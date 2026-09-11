@@ -1,0 +1,35 @@
+\section{Deep Learning Architectures}
+\label{sec:architectures}
+
+This section compares architecture families specifically for riverine waste traits: small targets, occlusion, reflection, vegetation entanglement, and class imbalance.
+
+\subsection{YOLO Family: The Workhorse}
+One-stage YOLO detectors appear in over 25 studies, from v2 through v10, because they balance accuracy with deployable speed. Within-family comparisons repeatedly favor lightweight variants for field use: YOLOv5s offers the best accuracy--complexity tradeoff on river UAV imagery while YOLOv4 localizes better at far higher cost \cite{Maharjan2022}; YOLOv8n sustains 0.992 mAP@0.5 on stream footage \cite{Lee2025}; nano-scale models enable Raspberry Pi and RK3588 edge deployment \cite{Sio2022,Yan2025}. Task-specific modifications cluster around attention (feature-map, coordinate, long-range, polarized), improved losses (SIoU, WiseIoU), and feature pyramids (BiFPN, GFPN), each contributing roughly 2--6 points of mAP \cite{Lin2021,Yang2022,Peng2024,Chen2023}. Dark-channel lighting augmentation lifts cross-river mAP@50-95 by 17\% without architectural change \cite{Saddi2024}.
+
+\subsection{Two-Stage and Single-Shot Alternatives}
+Faster R-CNN with Inception backbones established the fixed-camera baseline at 68.7\% precision \cite{Lieshout2020} and remains the backbone of self-supervised pipelines \cite{JiaSwAV2024}. RetinaNet variants compete closely with YOLO on canal data \cite{Tharani2021}. SSD persists through lightweight and domain-adaptive niches: teacher-student semi-supervision \cite{Sun2025}, camera-network deployment at 91.1\% \cite{Renfei2023}, and continual unsupervised domain adaptation at 82.2\% and 68.5 FPS \cite{EAAI2023}. Polarized-attention Faster R-CNN variants cut model size fivefold while adding 6.4 points on Yellow River data \cite{MPFasterRCNN2024}.
+
+\subsection{Segmentation Architectures}
+Encoder-decoder segmentation (FCN, U-Net family, DeepLabv3+) dominates pixel-level work. Fine-tuned DeepLabv3+ is the strongest single model in the base comparison \cite{Pati2025}; ResUNet50 maps polymer types with F1 up to 0.92 \cite{Jakovljevic2020}; spectral 3D U-Net variants match DeepLabV3+ on satellite debris at IoU 0.61 \cite{SoleGomez2022}. Mask R-CNN serves riverbank quantification pipelines \cite{Trinh2022}, while custom YOLOv8n-seg surpasses both COCO pretraining and foundation-model baselines on weathered litter \cite{Pan2024}.
+
+\subsection{Transformers, Foundation Models, and State-Space Models: Nearly Absent}
+No included river study trains a vision transformer as its primary detector; the base paper argues explicitly that CNN inductive biases suit small heterogeneous river datasets, with transformer comparison left as background discussion \cite{Pati2025}. Transformer-assisted segmentation exists only for marine imagery and is excluded by scope. Foundation models appear asymmetrically: as defeated baselines (SAM loses to task-trained YOLOv8n-seg \cite{Pan2024}), as data generators (Stable Diffusion synthetic training sets \cite{Pan2023}), and as inspiration (self-supervised SwAV pretraining toward litter foundation models \cite{JiaSwAV2024}). The first state-space backbone (Changemamba) arrives via semi-supervised UAV detection \cite{Sun2025}. The transformer gap flagged in prior reviews therefore persists into 2025 and is recorded as a first-order research opportunity.
+
+\begin{table}[!t]
+\centering
+\caption{Architecture families: typical riverine accuracy, cost, and best-fit role.}
+\label{tab:archs}
+\begin{tabular}{lccc}
+\hline
+\textbf{Family} & \textbf{Typical mAP} & \textbf{Cost} & \textbf{Best fit} \\
+\hline
+YOLOv5/v8 nano-small & 77--92\% & Low & Real-time field deployment \\
+YOLOv5x/v7-large & 83--94\% & High & Accuracy-first surveys \\
+Faster R-CNN/RetinaNet & 65--81\% & High & Small-target precision \\
+SSD (+UDA/SSL) & 65--91\% & Low--med & Networks, adaptation \\
+DeepLabv3+/U-Net & IoU 0.6--0.87 & High & Area/mass estimation \\
+Mask R-CNN/YOLO-seg & mAP 45--59\% & High & Instance quantification \\
+Transformers & --- & --- & No river studies found \\
+\hline
+\end{tabular}
+\end{table}

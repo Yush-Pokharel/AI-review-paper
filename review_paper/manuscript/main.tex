@@ -1,0 +1,44 @@
+\documentclass{ieeeaccess}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes.arrows,positioning}
+
+\begin{document}
+\doi{-}
+
+\title{Generalization of Deep Learning-Based Waste Detection Across Riverine Environments: A Systematic Review}
+\author{\uppercase{Yush Pokharel}\authorrefmark{1}}
+\address[1]{Affiliation To Be Confirmed}
+\corresp{Corresponding author: TBD (e-mail: TBD).}
+
+\begin{keywords}
+Deep Learning, Waste Detection, River Pollution, Generalization, Transfer Learning, UAV, Remote Sensing, Systematic Review
+\end{keywords}
+
+% NOTE: abstract.tex wraps its own abstract environment; input directly (before maketitle per IEEE Access convention).
+\input{../sections/abstract/abstract.tex}
+
+\maketitle
+
+% Sections (\input-ready fragments, no preambles)
+\input{../sections/introduction/introduction.tex}
+\input{../sections/methodology/methodology.tex}
+\input{../sections/data_sources/data_sources.tex}
+\input{../sections/detection_approaches/detection_approaches.tex}
+\input{../sections/dl_architectures/dl_architectures.tex}
+\input{../sections/datasets/datasets.tex}
+\input{../sections/training_evaluation/training_generalization.tex}
+\input{../sections/training_evaluation/evaluation.tex}
+\input{../sections/challenges_future/challenges.tex}
+\input{../sections/challenges_future/future_directions.tex}
+\input{../sections/conclusion/conclusion.tex}
+
+\bibliographystyle{IEEEtran}
+\bibliography{../sections/references}
+
+\EOD
+\end{document}

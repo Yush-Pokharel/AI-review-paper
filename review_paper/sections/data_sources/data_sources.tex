@@ -1,0 +1,42 @@
+\section{Data Sources and Imaging Platforms}
+\label{sec:datasources}
+
+This section answers RQ1: which datasets and imaging platforms underpin riverine waste detection. The base study is UAV-only \cite{Pati2025}; this review expands the frame to satellite, ground, handheld, surface-vehicle, and (absent) underwater sources (Table~\ref{tab:platforms}).
+
+\subsection{Unmanned Aerial Vehicles}
+UAVs dominate the corpus, offering millimetre-to-centimetre resolution at the cost of limited coverage, flight permissions, and weather sensitivity. Typical surveys fly 12--90~m yielding 4--30~mm ground sampling distance \cite{Jakovljevic2020,Maharjan2022,Pati2025}. Altitude directly trades against reliability: a multispectral Arno study holds 89.7\% precision at 30~m but collapses to 33.9\% at 80~m under sun glint \cite{Cortesi2022}. UAV RGB is the default modality; multispectral payloads (MAIA-S2 nine-band \cite{Cortesi2022}; MicaSense RedEdge \cite{Iordache2022}) add polymer discrimination at higher operational cost.
+
+\subsection{Satellite Imagery}
+Sentinel-2 (10--60~m) enables basin-scale, high-revisit monitoring but is blind to small dispersed items. Multi-river training lets segmentation models transfer across regions \cite{SoleGomez2022}, while single-river pixel classifiers degrade sharply on unseen hydrological conditions \cite{Mohsen2023}. Riverbank-focused indices with vegetation/built-up corrections extend applicability to complex shorelines \cite{Sakti2023}, and an operational three-river pipeline with an open Earth Engine application demonstrates deployment readiness \cite{PerezGarcia2025}. Commercial sub-metre imagery (Pleiades) serves mainly as validation rather than monitoring input \cite{Sakti2023}.
+
+\subsection{Ground, Fixed, and Handheld Cameras}
+Bridge- and bank-mounted cameras provide continuous, low-cost observation of fixed reaches and enable flux counting, but cover static fields of view and need power and connectivity \cite{Lieshout2020,Reinhardt2024}. Controlled release experiments on the Rhine reach $\sim$94\% mAP@0.5 with modest data \cite{Reinhardt2024}, while real-stream counting can collapse (6 of 32 items at the counting line) despite near-perfect detection scores \cite{Lee2025}. Handheld and phone imagery lowers the participation barrier for citizen science but introduces angle, scale, and quality inconsistency \cite{JiaFrontiers2023,Tharani2021}; smartphone-collected riparian sets with open releases partially offset this \cite{Pan2024}. Dual fixed-plus-UAV deployments combine persistence with rapid hotspot assessment \cite{FrontEnv2025}.
+
+\subsection{Surface Vehicles and Radar}
+Unmanned surface vehicles contribute a novel low-altitude viewpoint plus millimetre-wave radar, with the first inland-waters USV benchmark exposing small-object difficulty across six detectors \cite{Cheng2021}. Unmanned boats and pontoon-mounted cameras extend coverage to inaccessible or infrastructure-adjacent waters \cite{Peng2024,FrontEnv2025}.
+
+\subsection{Hyperspectral and Multispectral Sensing}
+Spectral range matters as much as platform: NIR--SWIR signatures separate polymers from water and vegetation where RGB fails. Laboratory-trained classifiers transfer to riverbanks at up to 93.6\% plastic accuracy \cite{Tasseron2022}, and multispectral UAV classification reaches operational precision only at low altitude \cite{Cortesi2022}. A river-systems spectral database now exists as shared infrastructure \cite{Olyaei2024}.
+
+\subsection{Underwater Cameras: An Explicit Gap}
+No included study deploys underwater cameras for riverine waste detection; the reference review excludes them by scope, and the closest evidence concerns shallow-water classification degradation \cite{Jakovljevic2020}. Submerged litter is therefore systematically invisible: calibration studies estimate only half of transported litter floats within camera view \cite{Wolf2022}, and field frameworks explicitly cannot yet detect submerged debris \cite{Nunkhaw2025}. This gap is recorded here as found, not filled.
+
+\begin{table}[!t]
+\centering
+\caption{Imaging platform comparison for riverine waste detection.}
+\label{tab:platforms}
+\begin{tabular}{lcccc}
+\hline
+\textbf{Platform} & \textbf{Resolution} & \textbf{Coverage} & \textbf{Cost} & \textbf{Key limitation} \\
+\hline
+UAV RGB & mm--cm & Reach & Medium & Altitude/permission/weather \\
+UAV multispectral & cm & Reach & High & Payload + calibration load \\
+Satellite (Sentinel-2) & 10--60~m & Basin/global & Low (open) & Small-item blindness \\
+Satellite (commercial) & Sub-metre & Tasked & High & Cost; validation role \\
+Fixed bridge/bank & cm & Single reach & Low & Static view; power/network \\
+Handheld/phone & mm--cm & Opportunistic & Very low & Inconsistency \\
+USV/boat + radar & cm & Reach & Medium & Novelty; sparse methods \\
+Underwater & --- & --- & --- & No river studies found \\
+\hline
+\end{tabular}
+\end{table}

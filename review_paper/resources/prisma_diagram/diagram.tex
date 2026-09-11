@@ -1,0 +1,16 @@
+% PRISMA-style selection diagram (organizational aid only; not a compliance statement).
+% Numbers are best-estimate working counts from search_protocol/search_log.md (Searches 1--17).
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}[node distance=1.1cm, every node/.style={draw, rounded corners=2pt, text width=7.2cm, align=center, font=\footnotesize}]
+\node (id1) {Identification: $\sim$190 titles screened\\(connected-paper exports 122 + keyword/backward hits $\sim$70)};
+\node (id2) [below of=id1] {Full-text / abstract assessed: $\sim$75};
+\node (inc) [below of=id2] {Primary studies included: 50\\(P001, P004--P052) + 2 context-only reviews};
+\node (exc) [below of=inc] {Excluded with documented reasons: $\sim$25\\(non-image, marine/land-only, manual-only,\\micro-only, venue quality; 1 reversal)};
+\draw[->] (id1) -- (id2);
+\draw[->] (id2) -- (inc);
+\draw[->] (id2) -| ([xshift=4.2cm]id2.east) |- (exc);
+\end{tikzpicture}
+\caption{Selection flow for the review corpus (working counts; single-agent screening with human log review).}
+\label{fig:prisma}
+\end{figure}

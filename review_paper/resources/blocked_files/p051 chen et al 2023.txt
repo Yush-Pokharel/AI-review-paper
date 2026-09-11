@@ -1,0 +1,128 @@
+Abstract
+Intelligent identification and monitoring of floating materials is extremely crucial in water environment management as floating pollution severely damages water ecosystems. However, it remains a challenging problem in practical applications due to high scene complexity, small-scale targets, and model domain shifting. Aimed at this problem, this paper proposes a novel object detector based on a continual unsupervised domain adaptation method, which improves the detection accuracy and generalization capability of the object detector for small floating targets. Specifically, this paper proposes an improved object detection algorithm-single shot multi-Box detector for floating targets to adapt to the detection task of small floating targets. Then, a new paradigm of domain adaptation method-continual unsupervised domain adaptation is proposed to solve the issue of converting data between the source and target domains. Simultaneously, this paper integrates the detector and domain adaptation method to improve the model’s detection accuracy for small floating targets in a new target domain. The proposed method is trained and compared with the state-of-the-art methods based on multiple scenarios. As a result, the detection accuracy of the proposed method using an input image size of 300 × 300 reaches 82.2%, the detection speed can reach 68.5 frames per second under the graphics processing unit, the computation amount of floating-point numbers is reduced to 3.3 billion, and the size of the model is compressed into 25.3 MB. This paper extends the application of floating object detection in water surface vision, which is crucial for the control of water pollution.
+
+Introduction
+Floating wastes are severely threatening the water ecosystem and causing sustained pollution to the environment of rivers and lakes (Wang et al., 2022, Zhu et al., 2020). Traditional strategies to cope with the floating wastes in inland waters mainly rely on manpower, which is low-efficient and costly (Ruangpayoongsak et al., 2017). Artificial intelligence technologies represented by machine vision and deep learning have recently attracted a lot of attention for their usage in various missions. In particular, water surface object detection is becoming increasingly important in autonomous driving applications such as unmanned surface vehicles (USVs) and water surface vision applications (Goutam Mukherjee et al., 2021, Wang et al., 2021, Zhou et al., 2021). Deep learning-based methods have emerged in recent years to handle the challenge of floating object detection, such as Faster RCNN (Ren et al., 2015), YOLO (Redmon et al., 2016), SSD (Liu et al., 2016), etc. Therefore, floating wastes detection relying on visual information can be the most cost-effective solution. However, the object detection algorithm is limited in engineering application practice due to small-scale targets and domain transfer problems, so the purpose of this study is to improve the performance of object detection to cope with complex detection scenarios and provide technical support for floating wastes management.
+Low accuracy of small-scale floating object detection. Most of the floating wastes occupy small image areas (Cheng et al., 2021), lack appearance information for deep neural network-based object detection, and their high-level features are not discriminative, making correct identification and localization challenging (Bai et al., 2018). This problem has received substantial interest, and most of the research in this field is aimed at improving the detection accuracy of small targets (Bai et al., 2018, Ding et al., 2021, Li et al., 2017b, Moosbauer et al., 2019, Tsung-Yi et al., 2017). Existing object detection pipelines usually detect small targets through learning representations of all the objects at multiple scales. In particular most studies, to our knowledge, have not completely solved the small-scale floating object detection challenges, and it is usually an ill-posed solution in the case of small-scale targets in complex water surface environments. Given that detection of small targets relies on high-resolution feature maps, the high-level layers tend to respond to semantic visual cues, such as instances or instance portions, which are important for small-scale target classification or detection tasks (Liu et al., 2021). By contrast, low-level features are less effective in small-scale floating object detection tasks. How to adjust the semantic vision of multi-scale hierarchical feature layers to improve the accuracy of small-scale floating targets is an open problem.
+Domain shifting reduces detection performance. The performance of object detection will drop sharply owing to the domain shift between the source and target domains (Tang et al., 2022). Transfer Learning, represented by unsupervised domain adaptation, is an effective method to solve the distribution differences between the source domain dataset and the target domain dataset (Li et al., 2019, Jia et al., 2021). Domain adaptive Faster R-CNN (DA-FRCNN) and contour-material of SSD (CM-SSD) were first raised in the field of unsupervised domain adaptation of object detection (Jiang et al., 2021b, Chen et al., 2018). Since then, many domain adaptive methods have appeared one after another to solve the domain shift problem (Xiong et al., 2022, Kim et al., 2019, Cai et al., 2019, Tzeng et al., 2017). However, these methods cannot be directly applied to the problem of floating object detection in real scenarios because they assume that the entire target dataset is available during the adaptation process, while the data are discontinuous during the actual detection process, e.g., when a floating target suddenly enters a new environment, resulting in a complete mismatch between the distribution of the target and the source dataset. Continuous learning (CL) enables deep learning networks to optimize continuously and adapt to new tasks for object detection in new target domains (Taufique et al., 2021). This has also been noted by the deep-learning in a recent discussion about domain transfer problems for object detection (Rebuffi et al., 2017, Castro et al., 2018, Wu et al., 2019, Hayes et al., 2020). However, catastrophic forgetting (McCloskey and Cohen, 1989) is a fundamental problem in CL, i.e. a phenomenon linked with performance degradations for previously acquired tasks when an object detection model is modified to a new task. For floating object detection, this could result in reduced detection performance for unique findings from the source domain, and the model could unlearn to detect from the source domain in general (Lenga et al., 2020). Existing methods still lack considering the continuous domain adaptation of object detectors.
+To address on these issues, this study proposes a novel continual unsupervised domain adaptation method based on the state-of-the-art SSD model of small-scale floating targets by taking inspiration from continual learning methods, which is called CDA-SSD-FT (CDA means the continual unsupervised domain adaptation method, and SSD-FT means a Single Shot Multi-Box Detector for floating targets). First, an improved SSD objection algorithm is proposed as SSD-FT by dropping the deep low-resolution detection layers and enhancing the shallow high-resolution layers, which can better improve the detection performance of small floating targets in the target domain. Then training the SSD-FT network with labeled source domain data in a supervised manner with label smoothing, where the trained source domain model is loaded for the target domain data in continual small batches. And a continual domain adaptation method based on buffer management and sample replay to mitigate the catastrophic forgetting problem is given to reduce the performance gap between the model that is adapted based on continual batches of target data. Furthermore, this study proposes a novel information maximization loss to improve the overall performance of the SSD-FT network. This proposed method has outperformed existing state-of-the-art methods on various datasets in multiple adaption scenarios. Compared with CM-SSD, D-adapt, and PSDA-FRCNN, the CDA-SSD-FT method achieves stable improvements in detection accuracy of up to 13.4%, 8.3%, and 9.4% in multiple scenarios such as from ambient lighting to dynamic light and shadow, from foggy weather to heavy rain, etc., and balances detection speed and model size. In summary, this method has the following advantages.
+(1) A novel object detection algorithm called Single Shot MultiBox Detector for small-scale floating targets (SSD-FT), has been proposed for floating objects on the water. The SSD-FT can better adapt to the detection task of small floating targets in the target domain.
+(2) Combining source-free domain adaptation with a buffer for the selective replay of previously seen samples, this study proposes a new paradigm of domain adaptation where a source-trained model adapts to target domain data that are received continually in small batches for adaptation. This mitigates the catastrophic forgetting problem and improves the network’s generalization capabilities for the overall target domain.
+(3) The sample mix-up and equal diversity loss function with a buffer management strategy that performs selective replay of previous samples are proposed for effective adaptation for object detection in a new target domain.
+The rest of this paper is structured as follows: The related works will be briefly introduced in Section 2. The novel SSD for floating objects based on a continuous unsupervised domain adaptation method will be covered in detail in Section 3. Section 4 will conduct the continual unsupervised domain adaptive object detection experiments based on the stable SSD-FT network with VGG16 backbone. The conclusions and suggestions for further work are summarized in Section 5.
+
+Section snippets
+Vision-based object detection on water surface
+Current research on the detection of floating objects mainly focuses on two aspects: traditional image processing and deep learning-based methods, as shown in Table 1. The former is mainly based on the foreground and background features of the water surface environment and filtering theory for target recognition, which has the advantage of fast detection (Li et al., 2017a, Qiao et al., 2019). However, it is vulnerable to interference from complex environments, such as small target scale, large
+Method
+In this section, this paper will introduce the novel SSD for floating objects based on a continual unsupervised domain adaptation method, which combines the improved SSD model and domain adaptation. This study will first introduce the overall framework of CDA-SSD-FT, and then introduce the details of each part.
+Experiment and discussion
+This study conducts continual unsupervised domain adaptive object detection experiments based on the SSD-FT network with the VGG16 backbone. During the adaptation process, this study first loads the pre-trained source SSD-FT model, and then inputs the batches sample image to adapt it. Since a source SSD-FT model already exists, a single iteration through each batch of target samples is sufficient to achieve good adaption performance.
+Conclusions
+This paper proposes a novel SSD for floating objects based on a continual unsupervised domain adaptation method to solve the problem of domain adaptation for floating object detection. The proposed method includes two aspects: an improved SSD-FT model and a continual unsupervised domain adaptation. This study proposes the SSD-FT model mainly by dropping the deep low-resolution detection layers and enhancing the shallow high-resolution layers to solve the problem of complex detection environment
+
+References (54)
+DingL. et al.
+Detection and tracking of infrared small target by jointly using SSD and pipeline filter
+Digit. Signal Process.
+(2021)
+Goutam MukherjeeA. et al.
+A review on modern and smart technologies for efficient waste disposal and management
+J. Environ. Manag.
+(2021)
+JiaY. et al.
+Unified unsupervised and semi-supervised domain adaptation network for cross-scenario face anti-spoofing
+Pattern Recognit.
+(2021)
+LiD. et al.
+Detection of uneaten fish food pellets in underwater images for aquaculture
+Aquac. Eng.
+(2017)
+LiuZ. et al.
+Multi-scale iterative refinement network for RGB-D salient object detection
+Eng. Appl. Artif. Intell.
+(2021)
+McCloskeyM. et al.
+QiaoX. et al.
+Fvunderwater sea cucumber identification based on principal component analysis and support vector machine
+Measurement
+(2019)
+TangH. et al.
+Unsupervised domain adaptation via distilled discriminative clustering
+Pattern Recognit.
+(2022)
+WangZ. et al.
+Cyanobacterial dominance and succession: Factors, mechanisms, predictions, and managements
+J. Environ. Manag.
+(2021)
+WangX. et al.
+Using EEM-PARAFAC to identify and trace the pollution sources of surface water with receptor models in Taihu Lake Basin, China
+J. Environ. Manag.
+(2022)
+XiongL. et al.
+Source data-free domain adaptation for a faster R-CNN
+Pattern Recognit.
+(2022)
+BaiY. et al.
+SOD-MTGAN: Small object detection via multi-task generative adversarial network
+Ben-DavidS. et al.
+A theory of learning from different domains
+Mach. Learn.
+(2010)
+Boris, Chidlovskii, Clinchant, Stéphane, Csurka, Gabriela, 2016. Domain adaptation in the absence of source domain...
+Cai, Q., Pan, Y., Ngo, C.-W., Tian, X., Duan, L., Yao, T., 2019. Exploring object relation in mean teacher for...
+CastroF.M. et al.
+End-to-end incremental learning
+(2018)
+Chen, Y., Li, W., Sakaridis, C., Dai, D., Van Gool, L., 2018. Domain adaptive faster R-CNN for object detection in the...
+ChengY. et al.
+Are we ready for unmanned surface vehicles in inland waterways? The USV in land multisensor dataset and benchmark
+IEEE Robot. Autom. Lett.
+(2021)
+Fu, Chengyang, Wei, Liu, Ranga, A., et al., 2017. DSSD: deconvolutional single shot detector. In: Proceedings of the...
+Girshick, R., Donahue, J., Darrell, T., Malik, J., 2014. Rich feature hierarchies for accurate object detection and...
+Gomes, R., Krause, A., Perona, P., 2010. Discriminative clustering by regularized information maximization. In:...
+Goodfellow, I.J., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., et al., 2014. Generative...
+HayesT.L. et al.
+REMIND your neural network to prevent catastrophic forgetting
+HeK. et al.
+Spatial pyramid pooling in deep convolutional networks for visual recognition
+IEEE Trans. Pattern Anal. Mach. Intell.
+(2015)
+Hoffman, J., Darrell, T., Saenko, K., 2014. Continuous manifold based adaptation for evolving visual domains. In: 2014...
+HoffmanJ. et al.
+CyCADA: Cycle-consistent adversarial domain adaptation
+(2017)
+Hu, W., Miyato, T., Tokui, S., Matsumoto, E., Sugiyama, M., 2017. Learning discrete representations via information...
+There are more references available in the full text version of this article.
+
+Cited by (18)
+Floating object detection using double-labelled domain generalization
+2024, Engineering Applications of Artificial Intelligence
+Citation Excerpt :
+Meanwhile, Li et al. (2022) improved detection by integrating different depth-of-field information in visual images and constructing a positive attention module (PAM). However, the complex water surface environment limits the advanced performance of the detection methods (Chen et al., 2023). Recently, deep learning-based methods for floating object detection have made sustained progress in related research, including accuracy, speed, lightweight, robustness, and real-time.
+
+
+Show abstract
+Improved YOLOv5s-based algorithm for foreign object intrusion detection on overhead transmission lines
+2024, Energy Reports
+Citation Excerpt :
+Currently the mainstream target detection algorithms are broadly categorized into two types: single-stage and dual-stage. Common single-stage target detection algorithms include the series of algorithms such as SSD(Single Shot MultiBox Detector) (Chen et al., 2023) and YOLO(You Only Look Once) (Li et al., 2023a). This class of algorithms treats classification and localization as a regression problem.
+
+
+Show abstract
+Ghost-YOLO v8: An Attention-Guided Enhanced Small Target Detection Algorithm for Floating Litter on Water Surfaces
+2024, Computers, Materials and Continua
+
+Show abstract
+Detection and tracking of floating objects based on spatial-temporal information fusion
+2023, Expert Systems with Applications
+Citation Excerpt :
+Floating materials pollution in water bodies is a growing concern, with the potential to cause environmental and economic damage and affect human health (Chen et al., 2023).
+
+
+Show abstract
+Optimized YOLOv8 for Lightweight Floating Object Detection on Unmanned Surface Vehicles
+2025, Information Technology and Control
+Yolo-based Deep Learning Techniques for Identifying Floating Bottles in Inland Water: A Comprehensive Analysis
+2024, 2024 15th International Conference on Computing Communication and Networking Technologies, ICCCNT 2024

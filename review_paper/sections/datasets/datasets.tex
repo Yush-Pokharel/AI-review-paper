@@ -1,0 +1,37 @@
+\section{Datasets}
+\label{sec:datasets}
+
+This section answers the dataset half of RQ1 through a master comparison (Table~\ref{tab:datasets}), including the base paper's novel sets.
+
+\subsection{Scale and Annotation Landscape}
+Dataset sizes span two orders of magnitude: 340-image low-resource sets \cite{Putra2021} to 16,000-image canal collections \cite{Qiao2022}, 14,925-image hyacinth surveys \cite{Saigon2025}, and 2,000-image multimodal benchmarks with 20,000 unlabeled tracking frames \cite{Cheng2021}. Annotation follows task: VOC boxes for detection, COCO polygons for instance work, pixel masks for segmentation. The largest open resources are the canal TUD-GV set (9,473 images \cite{JiaFrontiers2023}), the riparian HRB-WD set with released weights \cite{Pan2024}, the canal water-channel set (13,500 images, 48,450 objects \cite{Tharani2021}), and the USV-view FloW benchmark \cite{Cheng2021}. The base paper contributes 764 dual-annotated UAV tiles (detection plus segmentation) from two Nepali rivers via public repository \cite{Pati2025}, and the Laos--Thailand study adds 500 tiles per site at 2~m ground footprints \cite{Maharjan2022}.
+
+\subsection{Category and Condition Coverage}
+Most sets collapse waste into one ``waste'' or ``plastic'' class, which simplifies annotation but discards polymer information; exceptions separate bottles, bags, foam, organics, and vegetation \cite{Lin2021,Nunkhaw2024,Tharani2021}. Weathered, submerged, transparent, and entangled items are systematically under-annotated: dataset authors explicitly exclude micro-particles and leaves \cite{Tharani2021}, and field frameworks report transparency and hyacinth entrapment as dominant miss drivers \cite{JiaFlux2025,Nunkhaw2025}. Vegetation-heavy tropical sets (69k plastics against 57k hyacinths \cite{Saigon2025}) are the exception that proves the rule.
+
+\subsection{Geographic and Modal Diversity Gaps}
+Collection concentrates in Europe, East and South Asia; African and South American river datasets are essentially absent from the deep-learning corpus despite field studies confirming heavy pollution there \cite{Atuhaire2025}. No underwater river-waste dataset exists. Radar appears once as a modality \cite{Cheng2021}; synthetic data appears once as training source \cite{Pan2023}; self-supervised pools ($\sim$100k unlabeled images \cite{JiaSwAV2024}) point toward foundation-scale collection as the structural fix the field keeps requesting.
+
+\begin{table}[!t]
+\centering
+\caption{Master dataset comparison (selected; TBD = unreported).}
+\label{tab:datasets}
+\begin{tabular}{lccccc}
+\hline
+\textbf{Dataset} & \textbf{Images} & \textbf{Annot.} & \textbf{Region} & \textbf{Resol.} & \textbf{Access} \\
+\hline
+P001 Bagmati/Bishnumati & 764 & Box+mask & Nepal & 256px UAV & Public \\
+P004 Balkana/Crna Rijeka & 328/434/1846 & Pixel & Bosnia & 256px UAV & TBD \\
+P006 HMH/TT & 500+500 & Box & Laos/Thai & 256px UAV & TBD \\
+P008 TUD-GV & 9,473 & Level & Neth. canal & 1080p & Public \\
+P012 Lahore canals & 13,500 & Box+mask & Pakistan & TBD & Partial \\
+P017 HRB-WD & TBD & Mask & Japan & Phone 48MP & Public+weights \\
+P027 7-river + WLGCAM & 7,356+3,802 & Box+mask & Japan & Fixed cam & TBD \\
+P031 Korea stream & 4,162+1,005 & Box & Korea & Video & TBD \\
+P036 Citarum/Motagua/Odaw & TBD & Pixel & ID/GT/GH & S2 10m & Partial (app) \\
+P038 SSL pool & $\sim$100k unl. & Box (1.8k) & NL/ID/VN & Fixed cam & Public \\
+P042 Saigon & $\sim$15k & Box & Vietnam & UAV+fixed & TBD \\
+P048 FloW/FloW-RI & 2,000+videos & Box+radar & TBD inland & USV & Likely public \\
+\hline
+\end{tabular}
+\end{table}

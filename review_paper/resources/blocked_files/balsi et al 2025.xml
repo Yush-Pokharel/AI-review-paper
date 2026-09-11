@@ -1,0 +1,1646 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.3 20210610//EN" "JATS-journalpublishing1-3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.3" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">remotesensing</journal-id>
+      <journal-title-group>
+        <journal-title>Remote Sensing</journal-title>
+        <abbrev-journal-title abbrev-type="publisher">Remote Sens.</abbrev-journal-title>
+        <abbrev-journal-title abbrev-type="pubmed">Remote Sensing</abbrev-journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">2072-4292</issn>
+      <publisher>
+        <publisher-name>MDPI</publisher-name>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="doi">10.3390/rs17050938</article-id>
+      <article-id pub-id-type="publisher-id">remotesensing-17-00938</article-id>
+      <article-categories>
+        <subj-group>
+          <subject>Article</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Plastic Litter Detection in the Environment Using Hyperspectral Aerial Remote Sensing and Machine Learning</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid" authenticated="true">https://orcid.org/0000-0002-3571-2353</contrib-id>
+          <name>
+            <surname>Balsi</surname>
+            <given-names>Marco</given-names>
+          </name>
+          <role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Conceptualization" vocab-term-identifier="https://credit.niso.org/contributor-roles/conceptualization/">Conceptualization</role>
+          <role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Methodology" vocab-term-identifier="https://credit.niso.org/contributor-roles/methodology/">Methodology</role>
+          <role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Validation" vocab-term-identifier="https://credit.niso.org/contributor-roles/validation/">Validation</role>
+          <role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Data curation" vocab-term-identifier="https://credit.niso.org/contributor-roles/data-curation/">Data curation</role>
+          <role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Writing &#x2013; original draft" vocab-term-identifier="https://credit.niso.org/contributor-roles/writing-original-draft/">Writing &#x2013; original draft</role>
+          <xref rid="af1-remotesensing-17-00938" ref-type="aff">1</xref>
+          <xref rid="c1-remotesensing-17-00938" ref-type="corresp">*</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid" authenticated="true">https://orcid.org/0000-0001-6982-4989</contrib-id>
+          <name>
+            <surname>Moroni</surname>
+            <given-names>Monica</given-names>
+          </name>
+          <role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Conceptualization" vocab-term-identifier="https://credit.niso.org/contributor-roles/conceptualization/">Conceptualization</role>
+          <role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Methodology" vocab-term-identifier="https://credit.niso.org/contributor-roles/methodology/">Methodology</role>
+          <role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Validation" vocab-term-identifier="https://credit.niso.org/contributor-roles/validation/">Validation</role>
+          <xref rid="af2-remotesensing-17-00938" ref-type="aff">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid" authenticated="true">https://orcid.org/0009-0009-9476-7205</contrib-id>
+          <name>
+            <surname>Bouchelaghem</surname>
+            <given-names>Soufyane</given-names>
+          </name>
+          <role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Validation" vocab-term-identifier="https://credit.niso.org/contributor-roles/validation/">Validation</role>
+          <role vocab="credit" vocab-identifier="https://credit.niso.org/" vocab-term="Data curation" vocab-term-identifier="https://credit.niso.org/contributor-roles/data-curation/">Data curation</role>
+          <xref rid="af1-remotesensing-17-00938" ref-type="aff">1</xref>
+        </contrib>
+      </contrib-group>
+      <contrib-group>
+        <contrib contrib-type="editor">
+          <name>
+            <surname>Koch</surname>
+            <given-names>Magaly</given-names>
+          </name>
+          <role>Academic Editor</role>
+        </contrib>
+      </contrib-group>
+      <aff id="af1-remotesensing-17-00938"><label>1</label>Department of Information Engineering, Electronics and Telecommunications (DIET), Sapienza University of Rome, 00184 Rome, Italy; <email>soufyane.bouchelaghem@uniroma1.it</email></aff>
+      <aff id="af2-remotesensing-17-00938"><label>2</label>Department of Civil, Building, and Environmental Engineering (DICEA), Sapienza University of Rome, 00184 Rome, Italy; <email>monica.moroni@uniroma1.it</email></aff>
+      <author-notes>
+        <corresp id="c1-remotesensing-17-00938"><label>*</label>Correspondence: <email>marco.balsi@uniroma1.it</email>; Tel.: +39-320-435-7195</corresp>
+      </author-notes>
+      <pub-date pub-type="epub">
+        <day>06</day>
+        <month>03</month>
+        <year>2025</year>
+      </pub-date>
+      <pub-date pub-type="collection">
+        <month>03</month>
+        <year>2025</year>
+      </pub-date>
+      <volume>17</volume>
+      <issue>5</issue>
+      <elocation-id>938</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>03</day>
+          <month>01</month>
+          <year>2025</year>
+        </date>
+        <date date-type="rev-recd">
+          <day>21</day>
+          <month>02</month>
+          <year>2025</year>
+        </date>
+        <date date-type="accepted">
+          <day>04</day>
+          <month>03</month>
+          <year>2025</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-statement>&#xA9; 2025 by the authors.</copyright-statement>
+        <copyright-year>2025</copyright-year>
+        <license license-type="open-access">
+          <license-p>Licensee MDPI, Basel, Switzerland. This article is an open access article distributed under the terms and conditions of the Creative Commons Attribution (CC BY) license (<ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</ext-link>).</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <p>Plastic waste has become a critical environmental issue, necessitating effective methods for detection and monitoring. This article presents a machine-learning-based methodology and embedded solution to detect plastic waste in the environment using an airborne hyperspectral sensor operating in the short-wave infrared (SWIR) band. Experimental data were obtained from drone flights in several case studies in natural and controlled environments. Data were preprocessed to simply equalize the spectra across the whole band and across different environmental conditions, and machine learning techniques were applied to detect plastics even in real-time. Several algorithms for spectrum calibration, feature selection, and classification were optimized and compared to obtain an optimal solution that has high-quality results under cross-validation. This way, deploying the system in different environments without requiring complicated manual adjustments or re-learning is possible. The results of this work prove the feasibility of the proposed plastic litter detection approach using high-definition aerial remote sensing, with high specificity to plastic polymers that are not obtained using visible and NIR data.</p>
+      </abstract>
+      <kwd-group>
+        <kwd>drones</kwd>
+        <kwd>environmental monitoring</kwd>
+        <kwd>hyperspectral sensors</kwd>
+        <kwd>plastic waste</kwd>
+      </kwd-group>
+      <funding-group>
+        <funding-statement>This research received no external funding.</funding-statement>
+      </funding-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec1-remotesensing-17-00938" sec-type="intro">
+      <title>1. Introduction</title>
+      <p>Plastic pollution has recently become a significant global concern [<xref ref-type="bibr" rid="B1-remotesensing-17-00938">1</xref>], threatening both terrestrial and marine ecosystems, and is the object of the United Nations Sustainable Development Goal (SDG) Target 14.1 [<xref ref-type="bibr" rid="B2-remotesensing-17-00938">2</xref>]. The detection of plastic litter in the environment is necessary to prevent its scattering and eventual clustering in the oceans and on the coasts and to plan and execute clean-up action. To this purpose, remote sensing, at all scales, plays an essential role [<xref ref-type="bibr" rid="B3-remotesensing-17-00938">3</xref>,<xref ref-type="bibr" rid="B4-remotesensing-17-00938">4</xref>,<xref ref-type="bibr" rid="B5-remotesensing-17-00938">5</xref>]. Satellite data may be used to detect large-scale clusters of plastic debris [<xref ref-type="bibr" rid="B6-remotesensing-17-00938">6</xref>,<xref ref-type="bibr" rid="B7-remotesensing-17-00938">7</xref>,<xref ref-type="bibr" rid="B8-remotesensing-17-00938">8</xref>,<xref ref-type="bibr" rid="B9-remotesensing-17-00938">9</xref>], but higher-detail data [<xref ref-type="bibr" rid="B10-remotesensing-17-00938">10</xref>,<xref ref-type="bibr" rid="B11-remotesensing-17-00938">11</xref>,<xref ref-type="bibr" rid="B12-remotesensing-17-00938">12</xref>,<xref ref-type="bibr" rid="B13-remotesensing-17-00938">13</xref>,<xref ref-type="bibr" rid="B14-remotesensing-17-00938">14</xref>] are necessary to detect low-density litter in relatively small areas, e.g., on the coasts and in rivers, and to guide collection teams and vessels effectively to polluted areas.</p>
+      <p>Several sensing approaches have been considered recently; specifically, visible-spectrum and NIR multispectral imaging have attracted considerable interest. However, hyperspectral imaging, in particular in the SWIR (short-wave infrared) spectrum range (1000&#x2013;2500 nm, often limited to 1000&#x2013;1700 nm for technological reasons) is known to contain the most relevant information for plastic polymer detections because specific narrowband absorption peaks characterize the reflection pattern of each polymer in this band [<xref ref-type="bibr" rid="B15-remotesensing-17-00938">15</xref>,<xref ref-type="bibr" rid="B16-remotesensing-17-00938">16</xref>,<xref ref-type="bibr" rid="B17-remotesensing-17-00938">17</xref>,<xref ref-type="bibr" rid="B18-remotesensing-17-00938">18</xref>,<xref ref-type="bibr" rid="B19-remotesensing-17-00938">19</xref>]. For this reason, SWIR sensors provide the best discrimination capability between plastic materials and any other natural or artificial material.</p>
+      <p>Very few sources of satellite hyperspectral data, especially in the SWIR region, exist to date. A very interesting mission is PRISMA [<xref ref-type="bibr" rid="B9-remotesensing-17-00938">9</xref>], which has, however, relatively low ground resolution. For this reason, most studies employing satellite data rely on multispectral VIS/NIR data (reviews in refs. [<xref ref-type="bibr" rid="B3-remotesensing-17-00938">3</xref>,<xref ref-type="bibr" rid="B5-remotesensing-17-00938">5</xref>]), with the main limitation that some natural materials are difficult to discriminate from plastics in that spectral range. Few studies [<xref ref-type="bibr" rid="B16-remotesensing-17-00938">16</xref>,<xref ref-type="bibr" rid="B17-remotesensing-17-00938">17</xref>] have used SWIR sensors mounted on aircraft for plastic litter detection. Drones may be employed for low-altitude surveys, providing more detailed imaging with respect to satellites. To our best knowledge, no other group has collected SWIR data in flight yet, besides the interesting feasibility study of ref. [<xref ref-type="bibr" rid="B15-remotesensing-17-00938">15</xref>] that was performed using a taut line.</p>
+      <p>Algorithms used for data processing include machine learning (ML) and spectral angle mapping (SAM) for pixel-wise spectrum analysis, as well as deep learning (DL). The latter technique is straightforwardly applied to visible or multispectral images, using consolidated techniques for image processing. For hyperspectral data, architectures based on multiscale 3D convolution appear to be the most appropriate to the task [<xref ref-type="bibr" rid="B20-remotesensing-17-00938">20</xref>]. Applications of non-supervised learning are, for the moment, only at the level of a feasibility study [<xref ref-type="bibr" rid="B21-remotesensing-17-00938">21</xref>]. While neural architectures normally obtain better accuracy than ML, they require larger datasets that are not easily available and higher computing power that is less capable of embedded implementation.</p>
+      <p>In a previous work [<xref ref-type="bibr" rid="B22-remotesensing-17-00938">22</xref>], the authors presented the development and validation of a hyperspectral sensor system mounted on a drone for plastic detection in the environment and at sea, using ML for automatic detection at the pixel level, later upgraded for real-time geo-localized detection [<xref ref-type="bibr" rid="B23-remotesensing-17-00938">23</xref>]. In this paper, after an extensive experimental campaign, we present the further development of the detection algorithms with the purpose of obtaining a reliable detecting algorithm, capable of generalizing data taken in different environmental conditions, without needing re-learning or calibration for real-time operation and simplified survey organization.</p>
+      <p>Using a drone for plastic litter detection is motivated by envisaging integrated detection and collection scenarios that might be enhanced by the possibility of directing automatic collection machines (especially in water basins) towards locations in their vicinity where a significant concentration of litter exists. Moreover, drone-based detection might be useful in supporting litter monitoring in sites that are not easily accessible (e.g., riverbanks). Aerial detection may also be scaled up, without substantial changes, to helicopter or airplane-based surveys, which could cover larger areas at lower resolution. Lastly, local surveys at low resolution may support satellite-based wide-area surveys by means of data fusion and spatialization techniques. Of course, regulatory issues for the flight of drones should also be taken into account, but these are normally more stringent in populated areas than in the natural environment and, most notably, at sea.</p>
+      <p>The main contributions of this work are the following:<list list-type="bullet"><list-item><p>Consolidating a ML methodology for plastic detection in hyperspectral data that is capable of generalization in different environments and lighting conditions and capable of embedded and real-time implementation;</p></list-item><list-item><p>Experimenting with plastic litter detection in a controlled but fully realistic environment, employing drone-based hyperspectral sensing;</p></list-item><list-item><p>Demonstrating the feasibility of plastic detection in the environment (over ground and vegetation and floating on water) through a compact embedded airborne solution (appropriate for drone or airplane).</p></list-item></list></p>
+    </sec>
+    <sec id="sec2-remotesensing-17-00938">
+      <title>2. Materials and Methods</title>
+      <sec id="sec2dot1-remotesensing-17-00938">
+        <title>2.1. Sensor System</title>
+        <p>We assembled a stand-alone push-broom hyperspectral sensor system (<xref ref-type="fig" rid="remotesensing-17-00938-f001">Figure 1</xref>) based on two camera&#x2013;spectrometer devices operating in the bands 400&#x2013;1000 nm (VIS/NIR) and 900&#x2013;1700 nm (SWIR), with the purpose of realizing a stand-alone payload for a relatively small drone covering a large wavelength range for high versatility. While the VIS/NIR sensor is especially useful, e.g., for vegetation monitoring, in this work, we did not use data in that band because we chose to concentrate on the SWIR band that contains narrowband absorption patterns that are specific to plastic polymers. The spectrometer captures a narrow line image of the target through a slit behind the lens and disperses the light from each line pixel into a spectrum, orthogonally, with respect to the line. An Intel-based board PC performed data acquisition and storage, as well as data processing for detection and communication with a ground station. A compact INS provided Global Navigation Satellite System (GNSS)-based geolocation and attitude sensing for hyperspectral cube generation and georeferentiation. An additional RGB camera equipped with a standard lens provided images with strong superposition, adding the option of mosaicking and real-time transmission to the ground of relevant scenes corresponding to alerts.</p>
+        <p>The SWIR sensor chosen for this project is a Xenics (Leuven, Belgium) Bobcat 320, featuring sensitivity between 900 and 1700 nm (SWIR) and 320 &#xD7; 256 pixels (easily replaceable by a camera of the same family with 640 &#xD7; 512 pixels), assembled with a linear spectrometer ImSpector NIR17 OEM by Specim (Oulu, Finland) for capturing light through a narrow slit aligned in the direction of the smaller side of the sensor so that a spectral image of 256 spatial positions &#xD7; 320 wavelengths (individual bands about 2.5 nm wide) is obtained.</p>
+        <p>The payload was mounted on a DJI (Shenzen, China) Matrice 600 drone (<xref ref-type="fig" rid="remotesensing-17-00938-f002">Figure 2</xref>) operated by Oben srl, Sassari, Italy, which was normally flown at 7&#x2013;15 m height and 0.5&#x2013;2 m/s speed with an acquisition frequency of 12.5 Hz, obtaining a pixel size (sideways) of 1 to 2 cm.</p>
+        <p>In order to build the hyperspectral cube, we employ images obtained by a visible camera IDS (Obersulm, Germany) UI-3240-CP-C-HQ synchronized with the other cameras by hardware trigger. A mosaicking algorithm is used to stitch such images together, and the same roto-translation parameters obtained are applied to the spectral images. Such a method proved quite effective and avoided further complication (and cost) of the system, but it occasionally failed on poorly structured surfaces (in particular, over water), and does not allow for georeferentiation of the data. Therefore, in an upgrade of the system, we integrated a Vectornav VN-200 GNSS-aided Inertial Navigation System to provide synchronized position and attitude data for easy and accurate hyperspectral cube reconstruction, as well as to allow for real-time (during flight) georeferenced alerting.</p>
+      </sec>
+      <sec id="sec2dot2-remotesensing-17-00938">
+        <title>2.2. Data Acquisition</title>
+        <p>Starting in 2020, we operated the sensor system described above in many diverse survey missions in natural environments, where we placed plastic litter in a controlled manner (partly grouping materials by polymer and holding objects by threads or by sticking them on hidden supports, such as a light fishing net), and/or observing litter already present in the environment, over bare ground or grass, on beaches or river banks, and floating on lake or seawater. The missions were performed in different seasons, in cloudy or sunny weather, and choosing different exposure settings, in order to obtain a diverse database and validate the generalization capability of our algorithms.</p>
+        <p>In this work, we selected a subset of our database and preferentially employed datasets obtained in controlled conditions for machine learning, where we carefully manually labeled the hyperspectral cubes with ground truth. In particular, the training set we used is extracted from surveys performed in January and March 2020, April 2022, and in two days of February 2024, about two weeks apart from each other. The first two sets were also used for our previous paper on this topic [<xref ref-type="bibr" rid="B22-remotesensing-17-00938">22</xref>], and from the last two surveys mentioned, we selected two cubes each for this work. These cubes will be denoted, respectively, as Jan20, Mar20, Apr22, 7Feb24a, 7Feb24b, 21Feb24a, and 21Feb24b. All these flights, except for 21Feb24b, involved the acquisition of data over grassy or bare ground, where we placed small heaps of plastic objects from normal household waste sorted by polymer type, weathered plastic litter collected on a beach and not sorted, and objects made of other non-plastic materials, such as wood, metal, and glass, as well as some commercial white floor tiles. We observe that detecting plastics on such backgrounds as grassy or bare ground is a more difficult task than detecting objects floating on water because water appears very dark in the SWIR spectrum. Therefore, we assumed that the training set obtained in this way would be most appropriate to also generalize floating objects, provided that they are not fully covered by water. The 21Feb24b survey was taken over a row of tunnel greenhouses, realized with PP transparent foil.</p>
+        <p>The experimental setup for all surveys is shown in <xref ref-type="fig" rid="remotesensing-17-00938-f003">Figure 3</xref>.</p>
+        <p>The single hyperspectral images acquired at the rate of 12.5 Hz have one spatial dimension (linear array of 240 pixels taken across the flight direction), and one wavelength dimension (300 raw bands, downsampled to 81, spaced 10 nm apart from each other). They are stitched together into a hyperspectral cube by appropriate roto-translation so that the so-called cube is, in fact, a parallelepiped with an elongated shape, corresponding to a roughly straight flight path surveying a stripe on the ground. As the single one-dimensional segments are pasted into a matrix that needs to be rectangular in space, along the edges, we fill the cube with blank pixels (the spectra are all set to 0 value). Such blank pixels will be generally represented in gray in the following figures, and are not included in the processing. Of the 81 bands, corresponding to wavelengths from 900 to 1700 nm, the first four (900&#x2013;930 nm) are empty due to geometrical constraints of the assembly camera&#x2013;spectrometer. Some bands at the edges and around 1400 nm (the strongest atmospheric water absorption band) were not used for further processing because the data they contain have too low of a level and are therefore strongly noisy. In the end, we used 60 wavelengths in two intervals: 980&#x2013;1340 nm and 1460&#x2013;1680 nm.</p>
+        <p>On the occasion of some of the surveys, we also acquired the spectra of the plastic objects and white tiles using a pointwise spectroradiometer FieldSpec 4 (A.S.D. Inc., Longmont, CO, USA), which measures light intensity in the range of 350&#x2013;2500 nm. Such acquisitions are calibrated using a Spectralon tile, yielding reflectance across the spectrum rather than absolute sensed power.</p>
+        <p>Spectra contained in the 21Feb24a cube used in this work are compared in <xref ref-type="fig" rid="remotesensing-17-00938-f004">Figure 4</xref> to the spectra acquired with the spectroradiometer. In order to do this, we calibrated the spectra taken from the drone using the average spectra taken on the white tiles after having checked that the calibrated reflectance of such tiles is quite reasonably flat under the spectroradiometer. In this way, we obtained approximate reflectance for our field data. We also arbitrarily normalized the average spectra for visualization purposes because the purpose of the comparison is to check the agreement in the absorption patterns of the plastic polymers, regardless of absolute reflectance. It is apparent that the spectra acquired from the drone appear quite consistent with the ones acquired with the spectroradiometer, especially observing that the relevant absorption patterns are located at the same wavelengths. We also remark that the variability of the field spectra is reasonably limited so that we may observe that the shape of the spectra is quite consistent across different objects of the same material.</p>
+      </sec>
+      <sec id="sec2dot3-remotesensing-17-00938" sec-type="methods">
+        <title>2.3. Methodology for Data Analysis</title>
+        <p>In this contribution, in continuity with previous work, we apply machine learning (ML). Even if we are also exploring deep learning, we think that the advantage of ML is that it works on a small dataset and that the recall phase requires little computational resources, so it is well suited for embedded implementation in real time.</p>
+        <p>Following our previous work, in this paper, we also used Linear Discriminant Analysis (LDA) [<xref ref-type="bibr" rid="B24-remotesensing-17-00938">24</xref>] for the classification of individual pixel spectra, implemented with the MATLAB v.24.2 function in its basic form that uses no hyperparameters, and Support Vector Machines (SVM) [<xref ref-type="bibr" rid="B25-remotesensing-17-00938">25</xref>] with RBF (Radial-Basis Function) kernels, optimizing hyperparameters (kernel size and box constraint, i.e., soft-margin width) with the automatic feature of MATLAB to test the possible advantage of nonlinear separating surfaces. In a previous work, we also considered the k-Nearest Neighbors (k-NN) algorithm as a potentially very effective non-parametric algorithm but we did not use it in this work because of its very large computational cost [<xref ref-type="bibr" rid="B26-remotesensing-17-00938">26</xref>]. As we observed previously, it is beneficial to execute feature reduction before learning and applying a classifier because the information contained in the hyperspectral data is possibly redundant, and mainly because some bands contain no information that is useful for the discrimination of materials and contributes noise that may even make the detection more difficult. Also in this work, for this purpose, we used the minimum-redundancy/maximum-relevance criterion (mRMR [<xref ref-type="bibr" rid="B27-remotesensing-17-00938">27</xref>]). We explored in previous work the option of using Principal Component Analysis for feature reduction, finding performance similar to what we obtain with mRMR. However, from a computational point of view, PCA realizes a transformation applied to all bands so that it has a slightly higher computational cost than the straightforward reduction of the number of bands used.</p>
+        <p>While our previous results [<xref ref-type="bibr" rid="B22-remotesensing-17-00938">22</xref>] proved the efficacy of simple ML algorithms for plastic detection and even for single-polymer discrimination, in the experimental campaigns, we observed that classifiers learned on a given dataset were not always working properly for other datasets, mostly due to changes in exposure settings and shading but also to general environmental conditions (e.g., a sunny or cloudy sky), which caused detection algorithms to perform poorly or fail in some cases. Moreover, working on single cases may cause the algorithm to learn characteristics of the plastic object spectra present in that specific dataset (e.g., brightness) that are not actually significant for plastics with respect to other materials. Such malfunctions make the automation of plastic recognition unreliable and generally prevent the possibility of straightforward real-time operation. For this reason, it is important to use a training set that is representative of diverse environmental conditions and contains different (and, in particular, non-plastic) materials. It is also desirable, if possible, to avoid the necessity of calibration procedures to simplify the deployment of the sensor and the execution of the survey.</p>
+        <p>Training examples were automatically extracted from the cubes using manually drawn templates that identify the following:<list list-type="bullet"><list-item><p>Six plastic classes: PET, PE (both LDPE and HDPE grouped together), PVC, PP, PS, and other plastics (those currently identified with code 7, including bio-based plastics and mixed materials, as well as groups of mixed objects that were not sorted by polymer);</p></list-item><list-item><p>One class for white reference objects (white commercial floor tiles, which we verified with a point spectrometer as being satisfactorily white in the SWIR spectrum);</p></list-item><list-item><p>One class for non-plastic objects;</p></list-item><list-item><p>One class for background (generally grass, or occasionally bare earth).</p></list-item></list></p>
+        <p>In each hyperspectral cube, we extracted 100 samples per class, except 300 samples each for non-plastics and background. Taking into account that some polymers (and also non-plastic objects) are not present in all samples, we took a total of 7300 samples, reduced to 6350 after eliminating all the spectra that were too dark (average &lt; 32 DN after dark current level removal, in a range of 256). Such samples were simply chosen by extracting evenly spaced samples from the arbitrarily ordered list of all samples belonging to each class in the cube (as indicated by manually drawn labeling templates). In the same way, we also extracted a test set, just displacing the new sequence of evenly spaced samples as much as possible from the one used for the training set.</p>
+        <p>We considered the following training cases:<list list-type="bullet"><list-item><p>All plastics: namely, all six plastic classes combined into a positive class, and everything else in the negative class (600 positive, 700 negative samples from each cube that had all classes);</p></list-item><list-item><p>One polymer vs. non-plastics: namely, one of the five identified polymers (excluding the mixed plastics class) in the positive class, the other plastic classes in a &#x201C;don&#x2019;t care&#x201D; class (i.e., excluded from the training set altogether), and the non-plastics and background classes combined into the negative class (100 positive, 700 negative samples);</p></list-item><list-item><p>One polymer &#x201C;only&#x201D;: namely, one of the five identified polymers in the positive class, and the other plastic classes (leaving the &#x201C;mixed&#x201D; one as &#x201C;don&#x2019;t care&#x201D;) together with the non-plastic and background classes in the negative class (100 positive, 1100 negative samples).</p></list-item></list></p>
+        <p>The case &#x201C;all plastics&#x201D; is directly relevant to the detection of plastic litter in the environment, where it is not necessary to distinguish among different plastic polymers; the case of one polymer vs. non-plastics is also relevant to the same situation because binary classifiers for single polymers (whose results may be combined in logical OR to obtain all plastics) may be more effective than a single classifier generalizing all plastic polymers at once that have different absorption patterns. Leaving other polymers as &#x201C;don&#x2019;t care&#x201D; relaxes the constraints for the classifiers so that they may give positive outcomes on other polymers without this being a problem when the various outcomes are then combined. The case of one polymer only (vs. other polymers, besides non-plastics) is definitely relevant to the application of polymer sorting in recycling facilities but is also interesting to consider in this context because, in some cases, it may perform better than the &#x201C;don&#x2019;t care&#x201D; approach described above.</p>
+        <p>Since the training sets are generally unbalanced between positive and negative classes, as a performance parameter, we chose Cohen&#x2019;s Kappa coefficient [<xref ref-type="bibr" rid="B28-remotesensing-17-00938">28</xref>].</p>
+        <p>Indicating true-positive (negative) and false-positive (negative) outcomes as TP (TN) and FP (FN), respectively, and the number of examples as N, we compute<disp-formula>Accuracy = (TP + TN)/N<label>(1)</label></disp-formula><disp-formula>ExpectedAccuracy = ((TP + FP) &#xD7; (TP + FN) + (TN + FP) &#xD7; (TN + FN))/N<sup>2</sup> <label>(2)</label></disp-formula><disp-formula>Kappa = (Accuracy &#x2212; ExpectedAccuracy)/(1 &#x2212; ExpectedAccuracy) <label>(3)</label></disp-formula></p>
+        <p>Kappa essentially coincides with the Matthews Correlation Coefficient (MCC) for relatively high values (i.e., when performance is not bad) and seems more widely used in the literature than MCC. It gives a fair score of performance even with unbalanced classes by evaluating the improvement over expected accuracy, i.e., the accuracy that would be obtained by assigning outcomes totally by chance.</p>
+      </sec>
+    </sec>
+    <sec id="sec3-remotesensing-17-00938" sec-type="results">
+      <title>3. Results</title>
+      <p>We started with a series of experiments aimed at optimizing choices about the machine learning algorithm and the feature selection strategy. In our previous paper [<xref ref-type="bibr" rid="B20-remotesensing-17-00938">20</xref>], we already discussed such issues, and here, for further validation, we repeated the analysis specifically on the selected hyperspectral cubes, initially executing training and testing (on different sets of examples) on the same cube for each one of them.</p>
+      <p>As an example, the results of such an experiment are reported for the 21Feb24a dataset. The Kappa scores are listed in <xref ref-type="table" rid="remotesensing-17-00938-t001">Table 1</xref> and <xref ref-type="table" rid="remotesensing-17-00938-t002">Table 2</xref> for LDA and SVM, respectively, for several numbers of features selected by mRMR. Classification is executed for all plastics (i.e., the union of the six plastic classes mentioned above) and for PET and PE (the polymers that were present in six out of seven cubes), with other polymers in the &#x201C;don&#x2019;t care&#x201D; or in the negative classes (the latter denoted with &#x201C;only&#x201D;). The results for other polymer classes and other cubes are similar and not reported here for conciseness.</p>
+      <p><xref ref-type="fig" rid="remotesensing-17-00938-f005">Figure 5</xref> shows the Kappa score for the classifiers for all plastics. It is apparent that upon increasing the number of features selected, the Kappa score increases, saturates, and then possibly eventually slightly decreases. This is expected because the least significant features only add noise into the dataset, without providing additional information.</p>
+      <p>This example shows typical behavior as also observed in the other datasets and for the detection of the other polymers. SVM generally performs better than LDA; however, we continued using LDA, too, because it is computationally less expensive and because it generally does not perform significantly worse than SVM, sometimes even yielding better results. Indeed, the computation time of the SVM in MATLAB appeared to be almost quadratic in the number of support vectors in our experiments. Models with about 100 support vectors gave a computation time that was almost equal to LDA, but the largest model (1618 support vectors) requires about 80 times as much time compared to LDA. This means that a small kernel size should be avoided.</p>
+      <p>In the following, we will use the 30 best mRMR features because this is approximately the typical value where saturation of performance begins to appear.</p>
+      <p>The materials distribution for the case considered is visible in <xref ref-type="fig" rid="remotesensing-17-00938-f003">Figure 3</xref>e. Please take into account that the footprint on the ground of the visible image is not equal to the one of the hyperspectral cube and that they are not co-registered. In fact, <xref ref-type="fig" rid="remotesensing-17-00938-f003">Figure 3</xref> is obtained from a mosaic of a few high-resolution images, optimized for presentation only.</p>
+      <p><xref ref-type="fig" rid="remotesensing-17-00938-f006">Figure 6</xref> illustrates the application of the SVM classifier, trained on 30 features, to the classification of all plastics, PET (&#x201C;don&#x2019;t care&#x201D;), and PET only for the 21Feb24a cube. Especially, observing the results for all plastics, we notice several isolated false alarms that should be filtered out by morphological operators or rank filters. The results obtained on single polymers show significantly fewer false positives. For this reason, applying classifiers for single polymers (or sub-groups of polymers that have similar absorption patterns) and then combining results in logic OR may yield better overall results for the detection of all plastics at once. Moreover, it is to be noted that isolated false positives could disappear by processing pixels in their local context, either feeding a small window around the current pixel into an ML classifier or using explicitly convolutional schemes, in a higher-rank LDA or SVM model or in deep learning. As expected, the classifier for PET trained with the &#x201C;don&#x2019;t care&#x201D; option also gives positives on other polymers. The classifier trained for &#x201C;PET only&#x201D; also responds in some areas other than the one indicated in the desired output. This is not due to false positives and is, instead, correct. In fact, those areas are contained in the &#x201C;mixed&#x201D; classes (including weathered objects collected on a beach), where samples of PET objects are indeed present.</p>
+      <p>In order to choose the most appropriate adjustment of the spectra with the purpose of generalization across datasets, we tried the following options:<list list-type="bullet"><list-item><p>Simple level adjustment: After observing that no features that are especially significant for plastic detection are present in the lowest part of the SWIR wavelength range, we chose to divide each spectrum by the value at 1030 nm to make the overall levels more similar. This is computationally the fastest option considered, and we further observed that using the mean across the spectrum, or only in the lower band, or even applying the z-score (centering and normalization by the standard deviation), does not change performance significantly (we do not report details of the latter alternatives here, for simplicity);</p></list-item><list-item><p>Calibration using white reference: The mean spectrum of training examples taken on the white reference tiles is used as a divider, wavelength by wavelength, for all other spectra. Such an operation may amplify noise in bands where solar radiation at the ground level is weak. It is to be noted that using calibration implies a procedure to be executed on the field at each survey, which should be avoided if possible.</p></list-item><list-item><p>Calibration and subsequent level adjustment;</p></list-item><list-item><p>Continuum removal. Such a type of spectrum pre-processing is quite popular in hyperspectral data exploitation [<xref ref-type="bibr" rid="B29-remotesensing-17-00938">29</xref>] and is meant to make the absorption peaks most evident. In our case, we adjusted the method by fixing a priori which wavelengths are fixed at 1, after checking the typical spectra of plastic and non-plastic material, avoiding constraining wavelengths that are close to where plastic polymer absorption typically happens [<xref ref-type="bibr" rid="B30-remotesensing-17-00938">30</xref>]. This methodology is the most computationally intensive among those considered in this paper.</p></list-item></list></p>
+      <p>We tried training on three cubes (for the &#x201C;all plastics&#x201D; case), namely 7Feb24a, 21Feb24a, and Apr22a, and testing on each one separately using the above-mentioned normalization methods; thus, we obtained the scores listed in <xref ref-type="table" rid="remotesensing-17-00938-t003">Table 3</xref>. It is to be noted that calibration was only possible when we had a clearly readable white reference, realized by a large square of white tiles.</p>
+      <p>Indeed, applying normalization techniques clearly improves performance over results obtained on the raw cube. It is also apparent that simple level adjustment performs generally better, or at least not worse, than the other methods, and is definitely simpler in application, requiring just division by a single value of each spectrum.</p>
+      <p>In order to verify the potential of generalization across different datasets, we tried a leave-one-out (LOO) procedure by using composite training sets to collect six of the seven datasets&#x2014;testing on the seventh&#x2014;in all seven possible combinations (<xref ref-type="table" rid="remotesensing-17-00938-t004">Table 4</xref>).</p>
+      <p>This experiment shows that in most cases, the classifier learned on different cubes also works reasonably well on a cube that was not included in the training. Even Kappa values of the order of 0.3 indicate a generally successful detection if considered on groups of pixels rather than single ones, as commented above. A few cases fail (e.g., PET for Mar20 and Apr22, &#x201C;PET only&#x201D; for Mar20) or have poor performance (all plastics for 7Feb24b). While this can be in part attributed to inaccurate ground truth reference (in particular, for the Mar20 and Apr22 cubes, which contained some scattered objects and were difficult to accurately identify manually while drawing the label masks), these shortcomings also indicate that the environmental conditions and sensor settings must be controlled carefully to obtain uniform and good-quality data.</p>
+      <p>Examples of results using the SVM classifier obtained with simple normalization are shown in <xref ref-type="fig" rid="remotesensing-17-00938-f007">Figure 7</xref> (for some polymers) and <xref ref-type="fig" rid="remotesensing-17-00938-f008">Figure 8</xref> (for the others). <xref ref-type="fig" rid="remotesensing-17-00938-f008">Figure 8</xref>e, compared with <xref ref-type="fig" rid="remotesensing-17-00938-f007">Figure 7</xref>b, shows that combining the results for single polymers in logical OR yields cleaner results than using a single classifier for all plastics.</p>
+      <p><xref ref-type="table" rid="remotesensing-17-00938-t005">Table 5</xref> shows Kappa scores (computed on the test sets) for the SVM classifiers trained on all seven cubes and applied to each of them for all plastic classes. It is apparent that the performance is quite satisfactory in all cases.</p>
+      <p><xref ref-type="fig" rid="remotesensing-17-00938-f009">Figure 9</xref> graphically indicates which wavelength features were selected by mRMR. Filled circles indicate the first 10 features ranked, and empty circles indicate the other 20. The wavelength distribution of the most significant features may be compared to the position of the specific absorption peaks observable in <xref ref-type="fig" rid="remotesensing-17-00938-f004">Figure 4</xref>, taking into account that from a mutual information point of view, the relative response at different wavelengths is also relevant [<xref ref-type="bibr" rid="B30-remotesensing-17-00938">30</xref>], so that not only absorption peaks contribute to the result.</p>
+      <p><xref ref-type="fig" rid="remotesensing-17-00938-f010">Figure 10</xref> shows the results of the application of the SVM classifiers for &#x201C;All plastics&#x201D;, trained on seven cubes, for each one of them. Such results qualitatively prove the generally good performance of the methodology proposed.</p>
+      <p>As a further confirmation of the generalization capabilities of the methods and algorithms optimized in this work, we report here the result on one case of objects floating in seawater near the beach, a dataset we already presented in our previous paper [<xref ref-type="bibr" rid="B22-remotesensing-17-00938">22</xref>]. In <xref ref-type="fig" rid="remotesensing-17-00938-f011">Figure 11</xref>, we may observe that the classifier for all plastics correctly recognizes the plastic objects, distinguishing them from the others.</p>
+    </sec>
+    <sec id="sec4-remotesensing-17-00938" sec-type="discussion">
+      <title>4. Discussion and Conclusions</title>
+      <p>In this study, we present an embedded, drone-based hyperspectral survey system enhanced by classical machine learning methods to detect plastic waste in diverse environments. The experiments show that this setup adapts well to changing environmental conditions without requiring calibration or retraining. Below, we summarize the key advances over our earlier studies, address the feasibility of real-time operations, and discuss potential future directions involving deep learning.</p>
+      <p>In prior work, we relied on single-site training and testing, which limited transferability. In contrast, this present study integrates data acquired in various flights and systematically evaluates the classifiers&#x2019; performance in unfamiliar environments. The results confirm that relatively simple normalization procedures, such as dividing each spectrum by the reflectance at 1030 nm, can mitigate exposure and lighting inconsistencies, without requiring site-specific calibration.</p>
+      <p>A notable strength of the proposed technique is its modest computational overhead at the inference stage. Although hyperspectral data can be high-dimensional, the use of feature-selection strategies (mRMR) combined with efficient classifiers (LDA or SVM) ensures that real-time execution on a drone platform is feasible. This becomes particularly relevant for aerial surveys where hardware and power constraints are stringent. Future work might focus on optimizing or parallelizing the algorithmic components&#x2014;potentially with GPU-based processing&#x2014;to achieve even faster detection in real-time scenarios.</p>
+      <p>In this work, we essentially assumed that plastics essentially occupy entire pixels, based on the fact that the pixels of our cubes are indeed very small, and also exploiting the fact that our scenarios mostly include patches of objects made of the same material. We plan to investigate the detection of plastics occupying pixels only in part (and possibly in low density) when we proceed to use satellite data and when considering scenarios where small objects are widely scattered. This is an important issue that we will deal with in future work.</p>
+      <p>While this study primarily employs classical ML, deep learning (DL) techniques offer possibilities for further refinement:<list list-type="bullet"><list-item><p>Spectral&#x2013;spatial convolution: convolutional neural networks (CNNs) could harness both the spectral signatures and spatial structure of hyperspectral cubes, potentially reducing false alarms and improving the localization of plastic debris;</p></list-item><list-item><p>Automatic feature exploitation: DL models can learn discriminative features directly from raw data, reducing or eliminating the need for feature selection.</p></list-item></list></p>
+      <p>Nevertheless, several challenges arise when implementing deep learning:<list list-type="bullet"><list-item><p>Data requirements: CNNs demand large training sets. Gathering sufficient labeled data may be difficult, and overfitting may occur without adequately diverse training data.</p></list-item><list-item><p>Computational complexity: deep networks typically require considerable computational power, which might not be available in embedded solutions.</p></list-item></list></p>
+      <p>The continuation of this work will concentrate on executing surveys in a wider range of case studies, with specific attention to real situations where plastic litter is dispersed or accumulated in the environment, both on the ground and in the water. From an algorithmic point of view, context information will be integrated into the ML algorithm, and other learning systems capable of embedded implementation will be applied.</p>
+      <p>Data fusion with satellite surveys will also be considered in order to attempt spatialization of the small-area accurate detection obtained from a drone or airplane by employing large-area multispectral or hyperspectral satellite data in a synergic approach.</p>
+    </sec>
+  </body>
+  <back>
+    <notes>
+      <title>Author Contributions</title>
+      <p>Conceptualization and methodology, M.B. and M.M.; data curation, M.B. and S.B.; validation, M.B., M.M. and S.B.; writing, M.B. All authors have read and agreed to the published version of the manuscript.</p>
+    </notes>
+    <notes>
+      <title>Data Availability Statement</title>
+      <p>The datasets used in this paper are available as follows: Balsi, Marco; Moroni, Monica; Bouchelaghem, Soufyane (2025), &#x201C;SWIR hyperspectral data cubes for plastics detection in the environment&#x201D;, Mendeley Data, V1, <uri>https://doi.org/10.17632/y8cvcs8tt5.1</uri> (accessed on 20 November 2024).</p>
+    </notes>
+    <notes notes-type="COI-statement">
+      <title>Conflicts of Interest</title>
+      <p>The authors declare no conflicts of interest.</p>
+    </notes>
+    <ref-list>
+      <title>References</title>
+      <ref id="B1-remotesensing-17-00938">
+        <label>1.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Bidashimwa</surname>
+              <given-names>D.</given-names>
+            </name>
+            <name>
+              <surname>Hoke</surname>
+              <given-names>T.</given-names>
+            </name>
+            <name>
+              <surname>Huynh</surname>
+              <given-names>T.B.</given-names>
+            </name>
+            <name>
+              <surname>Narkpitaks</surname>
+              <given-names>N.</given-names>
+            </name>
+            <name>
+              <surname>Priyonugroho</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Ha</surname>
+              <given-names>T.T.</given-names>
+            </name>
+            <name>
+              <surname>Burns</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Weissman</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Plastic pollution: How can the global health community fight the growing problem?</article-title>
+          <source>BMJ Glob. Health</source>
+          <year>2023</year>
+          <volume>8</volume>
+          <supplement>(Suppl. S3)</supplement>
+          <fpage>e012140</fpage>
+          <pub-id pub-id-type="doi">10.1136/bmjgh-2023-012140</pub-id>
+          <pub-id pub-id-type="pmid">37295791</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B2-remotesensing-17-00938">
+        <label>2.</label>
+        <element-citation publication-type="web">
+          <article-title>UN Environment Program&#x2014;Nexus of the Ocean and Pollution</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.unep.org/topics/ocean-seas-and-coasts/nexus-ocean-and-pollution" ext-link-type="uri">https://www.unep.org/topics/ocean-seas-and-coasts/nexus-ocean-and-pollution</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2024-12-31">(accessed on 31 December 2024)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B3-remotesensing-17-00938">
+        <label>3.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Samuriwo</surname>
+              <given-names>T.N.</given-names>
+            </name>
+            <name>
+              <surname>Babalola</surname>
+              <given-names>O.P.</given-names>
+            </name>
+            <name>
+              <surname>Sparks</surname>
+              <given-names>C.A.J.</given-names>
+            </name>
+            <name>
+              <surname>Davidson</surname>
+              <given-names>I.E.</given-names>
+            </name>
+            <name>
+              <surname>Dieng</surname>
+              <given-names>L.</given-names>
+            </name>
+          </person-group>
+          <article-title>Comparative Review of Remote Sensing Methods for Ocean Plastic Litter Detection</article-title>
+          <source>IEEE Access</source>
+          <year>2024</year>
+          <volume>12</volume>
+          <fpage>166126</fpage>
+          <lpage>166161</lpage>
+          <pub-id pub-id-type="doi">10.1109/ACCESS.2024.3494660</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B4-remotesensing-17-00938">
+        <label>4.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Waqas</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Wong</surname>
+              <given-names>M.S.</given-names>
+            </name>
+            <name>
+              <surname>Stocchino</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Abbas</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Hafeez</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Zhu</surname>
+              <given-names>R.</given-names>
+            </name>
+          </person-group>
+          <article-title>Marine plastic pollution detection and identification by using remote sensing-meta analysis</article-title>
+          <source>Mar. Poll. Bull.</source>
+          <year>2023</year>
+          <volume>197</volume>
+          <fpage>115746</fpage>
+          <pub-id pub-id-type="doi">10.1016/j.marpolbul.2023.115746</pub-id>
+          <pub-id pub-id-type="pmid">37951122</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B5-remotesensing-17-00938">
+        <label>5.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Topouzelis</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Papageorgiou</surname>
+              <given-names>D.</given-names>
+            </name>
+            <name>
+              <surname>Suaria</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Aliani</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>Floating marine litter detection algorithms and techniques using optical remote sensing data: A review</article-title>
+          <source>Mar. Poll. Bull.</source>
+          <year>2021</year>
+          <volume>170</volume>
+          <fpage>112675</fpage>
+          <pub-id pub-id-type="doi">10.1016/j.marpolbul.2021.112675</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B6-remotesensing-17-00938">
+        <label>6.</label>
+        <element-citation publication-type="web">
+          <person-group person-group-type="author">
+            <collab>European Space Agency</collab>
+          </person-group>
+          <article-title>Innovations in Detecting Plastic Marine Litter from Space</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.esa.int/Enabling_Support/Preparing_for_the_Future/Discovery_and_Preparation/Innovations_in_detecting_plastic_marine_litter_from_space" ext-link-type="uri">https://www.esa.int/Enabling_Support/Preparing_for_the_Future/Discovery_and_Preparation/Innovations_in_detecting_plastic_marine_litter_from_space</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2024-12-31">(accessed on 31 December 2024)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B7-remotesensing-17-00938">
+        <label>7.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Park</surname>
+              <given-names>Y.J.</given-names>
+            </name>
+            <name>
+              <surname>Garaba</surname>
+              <given-names>S.P.</given-names>
+            </name>
+            <name>
+              <surname>Sainte-Rose</surname>
+              <given-names>B.</given-names>
+            </name>
+          </person-group>
+          <article-title>Detecting the Great Pacific Garbage Patch floating plastic litter using WorldView-3 satellite imagery</article-title>
+          <source>Opt. Express</source>
+          <year>2021</year>
+          <volume>29</volume>
+          <fpage>35288</fpage>
+          <lpage>35298</lpage>
+          <pub-id pub-id-type="doi">10.1364/OE.440380</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B8-remotesensing-17-00938">
+        <label>8.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Themistocleous</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Papoutsa</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Michaelides</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Hadjimitsis</surname>
+              <given-names>D.</given-names>
+            </name>
+          </person-group>
+          <article-title>Investigating Detection of Floating Plastic Litter from Space Using Sentinel-2 Imagery</article-title>
+          <source>Remote Sens.</source>
+          <year>2020</year>
+          <volume>12</volume>
+          <elocation-id>2648</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs12162648</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B9-remotesensing-17-00938">
+        <label>9.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Corbari</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Capodici</surname>
+              <given-names>F.</given-names>
+            </name>
+            <name>
+              <surname>Ciraolo</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Topouzelis</surname>
+              <given-names>K.</given-names>
+            </name>
+          </person-group>
+          <article-title>Marine plastic detection using PRISMA hyperspectral satellite imagery in a controlled environment</article-title>
+          <source>Int. J. Rem. Sens.</source>
+          <year>2023</year>
+          <volume>44</volume>
+          <fpage>6845</fpage>
+          <lpage>6859</lpage>
+          <pub-id pub-id-type="doi">10.1080/01431161.2023.2275324</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B10-remotesensing-17-00938">
+        <label>10.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Zhao</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Lv</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Zhao</surname>
+              <given-names>X.</given-names>
+            </name>
+            <name>
+              <surname>Wang</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Lv</surname>
+              <given-names>M.</given-names>
+            </name>
+          </person-group>
+          <article-title>Coastline target detection based on UAV hyperspectral remote sensing images</article-title>
+          <source>Front. Mar. Sci.</source>
+          <year>2024</year>
+          <volume>11</volume>
+          <elocation-id>1452737</elocation-id>
+          <pub-id pub-id-type="doi">10.3389/fmars.2024.1452737</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B11-remotesensing-17-00938">
+        <label>11.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Liu</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Wang</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Tang</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Zhang</surname>
+              <given-names>H.</given-names>
+            </name>
+          </person-group>
+          <article-title>Progress in Research on Marine Litter-Related Monitoring Technologies</article-title>
+          <source>J. Phys. Conf. Ser.</source>
+          <year>2024</year>
+          <volume>2679</volume>
+          <fpage>012055</fpage>
+          <pub-id pub-id-type="doi">10.1088/1742-6596/2679/1/012055</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B12-remotesensing-17-00938">
+        <label>12.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Maharjan</surname>
+              <given-names>N.</given-names>
+            </name>
+            <name>
+              <surname>Miyazaki</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Pati</surname>
+              <given-names>B.M.</given-names>
+            </name>
+            <name>
+              <surname>Dailey</surname>
+              <given-names>M.N.</given-names>
+            </name>
+            <name>
+              <surname>Shrestha</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Nakamura</surname>
+              <given-names>T.</given-names>
+            </name>
+          </person-group>
+          <article-title>Detection of River Plastic Using UAV Sensor Data and Deep Learning</article-title>
+          <source>Remote Sens.</source>
+          <year>2022</year>
+          <volume>14</volume>
+          <elocation-id>3049</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs14133049</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B13-remotesensing-17-00938">
+        <label>13.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Gon&#xE7;alves</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Andriolo</surname>
+              <given-names>U.</given-names>
+            </name>
+          </person-group>
+          <article-title>Operational use of multispectral images for macro-litter mapping and categorization by Unmanned Aerial Vehicle</article-title>
+          <source>Mar. Poll. Bull.</source>
+          <year>2022</year>
+          <volume>176</volume>
+          <fpage>113431</fpage>
+          <pub-id pub-id-type="doi">10.1016/j.marpolbul.2022.113431</pub-id>
+          <pub-id pub-id-type="pmid">35158175</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B14-remotesensing-17-00938">
+        <label>14.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Yuan</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Bao</surname>
+              <given-names>F.</given-names>
+            </name>
+            <name>
+              <surname>Xu</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Yang</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Yan</surname>
+              <given-names>Q.</given-names>
+            </name>
+            <name>
+              <surname>Zhong</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Yin</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Xu</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Huang</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <etal/>
+          </person-group>
+          <article-title>Marine environmental monitoring with unmanned vehicle platforms: Present applications and future prospects</article-title>
+          <source>Sci. Total Environ.</source>
+          <year>2022</year>
+          <volume>858</volume>
+          <fpage>159741</fpage>
+          <pub-id pub-id-type="doi">10.1016/j.scitotenv.2022.159741</pub-id>
+          <pub-id pub-id-type="pmid">36349622</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B15-remotesensing-17-00938">
+        <label>15.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cocking</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Narayanaswamy</surname>
+              <given-names>B.E.</given-names>
+            </name>
+            <name>
+              <surname>Waluda</surname>
+              <given-names>C.M.</given-names>
+            </name>
+            <name>
+              <surname>Williamson</surname>
+              <given-names>B.J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Aerial detection of beached marine plastic using a novel, hyperspectral short-wave infrared (SWIR) camera</article-title>
+          <source>ICES J. Mar. Sci.</source>
+          <year>2002</year>
+          <volume>79</volume>
+          <fpage>648</fpage>
+          <lpage>660</lpage>
+          <pub-id pub-id-type="doi">10.1093/icesjms/fsac006</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B16-remotesensing-17-00938">
+        <label>16.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Garaba</surname>
+              <given-names>S.P.</given-names>
+            </name>
+            <name>
+              <surname>Aitken</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Slat</surname>
+              <given-names>B.</given-names>
+            </name>
+            <name>
+              <surname>Dierssen</surname>
+              <given-names>H.M.</given-names>
+            </name>
+            <name>
+              <surname>Lebreton</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Zielinski</surname>
+              <given-names>O.</given-names>
+            </name>
+            <name>
+              <surname>Reisser</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Sensing Ocean Plastics with an Airborne Hyperspectral Shortwave Infrared Imager</article-title>
+          <source>Environ. Sci. Technol.</source>
+          <year>2018</year>
+          <volume>52</volume>
+          <fpage>11699</fpage>
+          <lpage>11707</lpage>
+          <pub-id pub-id-type="doi">10.1021/acs.est.8b02855</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B17-remotesensing-17-00938">
+        <label>17.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Hueni</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Bertschi</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>Detection of sub-pixel plastic abundance on water surfaces using airborne imaging spectroscopy</article-title>
+          <source>Proceedings of the IGARSS 2020&#x2013;2020 IEEE International Geoscience and Remote Sensing Symposium</source>
+          <conf-loc>Waikoloa, HI, USA</conf-loc>
+          <conf-date>26 September&#x2013;2 October 2020</conf-date>
+          <fpage>6325</fpage>
+          <lpage>6328</lpage>
+          <pub-id pub-id-type="doi">10.1109/IGARSS39084.2020.9323556</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B18-remotesensing-17-00938">
+        <label>18.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Tasseron</surname>
+              <given-names>P.F.</given-names>
+            </name>
+            <name>
+              <surname>Schreyers</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Peller</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Biermann</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>van Emmerik</surname>
+              <given-names>T.</given-names>
+            </name>
+          </person-group>
+          <article-title>Toward Robust River Plastic Detection: Combining Lab and Field-Based Hyperspectral Imagery</article-title>
+          <source>Earth Space Sci.</source>
+          <year>2022</year>
+          <volume>9</volume>
+          <fpage>e2022EA002518</fpage>
+          <pub-id pub-id-type="doi">10.1029/2022EA002518</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B19-remotesensing-17-00938">
+        <label>19.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Bonifazi</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Capobianco</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Serranti</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>A hierarchical classification approach for recognition of low-density (LDPE) and high-density polyethylene (HDPE) in mixed plastic waste based on short-wave infrared (SWIR) hyperspectral imaging</article-title>
+          <source>Spectrochim. Acta A</source>
+          <year>2018</year>
+          <volume>198</volume>
+          <fpage>115</fpage>
+          <lpage>122</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.saa.2018.03.006</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B20-remotesensing-17-00938">
+        <label>20.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Gong</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>Q.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Dai</surname>
+              <given-names>H.T.</given-names>
+            </name>
+            <name>
+              <surname>He</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Wang</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Han</surname>
+              <given-names>F.</given-names>
+            </name>
+            <name>
+              <surname>Tuniyazi</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Mu</surname>
+              <given-names>T.</given-names>
+            </name>
+          </person-group>
+          <article-title>Multiscale Information Fusion for Hyperspectral Image Classification Based on Hybrid 2D-3D CNN</article-title>
+          <source>Remote Sens.</source>
+          <year>2021</year>
+          <volume>13</volume>
+          <elocation-id>2268</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs13122268</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B21-remotesensing-17-00938">
+        <label>21.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Bouchelaghem</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Tibermacine</surname>
+              <given-names>I.E.</given-names>
+            </name>
+            <name>
+              <surname>Balsi</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Moroni</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Napoli</surname>
+              <given-names>C.</given-names>
+            </name>
+          </person-group>
+          <article-title>Cross-Domain Machine Learning Approaches using Hyperspectral Imaging for Plastics litter detection</article-title>
+          <source>Proceedings of the 2024 IEEE Mediterranean and Middle-East Geoscience and Remote Sensing Symposium (M2GARSS)</source>
+          <conf-loc>Oran, Algeria</conf-loc>
+          <conf-date>15&#x2013;17 April 2024</conf-date>
+          <fpage>36</fpage>
+          <lpage>40</lpage>
+          <pub-id pub-id-type="doi">10.1109/M2GARSS57310.2024.10537535</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B22-remotesensing-17-00938">
+        <label>22.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Balsi</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Moroni</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Chiarabini</surname>
+              <given-names>V.</given-names>
+            </name>
+            <name>
+              <surname>Tanda</surname>
+              <given-names>G.</given-names>
+            </name>
+          </person-group>
+          <article-title>High-Resolution Aerial Detection of Marine Plastic Litter by Hyperspectral Sensing</article-title>
+          <source>Remote Sens.</source>
+          <year>2021</year>
+          <volume>13</volume>
+          <elocation-id>1557</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs13081557</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B23-remotesensing-17-00938">
+        <label>23.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Balsi</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Bouchelaghem</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Conti</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Moroni</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Scalia</surname>
+              <given-names>R.</given-names>
+            </name>
+          </person-group>
+          <article-title>Real-time plastic litter detection using hyperspectral sensing on drone</article-title>
+          <source>Proceedings of the 2023 13th Workshop on Hyperspectral Imaging and Signal Processing: Evolution in Remote Sensing (WHISPERS)</source>
+          <conf-loc>Athens, Greece</conf-loc>
+          <conf-date>31 October&#x2013;2 November 2023</conf-date>
+          <fpage>1</fpage>
+          <lpage>4</lpage>
+          <pub-id pub-id-type="doi">10.1109/WHISPERS61460.2023.10431217</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B24-remotesensing-17-00938">
+        <label>24.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Fisher</surname>
+              <given-names>R.A.</given-names>
+            </name>
+          </person-group>
+          <article-title>The use of multiple measurements in taxonomic problems</article-title>
+          <source>Ann. Eugen.</source>
+          <year>1936</year>
+          <volume>7</volume>
+          <fpage>179</fpage>
+          <lpage>188</lpage>
+          <pub-id pub-id-type="doi">10.1111/j.1469-1809.1936.tb02137.x</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B25-remotesensing-17-00938">
+        <label>25.</label>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cristianini</surname>
+              <given-names>N.</given-names>
+            </name>
+            <name>
+              <surname>Shawe-Taylor</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <source>An Introduction to Support Vector Machines and Other Kernel-Based Learning Methods</source>
+          <publisher-name>Cambridge University Press</publisher-name>
+          <publisher-loc>Cambridge, UK</publisher-loc>
+          <year>2000</year>
+        </element-citation>
+      </ref>
+      <ref id="B26-remotesensing-17-00938">
+        <label>26.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Moroni</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Balsi</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Bouchelaghem</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>Plastics detection and sorting using hyperspectral sensing and Machine Learning algorithms</article-title>
+          <source>Waste Manag.</source>
+          <year>2025</year>
+        </element-citation>
+      </ref>
+      <ref id="B27-remotesensing-17-00938">
+        <label>27.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Peng</surname>
+              <given-names>H.C.</given-names>
+            </name>
+            <name>
+              <surname>Long</surname>
+              <given-names>F.</given-names>
+            </name>
+            <name>
+              <surname>Ding</surname>
+              <given-names>C.</given-names>
+            </name>
+          </person-group>
+          <article-title>Feature selection based on mutual information: Criteria of max-dependency, max-relevance, and min-redundancy</article-title>
+          <source>IEEE Trans. Pattern Anal. Mach. Intell.</source>
+          <year>2005</year>
+          <volume>27</volume>
+          <fpage>1226</fpage>
+          <lpage>1238</lpage>
+          <pub-id pub-id-type="doi">10.1109/TPAMI.2005.159</pub-id>
+          <pub-id pub-id-type="pmid">16119262</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B28-remotesensing-17-00938">
+        <label>28.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Chicco</surname>
+              <given-names>D.</given-names>
+            </name>
+            <name>
+              <surname>Warrens</surname>
+              <given-names>M.J.</given-names>
+            </name>
+            <name>
+              <surname>Jurman</surname>
+              <given-names>G.</given-names>
+            </name>
+          </person-group>
+          <article-title>The Matthews Correlation Coefficient (MCC) is more informative than Cohen&#x2019;s Kappa and Brier Score in binary classification assessment</article-title>
+          <source>IEEE Access</source>
+          <year>2021</year>
+          <volume>9</volume>
+          <fpage>78368</fpage>
+          <lpage>78381</lpage>
+          <pub-id pub-id-type="doi">10.1109/ACCESS.2021.3084050</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B29-remotesensing-17-00938">
+        <label>29.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Van der Meer</surname>
+              <given-names>F.</given-names>
+            </name>
+          </person-group>
+          <article-title>Analysis of spectral absorption features in hyperspectral imagery</article-title>
+          <source>Int. J. Appl. Earth Observ. Geoinf.</source>
+          <year>2004</year>
+          <volume>5</volume>
+          <fpage>55</fpage>
+          <lpage>68</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.jag.2003.09.001</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B30-remotesensing-17-00938">
+        <label>30.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Moroni</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Mei</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Characterization and Separation of Traditional and Bio-Plastics by Hyperspectral Devices</article-title>
+          <source>Appl. Sci.</source>
+          <year>2020</year>
+          <volume>10</volume>
+          <elocation-id>2800</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/app10082800</pub-id>
+        </element-citation>
+      </ref>
+    </ref-list>
+    <sec sec-type="display-objects">
+      <title>Figures and Tables</title>
+      <fig id="remotesensing-17-00938-f001" position="float">
+        <label>Figure 1</label>
+        <caption>
+          <p>Hyperspectral sensor assembly.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g001.tif"/>
+      </fig>
+      <fig id="remotesensing-17-00938-f002" position="float">
+        <label>Figure 2</label>
+        <caption>
+          <p>Drone and sensor in flight.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g002.tif"/>
+      </fig>
+      <fig id="remotesensing-17-00938-f003" position="float">
+        <label>Figure 3</label>
+        <caption>
+          <p>Situation on ground for the surveys used for plastic detection machine learning. (<bold>a</bold>) Jan20, (<bold>b</bold>) Mar20, (<bold>c</bold>) Apr22, (<bold>d</bold>) 7Feb24a and 7Feb24b, (<bold>e</bold>) 21Feb24a, (<bold>f</bold>) 21Feb24b. Material labels are self-explanatory. Unknown or unsorted plastic materials are indicated here as mixed (this class also includes type-7 plastics according to international codes), unknown, or beach, the latter indicating weathered litter collected on a beach. High- and low-density PE (HDPE and LDPE) have different standard codes but are chemically equal and not distinguishable by their reflected spectrum, so they were grouped in a single PE class in our work. These images were obtained by just stitching together a few visible images taken in the same or in separate flights, so they are not necessarily rectangular. They are not co-registered with the hyperspectral data because they are just meant to record the situation on the ground for documentation.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g003.tif"/>
+      </fig>
+      <fig id="remotesensing-17-00938-f004" position="float">
+        <label>Figure 4</label>
+        <caption>
+          <p>Comparison of spectra acquired from the drone (21Feb24a) and spectra acquired from the spectroradiometer. Blue lines show the reflectance measured by the spectroradiometer, and black lines show the reflectance as estimated from the drone sensor, both normalized to arbitrary units for visualization purposes. The standard deviation of the drone spectra is indicated by gray shading. Please notice that the standard deviation blows up near the band that we cut because it is dark in sunlight (so that under calibration, the division by the small values of the white spectrum is unreliable) and that another relatively dark band exists around approximately 1120 nm. <italic>x</italic>-axis: wavelength in nm; <italic>y</italic>-axis: arbitrary units for the black line, reflectance for the blue line.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g004.tif"/>
+      </fig>
+      <fig id="remotesensing-17-00938-f005" position="float">
+        <label>Figure 5</label>
+        <caption>
+          <p>Kappa score for classifiers for all plastics vs. number of features selected by mRMR. Dashed line: LDA, solid line: SVM.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g005.tif"/>
+      </fig>
+      <fig id="remotesensing-17-00938-f006" position="float">
+        <label>Figure 6</label>
+        <caption>
+          <p>Results of classification by the SVM classifier trained on the 21Feb24a cube (raw data) and tested on the same cube. (<bold>a</bold>) Desired output, all plastics; (<bold>b</bold>) classifier output, all plastics; (<bold>c</bold>) desired output, PET; (<bold>d</bold>) classifier output, PET (&#x201C;don&#x2019;t care&#x201D;); (<bold>e</bold>) classifier output, PET only. White: positive response; black: negative response; gray: external pixels (outside the surveyed area).</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g006.tif"/>
+      </fig>
+      <fig id="remotesensing-17-00938-f007" position="float">
+        <label>Figure 7</label>
+        <caption>
+          <p>Results of classification by the SVM classifier trained on seven datasets, with simple level adjustment, on the 21Feb24a dataset. (<bold>a</bold>) Desired output, all plastics; (<bold>b</bold>) classifier output, all plastics; (<bold>c</bold>) classifier output, PET (&#x201C;don&#x2019;t care&#x201D;); (<bold>d</bold>) classifier output, PET only. Materials: (1) mixed plastics; (2) PS; (3) weathered plastic litter collected on a beach; (4) PP; (5) PVC; (6) PE; (7) PET. White: positive response; black: negative response; gray: external pixels (outside the surveyed area).</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g007.tif"/>
+      </fig>
+      <fig id="remotesensing-17-00938-f008" position="float">
+        <label>Figure 8</label>
+        <caption>
+          <p>Results of classification by the SVM classifier trained on seven datasets, with simple level adjustment, on the 21Feb24a dataset. (<bold>a</bold>) PE only; (<bold>b</bold>) PVC only; (<bold>c</bold>) PS only; (<bold>d</bold>) PP only; (<bold>e</bold>) logical OR combinations of the outcomes for all five plastic polymers, to be compared to <xref ref-type="fig" rid="remotesensing-17-00938-f007">Figure 7</xref>b. White: positive response; black: negative response; gray: external pixels (outside the surveyed area).</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g008.tif"/>
+      </fig>
+      <fig id="remotesensing-17-00938-f009" position="float">
+        <label>Figure 9</label>
+        <caption>
+          <p>Wavelength features chosen by mRMR.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g009.tif"/>
+      </fig>
+      <fig id="remotesensing-17-00938-f010" position="float">
+        <label>Figure 10</label>
+        <caption>
+          <p>Results of the application of the SVM classifiers for &#x201C;all plastics&#x201D;, trained on seven cubes (gound truth mask and classification for each cube, respectively): (<bold>a</bold>,<bold>b</bold>) Jan20; (<bold>c</bold>,<bold>d</bold>) Mar20; (<bold>e</bold>,<bold>f</bold>) Apr22; (<bold>g</bold>,<bold>h</bold>) 7Feb24a; (<bold>i</bold>,<bold>j</bold>) 7Feb24b; (<bold>k</bold>,<bold>l</bold>) 21Feb24a; and (<bold>m</bold>,<bold>n</bold>) 21Feb24b. White: positive response; black: negative response; gray: external pixels (outside the surveyed area).</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g010a.tif"/>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g010b.tif"/>
+      </fig>
+      <fig id="remotesensing-17-00938-f011" position="float">
+        <label>Figure 11</label>
+        <caption>
+          <p>Plastic recognition at sea. (<bold>a</bold>) Photograph from the drone; (<bold>b</bold>) visible images mosaic; (<bold>c</bold>) detection result. Objects: (1) and (2), plastic containers; (3), metal coated bag; (4), rubber pipe; (5), wooden stick.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-17-00938-g011.tif"/>
+      </fig>
+      <table-wrap id="remotesensing-17-00938-t001" position="float">
+        <object-id pub-id-type="pii">remotesensing-17-00938-t001_Table 1</object-id>
+        <label>Table 1</label>
+        <caption>
+          <p>Kappa score for LDA classification of 21Feb24a data.</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin"># Features</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">All</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PET</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PET Only</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PE</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PE Only</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="middle">10</td>
+              <td align="center" valign="middle">0.54</td>
+              <td align="center" valign="middle">0.94</td>
+              <td align="center" valign="middle">0.83</td>
+              <td align="center" valign="middle">0.84</td>
+              <td align="center" valign="middle">0.23</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">15</td>
+              <td align="center" valign="middle">0.58</td>
+              <td align="center" valign="middle">0.94</td>
+              <td align="center" valign="middle">0.83</td>
+              <td align="center" valign="middle">0.88</td>
+              <td align="center" valign="middle">0.54</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">20</td>
+              <td align="center" valign="middle">0.64</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.84</td>
+              <td align="center" valign="middle">0.9</td>
+              <td align="center" valign="middle">0.51</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">25</td>
+              <td align="center" valign="middle">0.83</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.84</td>
+              <td align="center" valign="middle">0.9</td>
+              <td align="center" valign="middle">0.54</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">30</td>
+              <td align="center" valign="middle">0.87</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.87</td>
+              <td align="center" valign="middle">0.91</td>
+              <td align="center" valign="middle">0.59</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">35</td>
+              <td align="center" valign="middle">0.89</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.91</td>
+              <td align="center" valign="middle">0.93</td>
+              <td align="center" valign="middle">0.56</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">40</td>
+              <td align="center" valign="middle">0.89</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.91</td>
+              <td align="center" valign="middle">0.91</td>
+              <td align="center" valign="middle">0.60</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">50</td>
+              <td align="center" valign="middle">0.90</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.91</td>
+              <td align="center" valign="middle">0.92</td>
+              <td align="center" valign="middle">0.62</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle" style="border-bottom:solid thin">60</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.90</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.96</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.9</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.92</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.62</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="remotesensing-17-00938-t002" position="float">
+        <object-id pub-id-type="pii">remotesensing-17-00938-t002_Table 2</object-id>
+        <label>Table 2</label>
+        <caption>
+          <p>Kappa score for SVM classification of 21Feb24a data.</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin"># Features</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">All</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PET</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PET Only</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PE</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PE Only</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="middle">10</td>
+              <td align="center" valign="middle">0.82</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.83</td>
+              <td align="center" valign="middle">0.84</td>
+              <td align="center" valign="middle">0.64</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">15</td>
+              <td align="center" valign="middle">0.85</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.83</td>
+              <td align="center" valign="middle">0.94</td>
+              <td align="center" valign="middle">0.63</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">20</td>
+              <td align="center" valign="middle">0.87</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.83</td>
+              <td align="center" valign="middle">0.94</td>
+              <td align="center" valign="middle">0.50</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">25</td>
+              <td align="center" valign="middle">0.92</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.87</td>
+              <td align="center" valign="middle">0.94</td>
+              <td align="center" valign="middle">0.70</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">30</td>
+              <td align="center" valign="middle">0.92</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.84</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.71</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">35</td>
+              <td align="center" valign="middle">0.94</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.88</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.69</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">40</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.89</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.70</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">50</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.88</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.65</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle" style="border-bottom:solid thin">60</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.96</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.97</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.87</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.95</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.66</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="remotesensing-17-00938-t003" position="float">
+        <object-id pub-id-type="pii">remotesensing-17-00938-t003_Table 3</object-id>
+        <label>Table 3</label>
+        <caption>
+          <p>Average Kappa score for the SVM classifier trained on three datasets and tested on each one separately.</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin"> </th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Raw Spectra</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Level Adj.</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Calibration</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Calib. + Level Adj.</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Continuum</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="middle">21Feb24a</td>
+              <td align="center" valign="middle">0.64</td>
+              <td align="center" valign="middle">0.88</td>
+              <td align="center" valign="middle">0.87</td>
+              <td align="center" valign="middle">0.87</td>
+              <td align="center" valign="middle">0.87</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">7Feb24a</td>
+              <td align="center" valign="middle">0.86</td>
+              <td align="center" valign="middle">0.82</td>
+              <td align="center" valign="middle">0.80</td>
+              <td align="center" valign="middle">0.81</td>
+              <td align="center" valign="middle">0.77</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">Apr22</td>
+              <td align="center" valign="middle">0.88</td>
+              <td align="center" valign="middle">0.85</td>
+              <td align="center" valign="middle">0.88</td>
+              <td align="center" valign="middle">0.83</td>
+              <td align="center" valign="middle">0.84</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle" style="border-bottom:solid thin">
+                <bold>average</bold>
+              </td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">
+                <bold>0.79</bold>
+              </td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">
+                <bold>0.85</bold>
+              </td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">
+                <bold>0.85</bold>
+              </td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">
+                <bold>0.84</bold>
+              </td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">
+                <bold>0.83</bold>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="remotesensing-17-00938-t004" position="float">
+        <object-id pub-id-type="pii">remotesensing-17-00938-t004_Table 4</object-id>
+        <label>Table 4</label>
+        <caption>
+          <p>Average Kappa score for LDA classification. LOO procedure on seven datasets. Please notice that the 21Feb24b cube does not contain any PET or PE. Cube 21Feb24b does not contain any PET or PE, therefore corresponding cases are not applicable (N/A).</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Tested on</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">All</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PET</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PET Only</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PE</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PE Only</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="middle">Jan20</td>
+              <td align="center" valign="middle">0.26</td>
+              <td align="center" valign="middle">0.68</td>
+              <td align="center" valign="middle">0.39</td>
+              <td align="center" valign="middle">0.70</td>
+              <td align="center" valign="middle">0.65</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">Mar20</td>
+              <td align="center" valign="middle">0.29</td>
+              <td align="center" valign="middle">0.00</td>
+              <td align="center" valign="middle">0.01</td>
+              <td align="center" valign="middle">0.54</td>
+              <td align="center" valign="middle">0.63</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">Apr22</td>
+              <td align="center" valign="middle">0.66</td>
+              <td align="center" valign="middle">0.02</td>
+              <td align="center" valign="middle">0.41</td>
+              <td align="center" valign="middle">0.38</td>
+              <td align="center" valign="middle">0.08</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">7Feb24a</td>
+              <td align="center" valign="middle">0.39</td>
+              <td align="center" valign="middle">0.65</td>
+              <td align="center" valign="middle">0.60</td>
+              <td align="center" valign="middle">0.72</td>
+              <td align="center" valign="middle">0.67</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">7Feb24b</td>
+              <td align="center" valign="middle">0.14</td>
+              <td align="center" valign="middle">0.35</td>
+              <td align="center" valign="middle">0.56</td>
+              <td align="center" valign="middle">0.53</td>
+              <td align="center" valign="middle">0.30</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">21Feb24a</td>
+              <td align="center" valign="middle">0.47</td>
+              <td align="center" valign="middle">0.91</td>
+              <td align="center" valign="middle">0.81</td>
+              <td align="center" valign="middle">0.77</td>
+              <td align="center" valign="middle">0.61</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle" style="border-bottom:solid thin">21Feb24b</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.88</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="remotesensing-17-00938-t005" position="float">
+        <object-id pub-id-type="pii">remotesensing-17-00938-t005_Table 5</object-id>
+        <label>Table 5</label>
+        <caption>
+          <p>Kappa score for SVM classification trained on seven cubes with simple level adjustment. Some cubes do not contain all polymers (cells indicated as N/A).</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Tested on</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">ALL</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PET</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PETonly</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PE</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PEonly</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PS</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PSonly</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PVC</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PVConly</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PP</th>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">PPonly</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="middle">Jan20</td>
+              <td align="center" valign="middle">0.85</td>
+              <td align="center" valign="middle">0.93</td>
+              <td align="center" valign="middle">0.88</td>
+              <td align="center" valign="middle">0.80</td>
+              <td align="center" valign="middle">0.77</td>
+              <td align="center" valign="middle">N/A</td>
+              <td align="center" valign="middle">N/A</td>
+              <td align="center" valign="middle">N/A</td>
+              <td align="center" valign="middle">N/A</td>
+              <td align="center" valign="middle">N/A</td>
+              <td align="center" valign="middle">N/A</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">Mar20</td>
+              <td align="center" valign="middle">0.78</td>
+              <td align="center" valign="middle">0.80</td>
+              <td align="center" valign="middle">0.71</td>
+              <td align="center" valign="middle">0.83</td>
+              <td align="center" valign="middle">0.84</td>
+              <td align="center" valign="middle">N/A</td>
+              <td align="center" valign="middle">N/A</td>
+              <td align="center" valign="middle">N/A</td>
+              <td align="center" valign="middle">N/A</td>
+              <td align="center" valign="middle">0.77</td>
+              <td align="center" valign="middle">0.69</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">Apr22</td>
+              <td align="center" valign="middle">0.86</td>
+              <td align="center" valign="middle">0.83</td>
+              <td align="center" valign="middle">0.84</td>
+              <td align="center" valign="middle">0.91</td>
+              <td align="center" valign="middle">0.92</td>
+              <td align="center" valign="middle">0.79</td>
+              <td align="center" valign="middle">0.46</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.81</td>
+              <td align="center" valign="middle">0.77</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">7Feb24a</td>
+              <td align="center" valign="middle">0.81</td>
+              <td align="center" valign="middle">0.80</td>
+              <td align="center" valign="middle">0.73</td>
+              <td align="center" valign="middle">0.86</td>
+              <td align="center" valign="middle">0.88</td>
+              <td align="center" valign="middle">0.83</td>
+              <td align="center" valign="middle">0.44</td>
+              <td align="center" valign="middle">0.97</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.89</td>
+              <td align="center" valign="middle">0.79</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">7Feb24b</td>
+              <td align="center" valign="middle">0.61</td>
+              <td align="center" valign="middle">0.63</td>
+              <td align="center" valign="middle">0.64</td>
+              <td align="center" valign="middle">0.61</td>
+              <td align="center" valign="middle">0.46</td>
+              <td align="center" valign="middle">0.67</td>
+              <td align="center" valign="middle">0.36</td>
+              <td align="center" valign="middle">0.99</td>
+              <td align="center" valign="middle">0.98</td>
+              <td align="center" valign="middle">0.44</td>
+              <td align="center" valign="middle">0.33</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">21Feb24a</td>
+              <td align="center" valign="middle">0.92</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.94</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.82</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.58</td>
+              <td align="center" valign="middle">0.95</td>
+              <td align="center" valign="middle">0.91</td>
+              <td align="center" valign="middle">0.96</td>
+              <td align="center" valign="middle">0.80</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle" style="border-bottom:solid thin">21Feb24b</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.90</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">N/A</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.94</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">0.90</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+    </sec>
+    <fn-group>
+      <fn>
+        <p><bold>Disclaimer/Publisher&#x2019;s Note:</bold> The statements, opinions and data contained in all publications are solely those of the individual author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to people or property resulting from any ideas, methods, instructions or products referred to in the content.</p>
+      </fn>
+    </fn-group>
+  </back>
+</article>

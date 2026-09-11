@@ -1,0 +1,1820 @@
+# LITERATURE EXTRACTION TABLE TEMPLATE
+
+Agents: This is the master data file. Each row = one paper/study.
+Every paper must be assigned an ID before extraction.
+Update this file incrementally — do not wait until all papers are found.
+
+## Field Definitions (Based on User Request + Best Practice)
+
+| Field | Description | Example / Note |
+|---|---|---|
+| paperID | Unique identifier: P001, P002, ... | Sequential; never reuse |
+| authors | Author list (short form acceptable) | Pati et al. |
+| year | Publication year | 2025 |
+| country | Country/countries of study site | Nepal; Italy |
+| waterBody | River, pond, lake, canal name | Bishnumati River |
+| wasteType | Type of waste/plastic detected | Macroplastic; floating waste; mixed |
+| imageSource | UAV, Satellite, Ground Camera, Handheld, Fixed, Underwater, Multi | UAV |
+| imageType | RGB, Multispectral, Hyperspectral, SAR, LiDAR, Mixed | RGB |
+| datasetSize | Number of images / dataset name | 4 datasets (2 det, 2 seg); or "N/A" |
+| datasetName | Named dataset? Public? | "Bishnumati-Bagmati Dataset" |
+| datasetPublic | Yes / No / Partial | No (base paper — not yet released?) |
+| task | Classification / Object Detection / Semantic Segmentation / Instance Segmentation / Multi-task | Object Detection; Segmentation |
+| model | Main model name(s) tested / proposed | DeepLabv3+; YOLOv8; Faster R-CNN |
+| backbone | Network backbone | ResNet; MobileNet; ViT |
+| pretrained | Yes (specify source) / No / Partial | Yes (ImageNet); No |
+| transferLearning | Yes / No / Cross-river / Cross-region | Yes (Bagmati→Bishnumati) |
+| augmentation | Types used (flip, rotate, color jitter, etc.) | Horizontal flip; rotation |
+| imagePreprocessing | Normalization, resizing, GSD correction, etc. | Resize 512x512; GSD correction |
+| classifiers | Specific algorithm/classifier used | YOLO; DeepLab; U-Net |
+| algorithms | Broader algorithm family | CNN; Transformer |
+| performanceMetrics | Metrics reported (precision, recall, F1, mAP, IoU, etc.) | Precision=0.915; mIoU=0.849 |
+| observationDays | Number of days / flights / observation period | 5 days; 1 season |
+| crossLocationTesting | Was cross-testing of any type done? (See broad taxonomy in taxonomy_framework.md Level 8) | Yes (cross-river model transfer; cross-environment method transfer) |
+| generalizationType | Which broad generalization categories apply? (8A-8G from taxonomy) | 8B (cross-river), 8F (transfer learning), 8E (methodological transfer) |
+| mainLimitation | Author-reported limitations | Small dataset; two rivers only |
+| notes | Agent observations, contradictions, gaps | Compared scratch vs. fine-tune vs. frozen |
+| rqMapping | Which RQs does this paper address? | RQ1, RQ3, RQ4, RQ5 |
+| sourceType | Original Study / Review / Survey (exclude from primary data) | Original Study |
+| included | Yes / No (with reason if No) | Yes |
+| generalizationEvidence | A (demonstrated) / B (indirect) / C (claimed, unverified) / D (none) — see generalization_evaluation_guide.md | A (cross-river; quantitative) |
+
+## How to Use This Table for Synthesis
+- Filter by `rqMapping` to group papers for each RQ section.
+- Filter by `transferLearning` = Yes to synthesize RQ4.
+- Filter by `crossLocationTesting` = Yes to synthesize RQ5.
+- Filter by `wasteType` or `waterBody` to check geographic/environmental diversity.
+- Filter by `datasetPublic` = No to identify data availability gaps.
+
+## Example Entries (Seed Papers — Pre-filled)
+
+### P001 — Base Published Paper (Pati et al.)
+- paperID: P001
+- authors: Pati, Khadka, Thapa, Pal, Sakya, Shrestha, Joshi, Pyakurel, Roy
+- title: Leveraging UAV Data and Deep Learning Models for Detecting Waste in Rivers
+- journal: IEEE Access 2025 (doi 10.1109/access.2025.3576295 — confirmed via forward-search hit; update README/citations accordingly)
+- year: 2025
+- country: Nepal
+- waterBody: Bishnumati River (27°42.0'N 85°20.94'E); Bagmati River (27°41.88'N 85°18.13'E), Kathmandu
+- wasteType: Mixed solid waste incl. floating macroplastic; single unified "waste" class (biodegradable + non-biodegradable); floating / above-water only
+- imageSource: UAV (DJI Mavic 3 Enterprise, 20MP RGB, 5280x3956, ISO100, 35m altitude, GSD ≤0.6125cm)
+- imageType: RGB
+- datasetSize: 764 tiles total (256x256 JPEG, 1.57x1.57m each): Bagmati 343 tiles, Bishnumati 421 tiles (same tiles annotated for both OD and IS). Instances: Bagmati OD 449 / IS 444; Bishnumati OD 668 / IS 556. Avg objects/tile: Bagmati 1.309 OD / 1.2945 IS; Bishnumati 1.6342 OD / 1.3207 IS. Split 80:10:10 train:val:test
+- datasetName: Novel UAV datasets for Bishnumati and Bagmati (OD: YOLOv5 TXT; IS: binary-mask PNG)
+- datasetPublic: Yes (Data Availability Statement: GitHub https://github.com/AI-research-center/Leveraging-UAV-Data-and-Deep-learning-Models-for-Detecting-Waste-in-Rivers — corrects earlier "likely No" guess)
+- task: Object Detection; Semantic Segmentation (binary)
+- model: OD: YOLOv5s, YOLOv5x, YOLOv7, YOLOv7x; IS: FCN, DeepLabv3+
+- backbone: OD: CSPDarkNet53 (YOLOv5), E-ELAN-based (YOLOv7); IS: DeepLabv3+ encoder-decoder with separable atrous conv + ASPP (encoder backbone name not stated); FCN backbone not stated
+- pretrained: Yes — OD: MSCOCO; IS: MSCOCO subset filtered to Pascal VOC classes. S3 freezes backbone (OD) / encoder (IS)
+- transferLearning: Yes (cross-river fine-tune: Bagmati→Bishnumati; Bishnumati→Bagmati; best model per site transferred)
+- augmentation: Not stated in .tex (no augmentation list found — do NOT assume flip/rotate)
+- imagePreprocessing: Tiling to 256x256; Supervisely annotation; split 80:10:10; IoU threshold 0.5 for OD TP. No GSD correction / ortho / resize / normalization values stated
+- classifiers: YOLOv5s/x, YOLOv7/x; FCN; DeepLabv3+
+- algorithms: CNN (one-stage anchor-based detectors; encoder-decoder segmentation). Transformers discussed only as background (not tested)
+- performanceMetrics: Best single-site — OD mAP@50: Freeze-YOLOv5x 0.857 Bagmati, Freeze-YOLOv5s 0.844 Bishnumati (Finetune-YOLOv7 0.817 Bagmati, Freeze-YOLOv7x 0.835 Bishnumati). IS mIoU: Finetune-DeepLabv3+ 0.867 Bagmati / 0.869 Bishnumati; Precision 0.915/Recall 0.934 Bagmati, 0.913/0.939 Bishnumati (matches abstract). Transfer — OD mAP: Bishnumati test 0.886 (Finetune-YOLOv5x ex-Bagmati) / 0.855 (Finetune-YOLOv7); Bagmati test 0.838 (Freeze-YOLOv5s) / 0.882 (Freeze-YOLOv7x). IS mIoU: Finetune-DeepLabv3+ 0.841 Bagmati→Bishnumati, 0.849 Bishnumati→Bagmati; Finetune-FCN 0.826 / 0.803. Training hyperparams: batch 16, OD Adam+cosine, IS SGD+poly, early stopping (Emax/P values not stated), He init for scratch
+- observationDays: TBD (not stated; no flight count / dates / season)
+- crossLocationTesting: Yes (direct train-on-A test-on-B "before" + fine-tuned "after" for both OD and IS, quantitative)
+- generalizationEvidence: A (demonstrated cross-river transfer with before/after metrics)
+- generalizationType: 8B (cross-river), 8F (model-weight transfer + frozen/fine-tune comparison), 8G (MSCOCO/Pascal-VOC representation transfer)
+- mainLimitation: Author-stated: same basin/tributary (domain similarity assumed), small scale/diversity, UAV-RGB only, no uncertainty quantification; soil-covered and cluttered waste failure cases
+- notes: Seed paper; S1 scratch vs S2 full fine-tune vs S3 frozen comparison; segmentation (DeepLabv3+) beats detection on precision/recall; transfer improves mAP/mIoU and uncovers missed items. See improvement_flags for .tex contradictions (OD precision attribution, recall typo, size-reporting anomaly)
+- rqMapping: RQ1, RQ2, RQ3, RQ4, RQ5
+- sourceType: Original Study
+- included: Yes (meets all criteria_final.md)
+
+### P002 — Reference Systematic Review (Marye et al.)
+- paperID: P002
+- authors: Marye et al.
+- year: 2025
+- country: Multiple (global studies reviewed)
+- waterBody: Rivers (general)
+- wasteType: Macroplastics (buoyant, ≥5mm)
+- imageSource: Satellite, UAS, Ground (fixed/handheld) — review-level
+- imageType: RGB, Multispectral, Hyperspectral (reviewed)
+- datasetSize: N/A (review — synthesized 16 studies)
+- datasetName: N/A
+- datasetPublic: N/A
+- task: Review / Synthesis (not primary data)
+- model: N/A (mentions DL generally)
+- backbone: N/A
+- pretrained: N/A
+- transferLearning: N/A
+- augmentation: N/A
+- imagePreprocessing: N/A
+- classifiers: N/A
+- algorithms: CNN mentioned; DL generally
+- performanceMetrics: N/A (summarizes accuracy from included studies)
+- observationDays: N/A
+- crossLocationTesting: N/A (reviews studies that may include it)
+- mainLimitation: Focuses on buoyant macroplastics only; excludes underwater; limited transformer coverage; calls for standardization
+- notes: Seed review; excellent for identifying studies (backward/forward tracking) and confirming gaps (underwater cameras, standardization, newer architectures)
+- rqMapping: RQ1 (platform comparison), RQ2 (broad approach coverage), RQ6 (limitations/gaps)
+- sourceType: Review / Systematic Review
+- included: Context reference (not primary data extraction; but studies cited within can be extracted separately)
+- generalizationEvidence: D (no original data — review synthesis only)
+- generalizationType: N/A (reviews studies that may include 8B/8C/8D; see P005+ rows)
+
+### P003 — Jia et al. (2023) Water Research review (complete; context reference)
+- paperID: P003
+- authors: Tianlong Jia, Zoran Kapelan, Rinze de Vries, Paul Vriend, Eric Copius Peereboom, Imke Okkerman, Riccardo Taormina
+- year: 2023
+- country: Multiple/global (34 papers: marine + freshwater; Scopus + WoS search until end 2021 + snowball citation search)
+- waterBody: Multiple (marine, river, channel, canal, waterway, lake — review-level)
+- wasteType: Macroplastic litter (>5mm)
+- imageSource: Multiple (review-level: UAV, satellite, ground/handheld cameras summarized)
+- imageType: Multiple (RGB, multispectral summarized)
+- datasetSize: 34 papers reviewed (not an image dataset)
+- datasetName: N/A
+- datasetPublic: N/A
+- task: Review / Synthesis (Water Research, vol 231, 119632)
+- model: N/A (compares image classification / object detection / image segmentation architectures across literature)
+- backbone: N/A
+- pretrained: N/A (no original experiment)
+- transferLearning: N/A
+- augmentation: N/A
+- imagePreprocessing: N/A
+- classifiers: N/A (surveys CNNs incl. YOLO, U-Net families — see review Table 1)
+- algorithms: CNN (surveyed); proposes data-centric AI + semi-supervised ML as future direction
+- performanceMetrics: N/A (synthesizes reported metrics)
+- observationDays: N/A
+- crossLocationTesting: N/A (no original test; Sec 3.5 finding: published models do NOT retain performance under different geographical/environmental/device conditions)
+- generalizationEvidence: B (no original data, but synthesizes multi-study cross-condition degradation evidence — per guide proviso for reviews; NOT A)
+- generalizationType: N/A (synthesized evidence spans 8B/8C/8D failures)
+- mainLimitation: Majority-marine corpus, riverine understudied; search window ends 2021
+- notes: Full-text confirmed via ScienceDirect/TU Delft portal (abstract + highlights + methods). Key gaps: (i) no robust-generalization models, (ii) no flux/hotspot quantification (only van Lieshout 2020 quantifies fluxes), (iii) no structural monitoring strategies. Recommends riverine focus. Directly motivates our RQ5/RQ6. WARNING: distinct from Jia et al. 2023 Frontiers in Water open-dataset paper (see P008) — do not conflate
+- rqMapping: RQ1, RQ2, RQ6
+- sourceType: Review
+- included: Context reference (not primary data)
+
+### P004 — Jakovljevic et al. (2020) original study (complete; Table-5 residual check noted)
+- paperID: P004
+- authors: Gordana Jakovljevic, Miro Govedarica, Flor Álvarez-Taboada
+- year: 2020
+- country: Bosnia and Herzegovina (Mrkonjić Grad: artificial Lake Balkana; confluence of Crna Rijeka + Vrbas Rivers)
+- waterBody: Lake Balkana (artificial lake, clear water, controlled targets) + Crna Rijeka River (natural net-trapped floating garbage)
+- wasteType: Plastic: OPS squares (1–16cm), PET bottles, Nylon rope; natural mixed litter (net catch: 60% wood, 35% plastic packaging [55% PET, 45% PE/PP], 5% other)
+- imageSource: UAV (DJI Mavic Pro, RGB; 5 surveys Balkana 12–90m + 1 survey Crna Rijeka 90m; 6 surveys total)
+- imageType: RGB
+- datasetSize: Dataset1 328 (Balkana 4mm), Dataset2 434 (Balkana 4/13/18/23/30mm), Dataset3 1846 (Crna Rijeka 30mm) 256x256 patches; 80/20 train/val split (no separate held-out test reported — flag)
+- datasetName: TBD (no named dataset stated)
+- datasetPublic: Not stated (likely No)
+- task: Semantic Segmentation (pixel-wise, multi-class incl. plastic types)
+- model: ResUNet50 (best); ResNet50, ResNeXt50, Xception, Inception-ResNet v2 encoders tested; separate ResUNet trained on Dataset3
+- backbone: ResNet50 (best), ResNeXt50, Xception, Inception-ResNet v2
+- pretrained: Yes (ImageNet weights maintained during fine-tuning)
+- transferLearning: No cross-site fine-tuning (separate models per dataset); independent-scenario evaluation on Crna Rijeka instead
+- augmentation: TBD (hyperparameter Table 2 not retrieved — do NOT assume)
+- imagePreprocessing: SfM orthophotos, 256x256 patching, manual labeling, eCognition multiresolution segmentation; cross-entropy loss; Google Colab (PyTorch/TF/Keras)
+- classifiers: ResUNet50
+- algorithms: CNN (U-Net encoder-decoder)
+- performanceMetrics: F1 OPS 0.86, Nylon 0.88, PET 0.92, plastic-general 0.78 (Balkana 4mm); Crna Rijeka independent test F1 0.73 vs Balkana PET 0.78 at matched 30mm; plastic area underestimated by 3.4%; needs ≥1 pure pixel overwater / 2 pure pixels underwater; best at 4mm, accuracy falls with resolution
+- observationDays: 6 UAV surveys (dates TBD; May 2019 flood context)
+- crossLocationTesting: Yes — Balkana-trained ResUNet50 evaluated on independent Crna Rijeka site (lake→river) at matched 30mm + cross-resolution 4–30mm evaluation, quantitative
+- generalizationEvidence: A (CONFIRMED 2026-09-08 via full-text XML: Table 5 explicitly reports Balkana-trained ResUNet50 on Crna Rijeka as "independent scenario", F1 0.73 vs 0.78 + 3.4% area error; caveat lifted. Nuance retained: a separate ResUNet was also trained on Dataset 3; Dataset-3 labeling = 418,542 segments, 5,519 plastic + 4,014 maybe-plastic, with author-admitted boundary errors + two-UAV labeling recommendation)
+- generalizationType: 8B (cross-environment lake→river), 8C (cross-resolution 4–30mm), 8G (ImageNet representation transfer)
+- mainLimitation: Boundary confusion (water/wood/rock), "maybe plastic" class underestimated, coarse-resolution limits, semi-controlled Balkana targets vs real litter
+- notes: Full-text detail confirmed via MDPI page (methods + results + study-area sections). Early river+DL study; model detected training-omitted plastics (generalization anecdote); 18mm meets OSPAR/NOAA/UNEP guidelines, CSIRO needs 4mm. Base-tex "generalization issues" remark refers to dataset bias, not absence of cross-testing
+- rqMapping: RQ1, RQ2, RQ4, RQ5
+- sourceType: Original Study
+- included: Yes (meets all criteria_final.md)
+
+### P005 — Wolf et al. (2020) APLASTIC-Q (from WIREs backward tracking)
+- paperID: P005
+- authors: Wolf et al.
+- year: 2020
+- country: Cambodia (Phnom Penh / Sihanoukville / Siem Reap, Oct 2019; World Bank pilot; scaled to Vietnam, Philippines, Myanmar, Indonesia + Europe per GitHub)
+- waterBody: Rivers / waterways / beaches (floating, vegetation-trapped, washed-ashore, river-carpet accumulations)
+- wasteType: Floating and washed-ashore macroplastic (length >2.5cm; 5 top classes: big/small bags, bottles, PS packaging, Styrofoam + 6 more)
+- imageSource: UAV (DJI Phantom 4 Pro 20MP, 4864×3648, ISO 100–400, nadir, 6m altitude after 3–60m pre-tests, 0.5m hover)
+- imageType: RGB (VIS)
+- datasetSize: TBD (tile counts TBD; 6-class + 11-subclass scheme)
+- datasetName: APLASTIC-Q Cambodia set (input_data on GitHub)
+- datasetPublic: Partial (open code + trained PLD/PLQ weights + Cambodia sample data on GitHub DFKI-NI/APLASTIC-Q)
+- task: Classification (PLD-CNN detector + PLQ-CNN quantifier: low- vs high-density litter)
+- model: PLD-CNN, PLQ-CNN (custom dual-CNN) + SVM/RF baselines
+- backbone: TBD
+- pretrained: TBD
+- transferLearning: Cross-country deployment lineage (Cambodia-trained APLASTIC-Q → Vietnam bridge action-cams per EGU22 Wolf et al.; no retraining stated, metrics unreported)
+- augmentation: TBD
+- imagePreprocessing: Geo-referencing, mosaicking, UAS point-cloud densification, 3D mesh, DSM, orthomosaic (per WIREs Table 1)
+- classifiers: PLD-CNN / PLQ-CNN
+- algorithms: CNN
+- performanceMetrics: PLD-CNN overall accuracy >80%, PLQ-CNN 73% (per WIREs summary); Precision/Recall/F1 reported (values TBD from full text)
+- observationDays: TBD
+- crossLocationTesting: Multi-country deployment (Cambodia → Vietnam/PH/Myanmar/Indonesia/Europe per repo; Vietnam bridge-cam application per EGU22) without reported per-site metrics
+- generalizationEvidence: B (UPGRADED 2026-09-08: multi-country deployment + open multi-country weights = indirect; no per-site metrics — stays B)
+- generalizationType: TBD (possibly 8A only)
+- mainLimitation: Per WIREs: boundary-pixel confusion, low-vs-high density generalization limits
+- notes: Phase 2 PASS + 2026-09-08 enrichment (IOP full text: ERL 15:114042; dual-threshold quasi-quantification with caveats; shadow bias; field-survey misalignment noted by authors). Backward-tracked from P002. Tile counts still TBD
+- rqMapping: RQ1, RQ2, RQ6 (quantification + policy benchmark framing)
+- sourceType: Original Study
+- included: Yes (criteria-confirmed at summary level; metric verification pending full text)
+
+### P006 — Maharjan et al. (2022) (from WIREs backward tracking)
+- paperID: P006
+- authors: Maharjan, Miyazaki, Pati, Dailey, Shrestha, Nakamura
+- year: 2022
+- country: Laos (Houay Mak Hiao River, Mekong tributary, Vientiane 17.95°N 102.91°E) + Thailand (Khlong Nueng canal, Talad Thai 14.08°N 100.62°E)
+- waterBody: Houay Mak Hiao River + Khlong Nueng canal (HMH 592 / TT 796 ground-truth objects)
+- wasteType: Floating plastics
+- imageSource: UAV (DJI Phantom 4, 30m altitude, ~10mm resolution per WIREs Table 1)
+- imageType: RGB (VIS)
+- datasetSize: 500 tiles/site (256px = 2×2m), 70:30 split; HMH 592 / TT 796 ground-truth objects; UAV 30m DJI Phantom 4 4K, GSD 0.82cm (TT objects darker/vegetation-trapped vs HMH bright — useful domain-shift note)
+- datasetName: TBD
+- datasetPublic: TBD
+- task: Object Detection
+- model: YOLO v2, v3, v4, v5 (12 variants tested; pretrained YOLOv5s most effective per WIREs; YOLOv4 highest accuracy at higher cost per base tex)
+- backbone: TBD (confirm from full text)
+- pretrained: Yes (pretrained YOLOv5s; transfer learning improves per base tex summary)
+- transferLearning: Yes — bidirectional HMH↔TT: best-weights transfer with frozen-early-layers vs full fine-tune (lr 0.001; YOLOv3/v5 bs4/ep100, YOLOv2/v4 bs16)
+- augmentation: TBD
+- imagePreprocessing: Mosaicking / grid patch creation (per WIREs Table 1)
+- classifiers: YOLO family
+- algorithms: CNN
+- performanceMetrics: HMH YOLOv5s mAP 0.81 (no transfer, 13.6MB/16.3GFLOPs); TT→HMH YOLOv4 0.83 (+3%), YOLOv5s +2%, YOLOv3-spp 0.59→0.81; F1 0.78 (HMH) / 0.78+0.61 (TT)
+- observationDays: TBD
+- crossLocationTesting: Yes — bidirectional cross-country transfer (TT→HMH and HMH→TT) with per-direction mAP deltas
+- generalizationEvidence: A (UPGRADED 2026-09-08: explicit cross-country transfer with quantitative deltas, MDPI abstract-verified; residual: Table 5 full-text pass)
+- generalizationType: 8B (cross-river/country Laos↔Thailand) + 8F (weight transfer, frozen-vs-full ablation)
+- mainLimitation: Limited stretches/period; wide-area + longer-flight data recommended (authors' own)
+- notes: Phase 2 PASS + 2026-09-08 UPGRADE via MDPI abstract (forward-search hit). Direct P001 predecessor (same group, Pati co-author): TT→HMH transfer logic mirrors P001 Bagmati↔Bishnumati — cite lineage in synthesis. Exact image counts still TBD
+- rqMapping: RQ1, RQ2, RQ4, RQ5
+- sourceType: Original Study
+- included: Yes (criteria-confirmed at summary level; metric verification pending full text)
+
+### P007 — van Lieshout et al. (2020) (from WIREs backward tracking)
+- paperID: P007
+- authors: van Lieshout, van Oeveren, van Emmerik, Postma
+- year: 2020
+- country: Indonesia (five rivers in Jakarta per WIREs text)
+- waterBody: Five rivers, Jakarta (names TBD — needs full text)
+- wasteType: Floating plastic + organic debris
+- imageSource: Ground Camera — Fixed (bridge-mounted outdoor surveillance camera; Dahua Easy4ip, 4–8m height, 106° viewing angle per WIREs Table 2)
+- imageType: RGB (4MP)
+- datasetSize: 1272 images over 26 observation days across 5 locations (per WIREs Table 2)
+- datasetName: TBD
+- datasetPublic: TBD
+- task: Object Detection + Segmentation/Classification (Faster R-CNN + Inception v2 per WIREs text)
+- model: Faster R-CNN, Inception v2
+- backbone: Inception v2 (confirm from full text)
+- pretrained: Yes (Inception v2 COCO-pretrained classifier; Faster R-CNN TF-OD-API; flip augmentation per thesis)
+- transferLearning: Few-shot location adaptation (50 new-location objects: 20%→42% precision on different-condition sites)
+- augmentation: Horizontal/vertical flip (thesis Exp I; effective per authors)
+- imagePreprocessing: Frame extraction (per WIREs Table 2)
+- classifiers: Faster R-CNN / Inception v2
+- algorithms: CNN
+- performanceMetrics: 68.7% precision plastic density; +35% vs visual counting (>10 items/m/min stronger); Exp II: new similar-condition locations ~50% AP no-retrain; different-condition 20%→42% precision after 50-object retrain; 14,968 Zooniverse boxes (author-verified)
+- observationDays: 26 days
+- crossLocationTesting: Yes — Exp II train-one-location → test new locations (similar + different conditions) with per-condition metrics (WUR thesis record verified 2026-09-08)
+- generalizationEvidence: A (UPGRADED: explicit cross-location tests with metrics; scope nuance — similar-condition holds ~50%, different-condition needs 50-object few-shot)
+- generalizationType: 8A (same-river/different-condition robustness) + possibly 8B (cross-river multi-site) — confirm
+- mainLimitation: Per WIREs: reproducibility details missing (image collection/sensor setup); needs location-specific data for new locations
+- notes: Phase 2 criteria check PASS (Jakarta rivers + Faster R-CNN/Inception DL + experiment + 2020; bib corroborated: Earth and Space Science 7:e2019EA000960). Key non-UAV platform (fixed bridge camera) diversifying RQ1. Backward-tracked from P002
+- rqMapping: RQ1, RQ2, RQ5, RQ6
+- sourceType: Original Study
+- included: Yes (criteria-confirmed at summary level; metric verification pending full text)
+
+### P008 — Jia et al. (2023) Frontiers in Water open-dataset paper (from WIREs backward tracking; NOT the Water Research review)
+- paperID: P008
+- authors: Jia, Vallendar, de Vries, Kapelan, Taormina
+- year: 2023
+- country: TBD (canal per WIREs Table 2; exact site TBD)
+- waterBody: Canal (exact name TBD — needs full text)
+- wasteType: Plastics, metal tins, paper, cardboard
+- imageSource: Handheld + Fixed on bridge (GoPro HERO4, GoPro MAX 360, Huawei P30 Pro; 2.7–4m height; 0° and 45° angles per WIREs Table 2)
+- imageType: RGB (2.1MP)
+- datasetSize: 9473 images over 10 days (per WIREs Table 2; novel open dataset per WIREs text)
+- datasetName: Novel open floating-litter dataset (name TBD from full text)
+- datasetPublic: Likely Yes (described as novel open dataset — confirm URL from full text)
+- task: Classification (image-level)
+- model: SqueezeNet, DenseNet121, ResNet50, InceptionV3, MobileNetV2 (5 architectures tested)
+- backbone: N/A (full classifiers)
+- pretrained: TBD (confirm from full text)
+- transferLearning: TBD
+- augmentation: TBD
+- imagePreprocessing: Frame extraction (per WIREs Table 2)
+- classifiers: SqueezeNet / DenseNet121 et al.
+- algorithms: CNN
+- performanceMetrics: Overall accuracy 89.6% SqueezeNet, 91.7% DenseNet121; unseen-litter OA 84.4/85.3% (+5–6pp w/ flip/ANI-DA); 4m/45° complex setup drops (→~75% after adding limited images + flip); full-layer fine-tune > classifier-only; flip = best DA
+- observationDays: 10 days
+- crossLocationTesting: Yes — unseen litter items + new device settings (2.7m→4m, 0°→45°) with OA deltas (Frontiers full-text verified 2026-09-08)
+- generalizationEvidence: B (UPGRADED 2026-09-08: systematic out-of-sample tests with metrics, but same-canal setup, no cross-location — stays B per guide)
+- generalizationType: TBD
+- mainLimitation: TBD
+- notes: Phase 2 criteria check PASS (canal = closely related freshwater + CNN DL + experiment + 2023; corroborated by Vallendar 2021 TU Delft thesis: Green Village controlled setup, GoPro/Huawei, DenseNet majority-vote 91%, YOLOv4 95.61% single-class). Smartphone/handheld platform relevant to citizen-science RQ1. DO NOT conflate with P003 (Jia Water Research review). Full text needed
+- rqMapping: RQ1, RQ2
+- sourceType: Original Study
+- included: Yes (criteria-confirmed at summary level; metric verification pending full text)
+
+### P009 — Solé Gómez et al. (2022), JAG 107:102682 (expanded batch)
+- paperID: P009
+- authors: Solé Gómez, Scandolo, Eisemann
+- year: 2022
+- country: Serbia/Bosnia (Drina) + USA (Los Angeles River; San Francisco + Barcelona urban) + China (Yangtze/Three Gorges)
+- waterBody: Drina River (rural/vegetated, garbage net at Višegrad HPP) + Los Angeles River (urban/industrial, floating screens) + Yangtze (deep sediment-laden, Three Gorges Dam retention)
+- wasteType: Floating debris incl. plastics (3 classes: water/debris/other; debris = man-made accumulations incl. flood-driven pulses)
+- imageSource: Satellite (Sentinel-2 L2A via GEE, 12 bands 10–60m; B8 NIR key garbage band)
+- imageType: Multispectral (VIS/VNIR/SWIR 12 bands used)
+- datasetSize: Multi-date labeled set (Drina ~14 dates + Yangtze ~8 + LA ~5 + Barcelona/SF urban; exact image counts TBD from Table 2)
+- datasetName: TBD (first labeled satellite floating-plastic river set claimed; release unconfirmed)
+- datasetPublic: TBD
+- task: Semantic Segmentation
+- model: U-Net (31.1M) vs U-Net3DE 3D-spectral (29.1M) vs DeepLabV3+ MobileNetV2 (2.1M) vs DV3X Xception (41.1M) vs MLP (0.5M) vs FDI-NaiveBayes baselines
+- backbone: Xception / MobileNetV2 (DV3); VGG16-style U-Net
+- pretrained: TBD
+- transferLearning: No (cross-region evaluation without fine-tuning)
+- augmentation: Affine + noise + blur/sharpen + null-pixel injection; weighted cross-entropy (class imbalance); Adam 0.001/bs4; TF/GXE980Ti/Colab
+- imagePreprocessing: GEE L2A; FDI/NDVI/NDWI-aided manual labeling (news/hashtag-guided site discovery); black-pixel null class
+- classifiers: DeepLabV3+Xception (tied best)
+- algorithms: CNN (2D + 3D-spectral)
+- performanceMetrics: LA-unseen-test debris IoU 0.61 (U-Net3DE + DV3X), mIoU 0.82, debris acc 80–90%; cross-val Drina/LA ~0.5 IoU + 0.8 acc, Yangtze 0.02/0.07 FAILED (sediment/depth shift); FDI-baseline debris IoU 0.0023; Drina full-mission temporal monitoring (annual net-clearing cycle captured)
+- observationDays: Multi-year Sentinel-2 archive (Drina temporal series; dates TBD)
+- crossLocationTesting: Yes — LA-test held out of training; full leave-one-region cross-val (Drina/LA/Yangtze) with per-region IoU/acc
+- generalizationEvidence: A (explicit cross-region tests with per-region metrics — PDF-confirmed 2026-09-08; caveat lifted; Yangtze failure = honest negative evidence)
+- generalizationType: 8B (cross-region/river), 8D (cross-dataset multi-river)
+- mainLimitation: Debris class underrepresented; spatial overfitting (conv learns disposition); snow/sediment unseen conditions fail; urban-material confusion; clouds block flood-pulse captures
+- notes: Full-text PDF (blocked_files) verified 2026-09-08. Strongest satellite RQ5 evidence; see C006. TU Delft authors.
+- rqMapping: RQ1, RQ2, RQ5
+- sourceType: Original Study
+- included: Yes
+
+### P010 — Lin et al. (2021), Entropy 23:1111 (expanded batch)
+- paperID: P010
+- authors: Lin, Hou, Jin, You
+- year: 2021
+- country: TBD (urban + rural inland waterway; site unspecified in retrieved text — do NOT assume)
+- waterBody: Waterway (urban and rural inland rivers)
+- wasteType: 8 classes: bottle, milk-box, ball, plastic-bag, plastic-garbage, branch, grass, leaf
+- imageSource: Handheld (per WIREs Table 2; camera model TBD — confirm)
+- imageType: RGB (presumed — confirm)
+- datasetSize: 2,400 total images (XML-confirmed 2026-09-08: project-collected waterway set; 1,920 train → 4,800 expanded via object-onto-clean-background fusion); LabelImg VOC boxes; flood/rainy-season peak noted; camera model still TBD
+- datasetName: TBD
+- datasetPublic: Not stated
+- task: Object Detection
+- model: FMA-YOLOv5s (best) vs SSD, YOLOv2/v3/v4, YOLOv5s/m
+- backbone: YOLOv5s CSP + FMA self-attention layer between backbone and neck (FPN+PANet neck)
+- pretrained: TBD (likely COCO-pretrained YOLOv5 — confirm, do NOT assume)
+- transferLearning: No
+- augmentation: Mosaic + dataset expansion (small-target focused)
+- imagePreprocessing: 416x416 input
+- classifiers: FMA-YOLOv5s
+- algorithms: CNN + channel self-attention (FMA: 1x1 conv channel weighting, neck computation unchanged)
+- performanceMetrics: mAP 79.41% expanded / 77.83% original (+2.18pp over YOLOv5s); 42 FPS, 18.2M params; per-class AP bottle 93.81 … branch 66.98, grass 62.46
+- observationDays: TBD
+- crossLocationTesting: No (single-dataset test split)
+- generalizationEvidence: C (explicit "suitable for most environments" robustness claim on occlusion/reflection cases without any external test — quote in synthesis, do NOT upgrade)
+- generalizationType: 8A only
+- mainLimitation: Blurred/dense objects weak; only 8 categories; authors propose semi-supervised follow-up to cut annotation load
+- notes: Full-text PMC/MDPI + JATS XML confirmed. Attention-gain (+2.18pp) complements P001 training-strategy findings (different dimension — no contradiction). 2400-count conflict RESOLVED (2,400 total per XML §2.3).
+- rqMapping: RQ2, RQ4 (augmentation/expansion strategy)
+- sourceType: Original Study
+- included: Yes
+
+### P011 — Tasseron et al. (2022), Earth and Space Science 10.1029/2022EA002518 (expanded batch; +2021 companion)
+- paperID: P011
+- authors: Tasseron, Schreyers, Peller, Biermann, van Emmerik
+- year: 2022 (companion: Tasseron et al. 2021, Remote Sens 13:2335, lab hyperspectral + open dataset 10.4121/14518278)
+- country: Netherlands (Waal River groyne near Ochten 51°54'13.3"N 5°33'52.7"E; lab Wageningen)
+- waterBody: Rhine/Waal riverbank (field) + laboratory (controlled)
+- wasteType: Riverbank-harvested macroplastics (LDPE/PP/PS) vs water, vegetation, wood, rock, sand
+- imageSource: Fixed/tripod hyperspectral (Specim FX17 lab 900–1700nm 112 bands; Snapscan SWIR field)
+- imageType: Hyperspectral (NIR–SWIR; 1150–1675nm analysis)
+- datasetSize: 11 lab images (786,264 px) + 2 field images (40,289 px); 8,370 plastic px in field eval
+- datasetName: Open hyperspectral datasets + MATLAB scripts (10.4121/14518278; 10.4121/20343012.v1)
+- datasetPublic: Yes (open datasets + scripts)
+- task: Classification (pixel-wise)
+- model: SAM (best), SVM, SID, SID-SAM
+- backbone: N/A
+- pretrained: N/A
+- transferLearning: N/A (lab-trained classifier applied directly to field — no fine-tuning)
+- augmentation: N/A
+- imagePreprocessing: Reflectance correction, intensity normalization, RoI extraction, spectral matching (PerClass Mira/MATLAB)
+- classifiers: SAM
+- algorithms: Classical ML + spectral matching (NON-DL — included as computer vision per criteria_final #3)
+- performanceMetrics: Lab-trained SAM→field user accuracy 93.6% plastics, producer 99.8%; field-trained SAM 93.5%; SID 18.2–50.2%; rock-misclassified-as-plastic noted
+- observationDays: Field 1 day (lab NS)
+- crossLocationTesting: Yes — lab-trained classifier applied to field riverbank images (lab→field cross-setting) with confusion-matrix metrics
+- generalizationEvidence: A (cross-setting lab→field with separate quantitative metrics; caveat: single field site/day, 2 images — narrow; among first lab→field demonstrations)
+- generalizationType: 8D (lab→real cross-setting)
+- mainLimitation: Single site/day; 1350–1400nm atmospheric noise; frequent recalibration needs; rock confusion; tripod-only (no UAV/satellite deployment)
+- notes: Full-text abstract + WUR/EarthArXiv confirmed. Key spectral-modality complement to P001 UAV-RGB; supports future spectral missions. Does NOT contradict P001 UAV-only limitation (different modality) — see tracker
+- rqMapping: RQ1, RQ2, RQ5, RQ6
+- sourceType: Original Study
+- included: Yes
+
+### P012 — Tharani et al. (2021), ICONIP LNCS 13108 (expanded batch; preprint arXiv 2007.04639)
+- paperID: P012
+- authors: Tharani, Amin, Rasool, Maaz, Taj, Muhammad
+- year: 2021
+- country: Pakistan (Lahore; LUMS team; multiple city sites: market/dense-urban/peri-urban; IoT camera nodes)
+- waterBody: Urban drainage canals (fresh + sewerage channels feeding rivers)
+- wasteType: Floating trash (bottles, bags, papers, cardboards, food residuals; disfigured/submerged/clumped; micro-particles + leaves + bubbles EXCLUDED by design)
+- imageSource: Fixed IoT camera nodes, multi-view (bridge shadows, building reflections, vegetation)
+- imageType: RGB
+- datasetSize: 13,500 images, 48,450 objects (Table 1 COCO sizes: 11,214 S / 32,078 M / 5,158 L); 12,500 train-val + 1,000 test (incl. different sites AND view angles — confirmed cross-site)
+- datasetName: Water-Channel Trash dataset (LUMS CVLab)
+- datasetPublic: Partial (URL given: https://cvlab.lums.edu.pk/watertrash/ — verify live at synthesis)
+- task: Object Detection + Semantic Segmentation (dual: 5 detectors + UNet/SegNet variants)
+- model: M2Det(VGG) best mAP 45.8; YOLOv3 35.1 / +Attn 35.3; RetinaNet 43.4; PeleeNet 29.9; YOLOv3-Tiny 9.0; UNet/SegNet + separable-conv + focal/CBipw (PDF-verified 2026-09-08; arXiv-v1 easy-AP 48.1% SUPERSEDED — version conflict, use published)
+- backbone: Darknet (YOLOv3) / VGG (M2Det) et al.
+- pretrained: Yes (Pascal VOC init; objectness retained for large objects per authors)
+- transferLearning: No
+- augmentation: LabelImg boxes + LabelMe masks (4 annotators + domain expert); 10 challenge scenarios catalogued
+- imagePreprocessing: VOC boxes + COCO polygon masks; trash 1% vs water 89% imbalance → CBipw loss (UNet trash-acc 87%→92%; Sep‡ 10× smaller, 8→16 FPS)
+- classifiers: M2Det(VGG) / YOLOv3 + log-attention (fi+1 = fi·log(ReLU(fi)+1))
+- algorithms: CNN + novel log attention + separable conv
+- performanceMetrics: mAP M2Det 45.8 / RetinaNet 43.4 / YOLOv3 35.1 (+Attn 35.3); AP-S only 2.7–5.2 (small-object crisis); dataset URL cvlab.lums.edu.pk/watertrash
+- observationDays: Videos across daytimes/weather/localities (day count TBD)
+- crossLocationTesting: Yes — test incl. different sites AND view angles (cross-site, PDF-confirmed)
+- generalizationEvidence: A (cross-site held-out-location test with quantitative metrics — PDF-confirmed; caveat lifted)
+- generalizationType: 8B (cross-site urban canal)
+- mainLimitation: Small-object crisis (AP-S <6); attention gains marginal (+0.2 mAP); WIREs overgeneralization/bias risks
+- notes: Full-text PDF (blocked_files) verified 2026-09-08 — Tandem OD+IS comparison strengthens RQ3; version conflict (arXiv 48.1% vs published mAP) flagged in improvement_flags
+- rqMapping: RQ1, RQ2, RQ5
+- sourceType: Original Study (conference)
+- included: Yes
+
+### P013 — Pan et al. (2022), J JSCE B1 78(2):I_133–I_138
+- paperID: P013
+- title: The Application of Drone-Assisted Deep Learning Technology in Riverbank Garbage Detection
+- journal: Journal of Japan Society of Civil Engineers Ser. B1 (peer-reviewed)
+- authors: Pan, Yoshida, Boney, Nishiyama
+- year: 2022
+- country: Japan (Asahi River)
+- waterBody: Asahi River (grass floodplain, placed targets)
+- wasteType: Bicycles, PET bottles, cardboard, plastic bags (placed, not weathered litter)
+- imageSource: UAV/drone (model TBD; oblique 45°/60°/75° + GSD-varied)
+- imageType: RGB (presumed — confirm)
+- datasetSize: TBD (Original site set + Public PET set 342px + Random PET set 4000x2666 Xinxiang flood-ditch web images, model-generated labels)
+- datasetName: Original / Public PET / Random PET (working names, not released)
+- datasetPublic: No (self-made + web-scraped; not released)
+- task: Object Detection
+- model: RetinaNet vs YOLOv5l (batch/epoch ablations 4→15, 50→500)
+- backbone: TBD (confirm)
+- pretrained: TBD
+- transferLearning: No (data-combination ablation instead: Group-1 original-only / Group-2 mixed / Group-3 external-only)
+- augmentation: Flip, rotate, shear (Random PET set)
+- imagePreprocessing: Resize longer side 1024–2016px (GPU-dependent)
+- classifiers: YOLOv5l / RetinaNet
+- algorithms: CNN
+- performanceMetrics: TBD exact recall values (finding: YOLOv5l wins only at enlarged params; similar-GSD web supplement improves PET recall; external-only fails without site data)
+- observationDays: TBD
+- crossLocationTesting: Yes — Group-3 (web-trained → Asahi-tested) cross-dataset evaluation with recall metrics
+- generalizationEvidence: A (cross-dataset external→site test, quantitative; finding is demonstrated failure without site data — directly relevant to RQ5)
+- generalizationType: 8D (cross-dataset) + 8C note (GSD-similarity effect)
+- mainLimitation: Placed (not weathered) targets; exact metrics TBD from full text
+- notes: Auto-expansion batch 1 (base .bib). Key lesson: web data helps only GSD-matched AND combined with site data
+- rqMapping: RQ1, RQ2, RQ4, RQ5
+- sourceType: Original Study
+- included: Yes
+
+### P014 — Yang et al. (2022), Mathematics 10:4366
+- paperID: P014
+- title: Detection of River Floating Garbage Based on Improved YOLOv5
+- journal: Mathematics (MDPI, peer-reviewed)
+- authors: X. Yang, J. Zhao, L. Zhao, H. Zhang, L. Li, Ji, Ganchev
+- year: 2022
+- country: TBD (site unspecified in retrieved text)
+- waterBody: River (floating garbage; site TBD)
+- wasteType: Floating river garbage (classes TBD)
+- imageSource: TBD (captured images; platform unspecified)
+- imageType: TBD (presumed RGB — confirm)
+- datasetSize: TBD (private dataset + Flow-Img public dataset; counts TBD)
+- datasetName: Private + Flow-Img (public)
+- datasetPublic: Partial (Flow-Img public; private not)
+- task: Object Detection
+- model: YOLOv5_CBS (CCUB coordinate-attention + BiFPN + SIoU loss) vs YOLOv5, Faster R-CNN, YOLOv3, YOLOv4
+- backbone: YOLOv5 CSP (modified C3-CCUB)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: YOLOv5_CBS
+- algorithms: CNN + coordinate attention
+- performanceMetrics: Private recall 0.885 / AP 90.85% / F1 0.8669; Flow-Img 0.865 / 92.18% / 0.9006; beats all 4 baselines; higher compute cost noted (base tex)
+- observationDays: TBD
+- crossLocationTesting: Dual-dataset evaluation with separate metrics (train/test separation across datasets unconfirmed)
+- generalizationEvidence: B (stable metrics across 2 datasets = indirect; NOT a confirmed cross-dataset transfer — verify from full text)
+- generalizationType: 8D (dual-dataset; confirm) + 8A otherwise
+- mainLimitation: Increased complexity/training time (CA cost); platform/site details TBD
+- notes: Auto-expansion batch 1 (base .bib). Architecture novelty (CCUB/BiFPN/SIoU) valuable for RQ2
+- rqMapping: RQ2
+- sourceType: Original Study
+- included: Yes
+
+### P015 — Zailan et al. (2022), Front Public Health 10:907280
+- paperID: P015
+- title: An automated solid waste detection using the optimized YOLO model for riverine management
+- journal: Frontiers in Public Health (peer-reviewed)
+- authors: Zailan, Azizan, Hasikin, Mohd Khairuddin, Khairuddin
+- year: 2022
+- country: TBD (likely Malaysia — authors; river site unspecified)
+- waterBody: River/urban riverine (site TBD)
+- wasteType: 5 classes: plastic bottles, aluminum cans, plastic bags, styrofoam, plastic containers
+- imageSource: TBD (image dataset; platform unspecified — confirm)
+- imageType: TBD (presumed RGB — confirm)
+- datasetSize: 2,481 test images (train size TBD)
+- datasetName: TBD
+- datasetPublic: Not stated
+- task: Object Detection (for cleaning-robot vision)
+- model: Optimized YOLOv4 (CSP1_X backbone slimming + H-Swish + CSP2_X PANet) vs conventional YOLO models, Watanabe/Fulton/Li benchmarks
+- backbone: CSPDarkNet53 (CSP1_X-modified)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: NMS prediction filtering (3-frame tuning)
+- classifiers: Optimized YOLOv4
+- algorithms: CNN
+- performanceMetrics: mAP 89% (5 classes); best mAP/F1/recall vs baselines; ROC top-left; cf. Li et al. 91% on 3 classes
+- observationDays: TBD
+- crossLocationTesting: No (single-dataset eval; "various conditions" mentioned without separate metrics)
+- generalizationEvidence: D (no cross-testing; no generalizability claim made)
+- generalizationType: 8A only
+- mainLimitation: Conventional YOLOv4 limits (training time, shallow multi-scale features) motivated redesign; site/platform TBD
+- notes: Auto-expansion batch 1 (base .bib). Robot-deployment framing relevant to future-directions synthesis
+- rqMapping: RQ2
+- sourceType: Original Study
+- included: Yes
+
+### P016 — Nunkhaw & Miyamoto (2024), Water 16:1373
+- paperID: P016
+- title: An Image Analysis of River-Floating Waste Materials by Using Deep Learning Techniques
+- journal: Water (MDPI, peer-reviewed)
+- authors: Nunkhaw, Miyamoto
+- year: 2024
+- country: TBD (laboratory flume; authors Thailand/Japan — deployment site TBD)
+- waterBody: Laboratory open-channel flume (simulated river)
+- wasteType: 7 classes: cans, cartons, plastic bottles, foams, glasses, papers, plastics
+- imageSource: Ground/fixed camera (12MP MAPIR RGB: 660/550/475nm) over flume
+- imageType: RGB (narrowband RGB)
+- datasetSize: 5,711 test images (train counts TBD)
+- datasetName: TBD (lab flume set, not released)
+- datasetPublic: Not stated
+- task: Object Detection + Tracking (YOLOv5 + DeepSORT counting)
+- model: Refined YOLOv5 + DeepSORT (fine-tuned on flume video)
+- backbone: YOLOv5 (variant TBD)
+- pretrained: Yes-ish (fine-tuning of YOLOv5 stated; source TBD)
+- transferLearning: No (lab-only; flume-video fine-tune is same-domain)
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: YOLOv5 + DeepSORT
+- algorithms: CNN + tracking
+- performanceMetrics: mAP ≥88% (7 classes); flume-tuned mAP 0.75 (can/foam/paper AP 0.8, glass 0.5); 3 scenarios ~80% acc (clear Case1 R0.94/P0.80/F1 0.84; submerged Case2; collective-mass Case3 R0.68/P0.95); ~6h CPU training
+- observationDays: N/A (lab)
+- crossLocationTesting: No (lab scenarios only)
+- generalizationEvidence: C ("potential applicability in real river environments" suggested without any real-river test — textbook claim-only)
+- generalizationType: 8A only (scenario variation within lab)
+- mainLimitation: Lab-only; plastic/foam variable; size/transparency degradation; glass AP 0.5
+- notes: Auto-expansion batch 1 (base .bib). 2025 follow-up (Chao Phraya CCTV lab→field preprocessing, mAP 0.74→0.85, YOLOv10m) exists — candidate future row, NOT merged here
+- rqMapping: RQ2, RQ5 (negative example: untested transfer claim)
+- sourceType: Original Study
+- included: Yes
+
+### P017 — Pan et al. (2024), JSCE-IIAI 5:98–103
+- paperID: P017
+- title: Comprehensive Analysis of On-Site Riparian Waste Pollution: A Case Study on the Hyakken River Basin
+- journal: Intelligence, Informatics and Infrastructure (JSCE, peer-reviewed)
+- authors: Pan, Yoshida, Kojima
+- year: 2024
+- country: Japan (Hyakken River Basin)
+- waterBody: Hyakken River riparian zone (weathered on-site litter; follow-up to P013 placed-target study)
+- wasteType: Weathered riparian waste incl. bottles (sun-bleached, background-matched)
+- imageSource: Handheld (smartphone 48MP) + smartphone video
+- imageType: RGB
+- datasetSize: TBD (HRB-WD train/valid + source images + Test.mp4; counts TBD)
+- datasetName: HRB-WD (Hyakken River Basin Wild Dataset)
+- datasetPublic: Yes (dataset + Test.mp4 + custom YOLOv8n.pt, doi 10.60336/data.jsceiiai.25332601.v2)
+- task: Instance Segmentation
+- model: Custom YOLOv8n-seg (HRB-WD) vs COCO-pretrained YOLOv8n-seg / YOLOv8x-seg / SAM
+- backbone: YOLOv8n (Ultralytics)
+- pretrained: Yes (COCO baselines) + custom HRB-WD training; roboflow Smart Polygon labels + augmentation
+- transferLearning: No (custom-vs-pretrained comparison, same site)
+- augmentation: Yes (roboflow advanced; types TBD)
+- imagePreprocessing: TBD
+- classifiers: YOLOv8n-seg (custom)
+- algorithms: CNN (YOLOv8); SAM as baseline (foundation model 8G note)
+- performanceMetrics: Qualitative counts (24/24 instances >0.6 conf custom; pretrained 0 bottles; YOLOv8x 16/40 bottles 40%); epoch 251 stop; exact mAP TBD
+- observationDays: TBD (field campaign + volunteer cleanup)
+- crossLocationTesting: Tested on videos from distinct field sections (train/test section separation unconfirmed)
+- generalizationEvidence: B (multi-section field testing = indirect; section-held-out unconfirmed — verify)
+- generalizationType: 8A (within-basin sections) + 8G note (COCO/SAM baselines fail on weathered litter)
+- mainLimitation: Weathered-litter/background similarity; overlap confusion; dataset needs growth
+- notes: Auto-expansion batch 1 (base .bib). First instance-segmentation + first YOLOv8 + first open-dataset+weights row — high RQ3/RQ4 value. Companion: Pan 2023 generative-AI riparian study (pending list)
+- rqMapping: RQ1, RQ2, RQ3, RQ5
+- sourceType: Original Study
+- included: Yes
+
+### P018 — Cortesi et al. (2022), ISPRS Arch XLIII-B3:855–861
+- paperID: P018
+- title: UAV-Based River Plastic Detection with a Multispectral Camera
+- journal: ISPRS Archives (peer-reviewed proceedings)
+- authors: Cortesi, Masiero, Tucci, Topouzelis
+- year: 2022
+- country: Italy (Arno River; controlled anchored-plastic scenario)
+- waterBody: Arno River (semi-controlled: anchored samples)
+- wasteType: Plastic samples (anchored) vs water/rock/sunglint/foam
+- imageSource: UAV (DJI Matrice 300 + MAIA-S2 9-band multispectral, Sentinel-2 bands; RTK GNSS)
+- imageType: Multispectral (9 bands incl. 2 red-edge + 3 NIR)
+- datasetSize: 154 images (20–80m altitudes)
+- datasetName: TBD (not released)
+- datasetPublic: Not stated
+- task: Classification (pixel → object via area selection)
+- model: Cascaded RF-B + RF-A + area-based selection (evolution of Cortesi et al. 2021 handheld-RF)
+- backbone: N/A
+- pretrained: N/A
+- transferLearning: N/A
+- augmentation: N/A (classifier B hard-negative mining: +90k critical pixels instead)
+- imagePreprocessing: Geometric correction, co-registration, area-threshold selection
+- classifiers: Random Forest cascade
+- algorithms: Classical ML + spectral (NON-DL — included as computer vision per criteria_final #3, P011 precedent)
+- performanceMetrics: 30m acc 95.1 / prec 89.7 / rec 95.1 / qual 85.8; 80m prec 33.9 / qual 33.1 (sunglint-plastic confusion; raw pixel prec 3.1–7.3 before area selection)
+- observationDays: TBD (single campaign)
+- crossLocationTesting: Yes — same-scene evaluation at 30m vs 80m (cross-altitude/resolution) with separate metrics
+- generalizationEvidence: A (explicit cross-resolution test, quantitative; caveat: single controlled site — narrow)
+- generalizationType: 8C (cross-altitude/resolution)
+- mainLimitation: Controlled anchored samples; sunglint indistinguishability; precision collapses with altitude; authors propose DL + IR bands as follow-up
+- notes: Auto-expansion batch 2 (WIREs). Altitude-degradation curve directly complements P001 (fixed 35m) — synthesis point for RQ1/RQ5
+- rqMapping: RQ1, RQ5
+- sourceType: Original Study (conference proceedings)
+- included: Yes
+
+### P019 — Mohsen et al. (2023), ESPR 30:67742–67757
+- paperID: P019
+- title: Machine learning-based detection and mapping of riverine litter utilizing Sentinel-2 imagery
+- journal: Environmental Science and Pollution Research (peer-reviewed)
+- authors: Mohsen, Kiss, Kovács
+- year: 2023
+- country: Hungary (Tisza River; 175km Middle Tisza; Kisköre Dam hotspot)
+- waterBody: Tisza River (litter spots: anthropogenic + natural mix)
+- wasteType: Riverine litter spots (mixed anthropogenic/natural; size-varied small/medium/large test spots)
+- imageSource: Satellite (Sentinel-2; labels from Google Earth VHR)
+- imageType: Multispectral (bands + PI/FDI/NDWI/NDVI, Min-Max normalized)
+- datasetSize: TBD pixel counts (20% validation split; 3 test spots; counts TBD)
+- datasetName: TBD (not released)
+- datasetPublic: Not stated
+- task: Classification (pixel-wise binary litter mapping + spatio-temporal mapping)
+- model: SVC (RBF, C=1000) / RF (150 trees) / ANN Keras MLP (14-14-12-8-1, ReLU/sigmoid, dropout 0.5, Adam, BCE, bs32/400ep) / DT / NB + SHAP explainers
+- backbone: N/A
+- pretrained: N/A
+- transferLearning: N/A
+- augmentation: N/A
+- imagePreprocessing: FDI least influential (turbidity link); atmospheric correction + NN resampling (per WIREs)
+- classifiers: SVC/RF/ANN et al.
+- algorithms: Classical ML + shallow neural net (ANN = DL-adjacent; included as CV per criteria_final #3)
+- performanceMetrics: Val F1 SVC 0.94 / ANN 0.93 / RF 0.91 / DT 0.90 / NB 0.83 → unseen varying-hydro test F1 RF 0.69 / SVC 0.62 / ANN 0.62 / NB 0.48 / DT 0.45 (test acc 0.89–0.97 inflated by water majority); Kisköre Dam top hotspot; flood = max transport, summer low-stage = max spot area
+- observationDays: Multi-temporal (flood + summer low-stage; day counts TBD)
+- crossLocationTesting: Yes — explicit generalization test on larger unseen data under varying hydrological conditions + litter sizes, separate metrics
+- generalizationEvidence: A (demonstrated generalization DROP with metrics — rare negative-result RQ5 evidence)
+- generalizationType: 8A (cross-condition/size, same river) + spatio-temporal mapping note
+- mainLimitation: Sentinel-2 pixel-size bound; small validation set; needs finer resolution + more small-spot samples
+- notes: Auto-expansion batch 2 (WIREs). Pairs with P009 (satellite DL success) vs P019 (satellite ML limits) — core RQ5 contrast; cite for flux/hotspot gap (only P007 + P019 quantify transport/accumulation)
+- rqMapping: RQ1, RQ5, RQ6
+- sourceType: Original Study
+- included: Yes
+
+### P020 — Sakti et al. (2023), Sci Rep 13:5039
+- paperID: P020
+- title: Identification of illegally dumped plastic waste in a highly polluted river in Indonesia using Sentinel-2 satellite imagery
+- journal: Scientific Reports (peer-reviewed)
+- authors: Sakti, Sembiring, Rohayani, Fauzan, Anggraini, Santoso, Patricia, Ihsan, Ramadan, Arjasakusuma, Candra
+- year: 2023
+- country: Indonesia (Rancamanyar River, Citarum tributary, oxbow reach; 7 dumping targets)
+- waterBody: Rancamanyar River + banks (riverbank dumping, not floating-only)
+- wasteType: Illegally dumped plastic (banked) + 5 land-cover classes (water/building/ground/vegetation/debris)
+- imageSource: Multi (Sentinel-2A primary + Pleiades 1a/1b 0.5m + UAV DJI Phantom 4 Pro 75m/2.05cm, 1200 photos, 70ha)
+- imageType: Multispectral (12-band → PI/NDVI/NDBI → API) + RGB UAV
+- datasetSize: TBD (7 dumping targets; counts TBD)
+- datasetName: TBD (GEE visualization app: gisact.org/geoplatform/plastic-river-indonesia)
+- datasetPublic: Partial (data on request + public GEE app)
+- task: Classification (RF on Sentinel-2; Mahalanobis on Pleiades/UAV; API correlation validation)
+- model: Random Forest + Adjusted Plastic Index (PI−NDVI−MNDBI/NDBI corrections)
+- backbone: N/A
+- pretrained: N/A
+- transferLearning: N/A
+- augmentation: N/A
+- imagePreprocessing: Ready products; 10m harmonization/downscaling of debris %
+- classifiers: RF / Mahalanobis distance
+- algorithms: Classical ML + spectral index (NON-DL — included as computer vision per criteria_final #3)
+- performanceMetrics: API Δr +0.287 (Pleiades) / +0.143 (UAV) with p-value drops; debris-class acc only 53.33% (soil/building confusion); Pleiades debris 0–70%, UAV 0–80%
+- observationDays: Multi-date (Feb 2019 Pleiades vs Dec 2021 UAV — assumed persistent dumping; dates TBD)
+- crossLocationTesting: Multi-sensor validation (Sentinel vs independent Pleiades/UAV classifications, correlations) — single river, no cross-river test
+- generalizationEvidence: B (independent multi-sensor validation = indirect; authors explicitly limit to one river type and call for other-river tests)
+- generalizationType: 8C (cross-sensor validation) + 8A (single-site)
+- mainLimitation: Single river type/land cover; debris–soil–building confusion; flow ignored; DL-on-Sentinel deferred to future work
+- notes: Auto-expansion batch 2 (WIREs). First Global-South illegal-dumping + open GEE-app row — geographic/context value (RQ6)
+- rqMapping: RQ1, RQ5, RQ6
+- sourceType: Original Study
+- included: Yes
+
+### P021 — Iordache et al. (2022), Remote Sens 14:5820
+- paperID: P021
+- title: Targeting Plastics: Machine Learning Applied to Litter Detection in Aerial Multispectral Images
+- journal: Remote Sensing (MDPI, peer-reviewed)
+- authors: Iordache, De Keukelaere, Moelans, Landuyt, Moshtaghi, Corradi et al.
+- year: 2022
+- country: Belgium (Bocholt-Herentals canal, Mol; Antwerp-port weathered plastics)
+- waterBody: Canal (bridge-fixed water experiment) + land test site (UAS)
+- wasteType: 9 classes (4 natural + 5 litter incl. virgin + weathered plastics)
+- imageSource: UAS MicaSense RedEdge-M + bridge-fixed 7m (Campaign2: 135 land + 143 water images)
+- imageType: Multispectral (VIS–NIR, 5 bands)
+- datasetSize: Campaign1 + Campaign2 (135 land / 143 water images; pixel counts TBD)
+- datasetName: TBD (not released)
+- datasetPublic: Not stated
+- task: Classification (per-pixel, spectral-index features)
+- model: Random Forest (spectral-metric pool) + resolution/post-processing analyses
+- backbone: N/A
+- pretrained: N/A
+- transferLearning: N/A (land→water direct application, no adaptation)
+- augmentation: N/A
+- imagePreprocessing: DN-to-radiance, sky-glint correction, saturated-pixel removal
+- classifiers: Random Forest
+- algorithms: Classical ML + spectral (NON-DL — included as computer vision per criteria_final #3)
+- performanceMetrics: >85–88% all classes land (test+val); water application: spots non-water but heavier in-class confusion (qualitative); wood–soil confusion; shadow = top error source
+- observationDays: 2 campaigns (8 Mar 2022 Campaign2; Campaign1 TBD)
+- crossLocationTesting: Yes — land-trained classifier applied to Campaign2-Water images (land→water cross-environment); water metrics qualitative
+- generalizationEvidence: B (cross-environment application demonstrated incl. failure mode, but water-side metrics qualitative — do NOT upgrade to A)
+- generalizationType: 8B (land→water cross-environment) + 8C (resolution analysis)
+- mainLimitation: Land schemes not directly water-transferable (NIR/SWIR water absorption, glint, submersion states); needs separate land/water schemes + geographic-transfer work (explicit future work)
+- notes: Auto-expansion batch 2 (WIREs). Demonstrated land→water failure is prime RQ5 evidence; pairs with P011 (lab→field success) as modality contrast
+- rqMapping: RQ1, RQ2, RQ5
+- sourceType: Original Study
+- included: Yes
+
+### P022 — De Giglio et al. (2021), Water Environ J 35:569–579
+- paperID: P022
+- title: Plastics waste identification in river ecosystems by multispectral proximal sensing: a preliminary methodology study
+- journal: Water and Environment Journal (Wiley, peer-reviewed)
+- authors: De Giglio, Dubbini, Cortesi, Maraviglia, Parisi, Tucci
+- year: 2021 (submitted 2020; cited as 2020 in WIREs)
+- country: Italy (Reno River)
+- waterBody: Reno River (river + riverbank)
+- wasteType: Plastic samples vs water/vegetation/rock (spectral-signature study)
+- imageSource: Handheld multispectral (MAIA-WV2, WorldView-2-like UV–VIS–NIR; 1.7–40m range per WIREs)
+- imageType: Multispectral (9 bands VIS–NIR)
+- datasetSize: TBD (small preliminary sample; 3 observation days per WIREs)
+- datasetName: TBD (not released)
+- datasetPublic: Not stated
+- task: Classification (pixel; method comparison)
+- model: K-means / Isodata / Maximum Likelihood / Decision Tree (ENVI)
+- backbone: N/A
+- pretrained: N/A
+- transferLearning: N/A
+- augmentation: N/A
+- imagePreprocessing: Geometric + radiometric correction, format conversion
+- classifiers: Decision Tree (best reliability)
+- algorithms: Classical ML unsupervised+supervised (NON-DL — included as computer vision per criteria_final #3; preliminary)
+- performanceMetrics: Global accuracy + Kappa (values TBD); plastics high red-edge/NIR radiance finding
+- observationDays: 3 (per WIREs Table 2)
+- crossLocationTesting: No (single-site preliminary; sunny+cloudy conditions only)
+- generalizationEvidence: D (no cross-testing of any kind)
+- generalizationType: 8A only
+- mainLimitation: Preliminary/small sample; first step of wider programme (followed by P018)
+- notes: Auto-expansion batch 2 (WIREs). Precursor to P018 — cite as method lineage, not standalone evidence
+- rqMapping: RQ1
+- sourceType: Original Study
+- included: Yes
+
+### P023 — Sio et al. (2022), IEEE ICCCNT 2022:1–6
+- paperID: P023
+- title: Plastic Waste Detection on Rivers Using YOLOv5 Algorithm
+- journal: Proc. IEEE ICCCNT 2022 (peer-reviewed conference)
+- authors: Sio, Guantero, Villaverde
+- year: 2022
+- country: TBD (likely Philippines — Mapúa University; river site unspecified)
+- waterBody: River (site TBD; floating plastic bottles)
+- wasteType: Floating plastic bottles (single-class)
+- imageSource: Ground/fixed (Raspberry Pi 4B + 5MP OV5647 + USB webcam; LCD display unit)
+- imageType: RGB (presumed — confirm)
+- datasetSize: TBD (custom dataset; counts TBD)
+- datasetName: TBD (custom, not released)
+- datasetPublic: Not stated
+- task: Object Detection (edge deployment for mapping/surveillance)
+- model: YOLOv5 (variant TBD)
+- backbone: TBD
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: YOLOv5
+- algorithms: CNN
+- performanceMetrics: Accuracy 84.298%; precision 79.14%; recall 57.37% (confusion-matrix eval; low recall flagged)
+- observationDays: TBD
+- crossLocationTesting: No (single-dataset eval)
+- generalizationEvidence: D (no cross-testing; no generalizability claim)
+- generalizationType: 8A only
+- mainLimitation: Single class (bottles only); recall 57% — misses ~43%; site/dataset details TBD
+- notes: Auto-expansion batch 3. Edge-device (Raspberry Pi) deployment angle — unique RQ6/cost value; pairs with P015 robot framing
+- rqMapping: RQ2, RQ6
+- sourceType: Original Study (conference)
+- included: Yes
+
+### P024 — Putra & Prabowo (2021), BEEI 10(5)
+- paperID: P024
+- title: Low resource deep learning to detect waste intensity in the river flow
+- journal: Bulletin of Electrical Engineering and Informatics (peer-reviewed)
+- authors: Putra, Prabowo
+- year: 2021
+- country: Indonesia (Jakarta watersheds; flood-blockage motivation)
+- waterBody: Urban watersheds/river flow (several locations; plastic + styrofoam dominated)
+- wasteType: Mixed river waste incl. food wrappers (small) to large items; dry leaves counted in demo (label-noise note)
+- imageSource: Ground/handheld photos + video frames (researcher-captured)
+- imageType: RGB (presumed — confirm)
+- datasetSize: 340 images (90/10 train/val) + multi-location case videos
+- datasetName: TBD (not released)
+- datasetPublic: Not stated
+- task: Object Detection + Counting (counter-line + SORT tracking)
+- model: YOLOv3 Darknet-53 (batch/subdivision/max_batches/steps tuned)
+- backbone: Darknet-53 (last-3-residual multi-scale heads)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: Video→frame decomposition; NMS; centroid counter-line logic
+- classifiers: YOLOv3
+- algorithms: CNN
+- performanceMetrics: mAP 65.47% (train AP 64.43, best 66.07); case-video confidence 98.74%; 26 objects incl. leaves; sunlight-reflection failures even for annotated cases
+- observationDays: TBD (multi-location videos)
+- crossLocationTesting: Multi-location case videos within Jakarta watersheds (aggregated reporting, no per-site metrics)
+- generalizationEvidence: B (multi-location deployment = indirect; no held-out-location split — do NOT upgrade)
+- generalizationType: 8A (within-metro multi-site) + counting/flux note
+- mainLimitation: Sunlight-reflection blindness; leaf false positives; tiny dataset (340); CCTV/YOLOv4 suggested follow-up
+- notes: Auto-expansion batch 3. Second flux/counting study after P007 — RQ6 quantification strand; low-resource angle
+- rqMapping: RQ2, RQ5, RQ6
+- sourceType: Original Study
+- included: Yes
+
+### P025 — Nunkhaw et al. (2025), Water 17:3193
+- paperID: P025
+- title: Enhancing River Waste Detection with Deep Learning and Preprocessing: A Case Study in the Urban Canals of the Chao Phraya River
+- journal: Water (MDPI, peer-reviewed)
+- authors: Nunkhaw, Chitwatkulsiri, Miyamoto
+- year: 2025
+- country: Thailand (Chao Phraya urban canals; CCTV footage)
+- waterBody: Urban canals (Chao Phraya basin)
+- wasteType: 7 flume classes incl. foam/paper/plastic/bottles/cans (visually complex materials degrade most)
+- imageSource: Fixed CCTV (canal) + lab flume (train source)
+- imageType: RGB
+- datasetSize: 2,000 canal frames (test) + 5,711 flume images (train, from P016)
+- datasetName: TBD (not released)
+- datasetPublic: Not stated
+- task: Object Detection + Tracking (YOLOv5/YOLOv10m + DeepSORT)
+- model: Lab-trained YOLOv5 → +preprocessing; YOLOv10m upgrade; SSD-300 region extractor (TF 2.12)
+- backbone: YOLOv5 / YOLOv10m (Efficient backbone, anchor refinements)
+- pretrained: Yes (flume-trained weights reused with NO canal retraining — data-centric adaptation claim)
+- transferLearning: No weight transfer (preprocessing-based domain alignment instead: skew correction + background removal + SSD extraction)
+- augmentation: YOLOv10 robust augmentation (per authors)
+- imagePreprocessing: Skew→top-down, water-background removal, SSD RoI focus (ablated: +0.07–0.10 class gains)
+- classifiers: YOLOv5 / YOLOv10m + DeepSORT
+- algorithms: CNN + tracking
+- performanceMetrics: mAP 0.74→0.82 (YOLOv5+preproc) →0.85±0.03 (YOLOv10m+preproc); foam +0.13, plastic +0.14, bottle 0.94; F1 tracking stability confirmed; residual: reflections/motion-blur/occlusion, no submerged debris
+- observationDays: TBD (CCTV frames)
+- crossLocationTesting: Yes — flume-trained model evaluated on real-canal imagery (lab→field cross-setting) with before/after-preprocessing metrics
+- generalizationEvidence: A (explicit lab→field transfer test, quantitative incl. per-class deltas; no-retraining design)
+- generalizationType: 8D (lab→real cross-setting) + 8B note (flume→canal environment shift)
+- mainLimitation: Reflections/blur/occlusion persist; no submerged debris; single canal system
+- notes: Auto-expansion batch 3. Directly resolves P016's C-grade claim with a tested transfer — cite P016→P025 as claim-to-evidence arc in synthesis; data-centric (non-retraining) transfer is novel RQ4 contribution
+- rqMapping: RQ2, RQ4, RQ5
+- sourceType: Original Study
+- included: Yes
+
+### P026 — Pan et al. (2023), JSCE-IIAI 4:50–59
+- paperID: P026
+- title: Application of the Prompt Engineering-assisted Generative AI for the Drone-based Riparian Waste Detection
+- journal: Intelligence, Informatics and Infrastructure (JSCE, peer-reviewed)
+- authors: Pan, Yoshida, Kojima
+- year: 2023
+- country: Japan (riparian; benchmark sets UAV-PWD / UAV-BD incl. water areas)
+- waterBody: Riparian + water-area backgrounds (synthetic + real benchmarks)
+- wasteType: Bikes, cardboards, plastic bags, PET bottles (same 4-class scheme as P013)
+- imageSource: Synthetic (Stable Diffusion txt2img via CLIP-Interrogator + prompt engineering) + UAV real benchmarks
+- imageType: RGB (synthetic + real)
+- datasetSize: TBD (AIGC cases 1–2 + real Case 3; counts TBD)
+- datasetName: Stable Diffusion AIGC set (auto-labeled by public-set-trained model) vs Real-World set
+- datasetPublic: Not stated (AIGC set)
+- task: Object Detection
+- model: YOLOv5 (AIGC-trained vs real-trained, benchmark-compared)
+- backbone: TBD
+- pretrained: Yes (auto-labeler = public-set-trained model; YOLOv5 COCO convention)
+- transferLearning: No (synthetic-vs-real training comparison)
+- augmentation: Prompt-engineering variants as data generator (keywords: UAV, 8k, super-detailed)
+- imagePreprocessing: Uniform train/val/test ratio assignment of AIGC
+- classifiers: YOLOv5
+- algorithms: CNN + Stable Diffusion + CLIP (first generative-AI row; 8G-adjacent synthetic representation)
+- performanceMetrics: F1-based: AIGC wins on simple (water) backgrounds incl. high-GSD targets; loses on complex-feature targets; natural-background bottles F1 <0.7; 1.5cm-GSD 4cls set ≈1.0 F1 except bikes (tire-only 0.3 conf)
+- observationDays: N/A (synthetic)
+- crossLocationTesting: Yes — synthetic-trained model evaluated on real benchmark sets (synthetic→real cross-dataset) with F1
+- generalizationEvidence: A (explicit synthetic→real test, quantitative; narrow: simple backgrounds only)
+- generalizationType: 8D (synthetic→real)
+- mainLimitation: Auto-labels inherit single-dataset bias (unstable if labeler changes); complex-feature/background gap; prompt scope narrow
+- notes: Auto-expansion batch 4. First synthetic-data paper — landmark RQ4 (data scarcity workaround) + RQ6 (annotation cost) evidence
+- rqMapping: RQ2, RQ4, RQ6
+- sourceType: Original Study
+- included: Yes
+
+### P027 — Kataoka et al. (2024), Front Earth Sci 12:1427132
+- paperID: P027
+- title: Instance segmentation models for detecting floating macroplastic debris from river surface images
+- journal: Frontiers in Earth Science (peer-reviewed)
+- authors: Kataoka, Yoshida, Yamamoto
+- year: 2024
+- country: Japan (7 rivers train via fixed cameras; 3 rivers WLGCAM test)
+- waterBody: 7 rivers (train) + 3 rivers (novel WLGCAM gauge-cam test)
+- wasteType: Floating macroplastic debris (FMPD; category selection flagged as FP driver)
+- imageSource: Fixed cameras (train 7,356 imgs) + WLGCAM ultrasonic-gauge cam (test 3,802 imgs / 107 frames)
+- imageType: RGB (presumed — confirm)
+- datasetSize: 7,356 train + 3,802 test images
+- datasetName: TBD (not released)
+- datasetPublic: Not stated
+- task: Instance Segmentation (+ OD branch comparison)
+- model: 5 YOLOv8-based IS models (varying weights) vs pretrained YOLOv8
+- backbone: YOLOv8 variants (sizes TBD)
+- pretrained: Yes (pretrained YOLOv8 baseline)
+- transferLearning: No (train-once, cross-river/sensor test)
+- augmentation: TBD
+- imagePreprocessing: GSD-varied evaluation
+- classifiers: YOLOv8-IS
+- algorithms: CNN
+- performanceMetrics: Similar-to-pretrained accuracy; INTERMEDIATE weights best (largest overfits); smaller-GSD better for IS, larger-GSD better for OD; FP/category issues; exact mAP TBD
+- observationDays: TBD (fixed-camera monitoring periods)
+- crossLocationTesting: Yes — 7-river-trained model tested on 3 unseen rivers + novel sensor (WLGCAM) with metrics
+- generalizationEvidence: A (cross-river + cross-sensor test, quantitative; overfitting non-monotonicity is key RQ4/RQ5 finding)
+- generalizationType: 8B (cross-river) + 8C (cross-sensor/GSD)
+- mainLimitation: Category selection → FPs; exact metrics TBD from full text
+- notes: Auto-expansion batch 4. "Bigger ≠ better" overfitting result directly nuances P001-scale assumptions — RQ4 synthesis point; second IS row after P017
+- rqMapping: RQ1, RQ2, RQ3, RQ4, RQ5
+- sourceType: Original Study
+- included: Yes
+
+### P028 — Liu et al. (2025), Lightweight YOLOv8s-LSKA-AKConv-BSFPN
+- paperID: P028
+- title: Research on Real-Time Detection Method for River Floating Objects Using UAVs Based on Lightweight YOLOv8s Model
+- journal: Jisuanji Shenghuojia 13(2):44–47 (doi 10.54097/t1napg15 — low-index venue; peer-review rigor UNCERTAIN, cite thinly; reversible)
+- authors: S. Liu, Y. Chen, Z. Chen
+- year: 2025
+- country: TBD (China IWHR dataset; site unspecified)
+- waterBody: River (surveillance + drone imagery)
+- wasteType: Bottles, foam boards, aquatic plants, algae (23,692 objects)
+- imageSource: UAV + surveillance cameras
+- imageType: RGB (presumed — confirm)
+- datasetSize: 3,000 images / 23,692 objects (IWHR Water Surface Floating Object Dataset, 2.09GB)
+- datasetName: IWHR Floating Objects Dataset (institutional; public release unconfirmed)
+- datasetPublic: TBD
+- task: Object Detection (edge real-time)
+- model: YOLOv8s + LSKA + AKConv + BSFPN/SCDown vs baselines
+- backbone: YOLOv8s (modified)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: Enhanced YOLOv8s
+- algorithms: CNN + large-separable-kernel attention
+- performanceMetrics: mAP50 68.0%→77.9%; 11.1M→8.3M params; 3.1ms/frame; occlusion/reflection robustness claimed
+- observationDays: TBD
+- crossLocationTesting: No (single-dataset eval)
+- generalizationEvidence: D (no cross-testing; complexity-robustness language without external test)
+- generalizationType: 8A only
+- mainLimitation: Still below heavy detectors in high-variability settings (authors' own caveat)
+- notes: Auto-expansion batch 4 (keyword search). Year 2025 — recency value; venue TBD
+- rqMapping: RQ2
+- sourceType: Original Study
+- included: Yes
+
+### P029 — Yan et al. (2025), IEEE GRSL (EFD-YOLO)
+- paperID: P029
+- title: EFD-YOLO: An Improved YOLOv8 Network for River Floating Debris Object Detection
+- journal: IEEE Geoscience and Remote Sensing Letters (peer-reviewed)
+- authors: Yan, Liang, C. Liu, Zou
+- year: 2025
+- country: TBD (UAV Floating Debris Dataset; site unspecified)
+- waterBody: River (UAV imagery)
+- wasteType: Floating debris incl. small objects (classes TBD)
+- imageSource: UAV
+- imageType: RGB (presumed — confirm)
+- datasetSize: TBD (UAV Floating Debris Dataset; counts TBD)
+- datasetName: UAV Floating Debris Dataset (public release unconfirmed)
+- datasetPublic: TBD
+- task: Object Detection (edge real-time, RK3588 30.5ms)
+- model: EFD-YOLO (EFStem gate-attention + MBERB reparam fusion) vs YOLOv8n
+- backbone: YOLOv8n (modified stem)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: EFD-YOLO
+- algorithms: CNN + edge-fusion attention
+- performanceMetrics: +6.3% mAP vs YOLOv8n; −26.7% params; small-object recall +21.9%; 30.5ms edge inference
+- observationDays: TBD
+- crossLocationTesting: No (single-dataset eval)
+- generalizationEvidence: D (no cross-testing)
+- generalizationType: 8A only
+- mainLimitation: UAV small-object miss rates remain the motivating (not fully closed) problem
+- notes: Auto-expansion batch 4 (keyword search). Edge-deployment strand with P023/P028
+- rqMapping: RQ2, RQ6
+- sourceType: Original Study (letter)
+- included: Yes
+
+### P030 — WCSE 2024 YOLOv8 waterways (Philippines)
+- paperID: P030
+- title: Real-Time Detection of Floating Debris in Waterways Using YOLOv8
+- journal: Proc. WCSE 2024 (doi 10.18178/wcse.2024.06.002; peer-reviewed conference — venue prestige TBD)
+- authors: Tomas, Tupas, Soniel, Caruz, Babar (Mapúa University, Philippines — confirmed 2026-09-08; same group as P044)
+- year: 2024
+- country: Philippines (waterways; 356kt/yr context)
+- waterBody: Waterways (rivers/streams/canals; garbage + invasive plants + branches/leaves)
+- wasteType: Garbage, invasive aquatic plants, branches, leaves (4 classes, imbalanced)
+- imageSource: TBD (controlled collection; camera TBD)
+- imageType: RGB (presumed — confirm)
+- datasetSize: TBD (limited, imbalanced; counts TBD)
+- datasetName: TBD (custom, not released)
+- datasetPublic: Not stated
+- task: Object Detection
+- model: YOLOv8 (COCO-pretrained, custom-trained; SGD vs Adam × lr 0.01/0.001; early-stop patience 50: SGD-0.001 stopped ep123/best ep73)
+- backbone: YOLOv8 (variant TBD)
+- pretrained: Yes (COCO)
+- transferLearning: No
+- augmentation: Flip/rotation/shear/saturation/brightness/exposure/noise (heavy schedule)
+- imagePreprocessing: Resize/orientation/contrast
+- classifiers: YOLOv8
+- algorithms: CNN
+- performanceMetrics: mAP50 87.2% (SGD lr 0.001, best weights); SGD > Adam; tiny/water-colored objects fail 25% conf threshold
+- observationDays: TBD
+- crossLocationTesting: No (single controlled dataset)
+- generalizationEvidence: D (no cross-testing; authors explicitly recommend varied time/camera/lighting collection = admitted gap)
+- generalizationType: 8A only
+- mainLimitation: Controlled collection; 4 imbalanced classes; tiny/water-mimic misses
+- notes: Auto-expansion batch 4 (keyword search). COCO-pretrain + Colab-T4 recipe mirrors P001 training logic — RQ4 comparability
+- rqMapping: RQ2, RQ4
+- sourceType: Original Study (conference)
+- included: Yes
+
+### P031 — Lee et al. (2025), Sensors 25:2225
+- paperID: P031
+- title: Construction of a Real-Time Detection for Floating Plastics in a Stream Using Video Cameras and Deep Learning
+- journal: Sensors (MDPI, peer-reviewed)
+- authors: H.T. Lee, Byeon, J.H. Kim, Shin, Park
+- year: 2025
+- country: Korea (stream 37°33'09"N 127°02'38"E; post-rainfall influx)
+- waterBody: Stream (narrow freshwater; rainfall-event influx)
+- wasteType: 4 plastic classes (common, bottles, film/vinyl, fragments; 470 instances)
+- imageSource: Fixed video cameras (field rainfall-event footage; CVAT-annotated)
+- imageType: RGB (presumed — confirm)
+- datasetSize: 4,162 images + 1,005 background (7:2:1 split)
+- datasetName: TBD (not released)
+- datasetPublic: Not stated
+- task: Object Detection + Tracking/Counting (modified YOLOv8)
+- model: YOLOv8n (portability pick) multi-class
+- backbone: YOLOv8n
+- pretrained: Yes (YOLOv8n pretrained weights)
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: Frame extraction 1:1 image-annotation correspondence
+- classifiers: YOLOv8n
+- algorithms: CNN
+- performanceMetrics: F1 0.982 val / 0.980 test; mAP50 0.992, mAP50-95 0.714; field accuracy 92.34% (434/470); BUT unknown-video counting 6/32 (tracking collapse)
+- observationDays: Rainfall-event campaign (days TBD)
+- crossLocationTesting: Unknown-video counting attempt (same stream, poor 6/32) — within-site, failed
+- generalizationEvidence: B (unknown-video test = indirect; failed tracking bounds the claim — honest negative evidence, do NOT grade D since external footage was tested)
+- generalizationType: 8A (within-site unknown footage)
+- mainLimitation: Tracking/counting collapse on unknown video (6/32); narrow stream; rainfall-specific
+- notes: Auto-expansion batch 4 (keyword search). Detection-vs-counting gap (0.99 mAP yet 6/32 counted) is a flagship RQ3/RQ6 synthesis point alongside P007/P024
+- rqMapping: RQ2, RQ3, RQ6
+- sourceType: Original Study
+- included: Yes
+
+### P032 — Frontiers in Environ Sci 2025 (Danube/Tisza/Bodrog multi-scenario YOLOv8)
+- paperID: P032
+- title: Real-time detection of macroplastic pollution in inland waters: development of a lightweight image recognition system
+- journal: Frontiers in Environmental Science (peer-reviewed)
+- authors: Tikász, Gyalai-Korpos, Fleit, Baranya (BME Hungary; Plastic Cup Society / River Cleanup Technologies — confirmed 2026-09-08)
+- year: 2025
+- country: Hungary (Danube Budapest Rkm1645 simulated release; Tisza/Kisköre post-2019-flood UAV; Bodrog floodplain 2023; live pontoon IP-cam Sep-2024 flood)
+- waterBody: Danube + Tisza + Bodrog (3 fluvial environments) + live pontoon stream
+- wasteType: Macroplastic (open-water + dense aggregations + floodplain/vegetation-occluded)
+- imageSource: Fixed pontoon/bank/bridge cameras + UAV (dual deployment design)
+- imageType: RGB (presumed — confirm)
+- datasetSize: TBD (Bodrog floodplain + simulated-release frames; counts TBD)
+- datasetName: TBD (pre-annotated dataset collection enabled by system; release TBD)
+- datasetPublic: TBD
+- task: Object Detection + Tracking (YOLOv8 + built-in tracking; tiling/blurring preprocessing)
+- model: YOLOv8 (nano→scale options; ONNX/TensorRT exportable)
+- backbone: YOLOv8 (variant TBD)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: Deployment-side tiling (1×/2×) + blurring (vegetation-noise cut)
+- imagePreprocessing: Single/double tiling (counts 80→2610→3633 w/ re-ID faults); blur+double-tile best in vegetation
+- classifiers: YOLOv8
+- algorithms: CNN
+- performanceMetrics: Per-scenario: open-water fixed-cam suitable; dense-aggregation interiors missed (alert-only); vegetation raw insufficient → tiling gains; some "false" detections were real reviewer-missed plastics
+- observationDays: Multi-event (2019 flood footage, 2023 flood, Sep-2024 live flood)
+- crossLocationTesting: Same system evaluated across 3 rivers + live stream with per-scenario reporting (train origin TBD)
+- generalizationEvidence: B (multi-river deployment with per-scenario metrics = indirect; train/test-river separation unconfirmed — verify before any A)
+- generalizationType: 8B (multi-river deployment) + 8C (fixed↔UAV dual platform)
+- mainLimitation: Dense-aggregation quantification unreliable; re-ID repeats; small/vegetated targets weak; training origin TBD
+- notes: Auto-expansion batch 4 (keyword search). Operational networked-station vision (reach→basin scale) — prime future-directions material; networked design answers P007 single-point limits
+- rqMapping: RQ1, RQ2, RQ5, RQ6
+- sourceType: Original Study
+- included: Yes
+
+### P033 — Reinhardt et al. (2024), SPIE 13197:1319706
+- paperID: P033
+- title: Applying deep learning methods for the bridge-based monitoring of floating macroplastics on rivers
+- journal: Proc. SPIE 13197 (peer-reviewed conference)
+- authors: Reinhardt, Baschek, Brehm, Ternes
+- year: 2024
+- country: Germany (Rhine at Niederwerth Bridge, Koblenz; boat released/collected items)
+- waterBody: Rhine River (controlled release: bottles, caps, bags, polystyrene, branches ± leaves)
+- wasteType: Macroplastic + vegetation confounds (5 raw classes → 3 trained: bottles / plastic litter / vegetation)
+- imageSource: Fixed bridge RGB camera (1s interval, 6000x4000, ~4mm/px, 0.5 m/s drift, 15–20 frames/object)
+- imageType: RGB
+- datasetSize: ~800+ images → 1,280px patches (train 551+51 bg; test 244+12 bg; 1,055 train / 323 test instances; runs 1+3 train, run 2 test)
+- datasetName: TBD (not released)
+- datasetPublic: Not stated
+- task: Object Detection
+- model: YOLOv5x (COCO-pretrained, fine-tuned 100ep/bs16/SGD/adaptive-lr/mosaic, RTX A6000 1.5h)
+- backbone: YOLOv5x CSP
+- pretrained: Yes (MS COCO)
+- transferLearning: No
+- augmentation: Mosaic (default) + 10% train / 5% val background patches
+- imagePreprocessing: 1-in-5 dedup, 1280px patching, makesense.ai boxes, unknown/other-litter classes dropped
+- classifiers: YOLOv5x
+- algorithms: CNN
+- performanceMetrics: mAP@0.5 ~94% (no overfit); glint/foam/submersion = labeling-uncertainty drivers
+- observationDays: 3 runs (same campaign; weather/foam/ripple variation captured)
+- crossLocationTesting: No (single-site run split; authors explicitly call for multi-river/diverse-condition data)
+- generalizationEvidence: D (no cross-testing; authors' own limitation statement)
+- generalizationType: 8A only
+- mainLimitation: Single site/campaign; small/ambiguous items lost; runs 4–5 unlabeled
+- notes: Auto-expansion batch 5 (keyword). Run-separated split = clean anti-leakage design worth citing in methods discussion; cites P006 (forward-link Maharjan)
+- rqMapping: RQ1, RQ2, RQ6 (limitation honesty)
+- sourceType: Original Study (conference)
+- included: Yes
+
+### P034 — Saddi et al. (2024), IEEE IGARSS 2024:10641940
+- paperID: P034
+- title: Balancing Accuracy and Efficiency for River Plastic Monitoring
+- journal: Proc. IEEE IGARSS 2024 (peer-reviewed conference)
+- authors: Saddi, Miglino, Isgrò, van Emmerik, Manfreda (P002-coauthor team; RiverWatch project)
+- year: 2024
+- country: Indonesia (Jakarta train) → Italy (Sarno test; different camera angle)
+- waterBody: Jakarta river/dataset → Sarno River (cross-country deployment)
+- wasteType: 3 classes (plastic / plastic bottle / plastic bag; Indonesia-region ocean plastics)
+- imageSource: Mixed (Jakarta public dataset excerpt + Sarno test images; bridge/UAV TBD)
+- imageType: RGB
+- datasetSize: TBD (J / J+Dark / J50+Dark50 variants; counts TBD)
+- datasetName: Jakarta public set [17] + Sarno RiverWatch set
+- datasetPublic: Partial (Jakarta public; Sarno TBD)
+- task: Object Detection
+- model: YOLOv7 vs YOLOv8 (100ep fixed; train-aug dark γ0.4 doubling; test-aug dark/bright/contrast)
+- backbone: YOLOv7 / YOLOv8
+- pretrained: TBD (confirm)
+- transferLearning: Yes (Jakarta→Sarno cross-country deployment framed as transfer-learning-level test)
+- augmentation: Train gamma-dark doubling; test gamma/contrast sweep (Matlab + Colab)
+- imagePreprocessing: Lighting adjustments pre/post detector
+- classifiers: YOLOv7 / YOLOv8
+- algorithms: CNN
+- performanceMetrics: J+Darkv8 +17% mAP50-95 over base (24 min extra train); J50+Dark50v7 −61% (halving data hurts v7); v8 epoch-100 early-stop vs v7 still learning at 300ep; 50×70px bottle detected
+- observationDays: TBD
+- crossLocationTesting: Yes — Jakarta-trained, Sarno-tested (different country + camera angle) with mAP reporting
+- generalizationEvidence: A (explicit cross-country deployment test, quantitative incl. augmentation deltas)
+- generalizationType: 8B (cross-country) + 8F (deployment transfer) + 8G note (COCO-family backbones)
+- mainLimitation: Fixed 100ep handicaps v8-vs-v7 comparison (authors' own caveat); dataset counts TBD
+- notes: Auto-expansion batch 5 (keyword). Dark-channel augmentation finding is a low-cost RQ4 alternative to P001-style fine-tuning; links P007 (Jakarta data reuse) → P034
+- rqMapping: RQ1, RQ2, RQ4, RQ5
+- sourceType: Original Study (conference)
+- included: Yes
+
+### P035 — Sun et al. (2025), IEEE CCSB 2025:11154292
+- paperID: P035
+- title: Semi-Supervised UAV-Based River Plastic Detection with Efficient Teacher-Student Framework
+- journal: Proc. IEEE CCSB 2025 (peer-reviewed conference — prestige TBD)
+- authors: N. Sun, K. Yang, D. Liu, Guo
+- year: 2025
+- country: TBD (site unspecified in retrieved text)
+- waterBody: River surface (UAV)
+- wasteType: River-surface plastic (classes TBD)
+- imageSource: UAV
+- imageType: RGB (presumed — confirm)
+- datasetSize: TBD (small labeled + large unlabeled; counts TBD)
+- datasetName: TBD (not released)
+- datasetPublic: Not stated
+- task: Object Detection (semi-supervised)
+- model: Teacher-student (SOTA detectors fine-tuned → pseudo-label + consistency); Changemamba best backbone
+- backbone: Changemamba (best) et al. (TBD)
+- pretrained: Yes (fine-tuned SOTA baselines)
+- transferLearning: No
+- augmentation: Consistency-training augmentations (details TBD)
+- imagePreprocessing: TBD
+- classifiers: Teacher-student YOLO-family + Changemamba
+- algorithms: CNN + state-space (Mamba) + semi-supervised learning
+- performanceMetrics: mAP 75.1%→77.7% with more unlabeled data; minimal inference hit
+- observationDays: TBD
+- crossLocationTesting: No (single-dataset eval)
+- generalizationEvidence: D (no cross-testing)
+- generalizationType: 8A only
+- mainLimitation: +2.6pp gain modest; site/dataset details TBD
+- notes: Auto-expansion batch 5 (keyword). FIRST semi-supervised + FIRST Mamba-backbone row — answers P003/P010 semi-supervised future-direction calls; flagship RQ4 novelty
+- rqMapping: RQ2, RQ4
+- sourceType: Original Study (conference)
+- included: Yes
+
+### P036 — Pérez-García et al. (2025; iScience 29:114570 + EGU26-13155)
+- paperID: P036
+- title: River plastic hotspot detection from space (full-text verified 2026-09-08 via PMC/WUR; doi CORRECTED to 10.1016/j.isci.2025.114570)
+- journal: iScience 29(2):114570 (peer-reviewed) + EGU26 abstract
+- authors: Pérez-García, Amanda, López, Rußwurm, van Emmerik
+- year: 2025
+- country: Indonesia (Citarum 6.92°S 107.48°E) + Guatemala (Motagua 14.76°N 90.50°W) + Ghana (Odaw 5.54°N 0.22°W)
+- waterBody: Citarum (turbid/organic-mix) + Motagua (canopy-shadow) + Odaw (narrow urban pixel-mixing) + open GEE app
+- wasteType: Accumulated riverine plastic hotspots (plastic vs water vs vegetation)
+- imageSource: Satellite (high-res annotation imagery + Sentinel-2 classification)
+- imageType: Multispectral (top bands + NDVI/PI/FDI/SI13)
+- datasetSize: TBD (counts TBD)
+- datasetName: TBD (open GEE app; training release TBD)
+- datasetPublic: Partial (open GEE application; data release TBD)
+- task: Classification (hotspot mapping + multi-temporal frequency maps)
+- model: Random Forest (GEE) with SHAP-style band/index importance
+- backbone: N/A
+- pretrained: N/A
+- transferLearning: N/A (cross-river application of index-reduced models)
+- augmentation: N/A
+- imagePreprocessing: Manual high-res annotation → Sentinel-2 10m harmonization
+- classifiers: Random Forest
+- algorithms: Classical ML + spectral (NON-DL — included as computer vision per criteria_final #3)
+- performanceMetrics: Within-river acc to 99.5% (IDs 7–10 test); per-river plastic F1 with indices IDN 98.5 / GUA 91.9 / GHA 76.6 (+20pp from indices); inter-river avg F1 79% (Guatemala→Ghana +30%); PlanetScope-annotated RF→Sentinel-2 transfer; commercial-annotation scalability caveat
+- observationDays: Multi-temporal (hotspot frequency maps; IDs 1–6 train / 7–10 test per river)
+- crossLocationTesting: Yes — train-one-river → test-other-rivers (incl. independent Citarum ID-11 section: 7,767 water / 3,696 veg / 669 plastic px)
+- generalizationEvidence: A (UPGRADED 2026-09-08: full-text verified cross-river transfer with per-river F1 table)
+- generalizationType: 8B (cross-river/country)
+- mainLimitation: Pixel-mixing in narrow/shaded channels; commercial PlanetScope annotation limits scalability
+- notes: Auto-expansion batch 5 (keyword). First 3-country satellite cross-river result + operational GEE app — pairs with P020 (single-river API) and P009 (DL cross-region); key RQ5/RQ6 hotspot-quantification evidence
+- rqMapping: RQ1, RQ5, RQ6
+- sourceType: Original Study
+- included: Yes
+
+### P037 — Jia et al. (2024b), SwAV semi-supervised freshwater litter detection (WUR eDepot 673610)
+- paperID: P037
+- title: Detecting floating litter in freshwater bodies with semi-supervised deep learning
+- journal: Water Research 2024 (doi 10.1016/j.watres.2024.122405 — confirmed 2026-09-08)
+- authors: T. Jia, de Vries, Kapelan, van Emmerik, Taormina
+- year: 2024
+- country: Netherlands (Delft canals) + Indonesia (Jakarta) train; Vietnam (HCMC) + Netherlands (Amsterdam, Groningen) zero-shot test
+- waterBody: Canals + waterways (Delft/Jakarta) → unseen HCMC/Amsterdam/Groningen waters
+- wasteType: Floating litter (2.6k annotated items; classes TBD)
+- imageSource: Fixed/static cameras (same-device constraint noted)
+- imageType: RGB (presumed — confirm)
+- datasetSize: ~100k unlabeled (SwAV) + ≤1.8k labeled fine-tune (few-shot ≈200 imgs/300 items tested)
+- datasetName: TBD (TUD-GV lineage; release TBD)
+- datasetPublic: TBD
+- task: Object Detection
+- model: SwAV-ResNet50 → Faster R-CNN vs ImageNet-supervised Faster R-CNN benchmark
+- backbone: ResNet50 (SwAV self-supervised vs ImageNet)
+- pretrained: Yes (SwAV-on-100k-river-images vs ImageNet; ImageNet-init helps SSL too)
+- transferLearning: No weight transfer (representation-learning comparison instead)
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: Faster R-CNN
+- algorithms: CNN + SwAV self-supervised (foundational-model direction; answers P003/P010 SSL calls)
+- performanceMetrics: Zero-shot unseen-location AP +12.7% over SL; matches/beats SL in-domain; few-shot wins; fewer FPs
+- observationDays: TBD
+- crossLocationTesting: Yes — zero-shot HCMC/Amsterdam/Groningen (train Delft/Jakarta only) with AP deltas
+- generalizationEvidence: A (explicit zero-shot cross-location test, quantitative)
+- generalizationType: 8B (cross-city/country zero-shot) + 8G (domain-relevant self-supervised representation)
+- mainLimitation: Static-camera-only; transformers/hyperparam-tuning deferred; needs global image-scale-up
+- notes: Auto-expansion batch 6 (backward: P008-team follow-up). Strongest SSL-generalization result in corpus — landmark RQ4/RQ5 row
+- rqMapping: RQ2, RQ4, RQ5
+- sourceType: Original Study
+- included: Yes
+
+### P038 — Jia et al. (flux SSL+SAHI; WUR eDepot 704977; GitHub deep_plastic_Flux_SSL + Zenodo)
+- paperID: P038
+- title: A semi-supervised learning-based framework for quantifying litter fluxes in river systems
+- journal: Water Research 289 Part A:124833 (doi 10.1016/j.watres.2025.124833 — confirmed 2026-09-08; published online Oct 2025, within scope window)
+- authors: T. Jia, Taormina, de Vries, Kapelan, van Emmerik, Vriend, Okkerman
+- year: 2025
+- country: Netherlands + Indonesia + Vietnam (train) → Vietnam case zero-shot flux test
+- waterBody: Wide-cross-section rivers (multi-location camera arrays; uneven lateral flux distribution noted)
+- wasteType: Floating macroplastic litter (>5mm; transparent + hyacinth-entrapped = miss drivers)
+- imageSource: Fixed river-surface cameras (multi-location across width)
+- imageType: RGB (presumed — confirm)
+- datasetSize: TBD (same SSL pool lineage as P037; counts TBD)
+- datasetName: Open (GitHub deep_plastic_Flux_SSL + Zenodo 10.5281/zenodo.17387612)
+- datasetPublic: Yes (code + dataset)
+- task: Object Detection + Flux Quantification (SSL + SAHI slicing + post-processing)
+- model: SwAV-ResNet50 → Faster R-CNN + SAHI vs SL benchmark vs human counting
+- backbone: ResNet50
+- pretrained: Yes (SSL vs ImageNet-SL benchmark)
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: SAHI slicing (+45 small <1000cm² items, F1 +0.19); cross-width flux integration
+- classifiers: Faster R-CNN + SAHI
+- algorithms: CNN + SwAV + SAHI
+- performanceMetrics: In-domain F1 +0.2, zero-shot +0.14 over SL; flux 3–4× UNDER human (transparent/hyacinth misses) but ~2× SL; longer pre-train + bigger pool help
+- observationDays: TBD
+- crossLocationTesting: Yes — zero-shot Vietnam flux case (no development data) vs human + SL baselines
+- generalizationEvidence: A (explicit zero-shot cross-location + flux-quantification test, quantitative incl. honest underestimation)
+- generalizationType: 8B (zero-shot cross-location) + 8G (SSL representation)
+- mainLimitation: 3–4× flux underestimation (transparency, hyacinth entrapment — links Schreyers context); single new-camera pipeline
+- notes: Auto-expansion batch 6. Only flux-quantifying SSL study — joins P007/P024/P031/P032 quantification strand; open code+data exemplary for RQ6 reproducibility
+- rqMapping: RQ2, RQ4, RQ5, RQ6
+- sourceType: Original Study
+- included: Yes
+
+### P039 — Peng et al. (2024), WUJNS (YOLOv7-GFPN long-range attention, WiseIoU)
+- paperID: P039
+- title: Improved YOLOv7 Algorithm for Floating Waste Detection Based on GFPN and Long-Range Attention Mechanism
+- journal: Wuhan Univ J Nat Sci (EDP Sciences, peer-reviewed)
+- authors: Peng, He, Xi, Lin
+- year: 2024
+- country: TBD (Orca-boat dataset + web/phone images; sites unspecified)
+- waterBody: River (unmanned-boat viewpoint + phone; reflections/waves/bank-objects)
+- wasteType: Floating waste, small-scale/low-pixel (classes TBD)
+- imageSource: Unmanned boat (Orca-boat public set) + phone photos + web downloads (LabelImg)
+- imageType: RGB (presumed — confirm)
+- datasetSize: 2,500 images (train/val split TBD)
+- datasetName: Orca-boat river set + self-collected (release TBD)
+- datasetPublic: Partial (Orca-boat public [2]; self-collected TBD)
+- task: Object Detection
+- model: YOLOv7 + GFPN-RepC2f neck + DFC long-range attention + WiseIoU (SGD lr 0.001/mom 0.9/wd 0.0005, RTX 3090)
+- backbone: YOLOv7 E-ELAN (modified neck)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: Enhanced YOLOv7
+- algorithms: CNN + long-range attention
+- performanceMetrics: Avg accuracy 86.3% (+6.3pp over baseline); intense-light conf 78% w/ FPs; attention adds latency (accuracy-over-speed trade accepted)
+- observationDays: TBD
+- crossLocationTesting: No (single pooled-dataset eval)
+- generalizationEvidence: D (no cross-testing; "superior generalization" intro boilerplate only — do NOT credit)
+- generalizationType: 8A only
+- mainLimitation: Small-target information loss persists; latency cost; more categories + cleanup-machinery deployment deferred
+- notes: Auto-expansion batch 6 (keyword). Novel unmanned-boat viewpoint platform — new Level-2 variant for taxonomy
+- rqMapping: RQ2
+- sourceType: Original Study
+- included: Yes
+
+### P040 — Li et al. (2022), Sustainability 14:11729 (PC-Net)
+- paperID: P040
+- title: Detection of Floating Garbage on Water Surface Based on PC-Net
+- journal: Sustainability (MDPI, peer-reviewed)
+- authors: N. Li, Huang, Wang, Yuan, Y. Liu, Xu (confirmed 2026-09-08; same 8-class scheme as P010 — shared-dataset lineage suspected, flagged)
+- year: 2022
+- country: TBD (site unspecified)
+- waterBody: Water surface (generic; river/lakeженерные unspecified — confirm; closely-related-aquatic assumed pending verification)
+- wasteType: Floating garbage, small/dense, large aspect-ratio spread (branches vs bottles)
+- imageSource: TBD (floating-garbage dataset; platform unspecified)
+- imageType: TBD (presumed RGB — confirm)
+- datasetSize: TBD
+- datasetName: TBD (floating-garbage dataset, release TBD)
+- datasetPublic: TBD
+- task: Object Detection (two-stage Faster R-CNN family + pyramid anchors + classification-map RoI)
+- model: PC-Net vs Faster R-CNN / SSD / YOLOv3 / YOLOX / Dynamic R-CNN
+- backbone: TBD (Faster R-CNN base — confirm)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: Pyramid anchor generation (target-centered); high-res classification-map RoI import
+- classifiers: PC-Net
+- algorithms: CNN (two-stage)
+- performanceMetrics: Avg acc 86.4% (+4.1 FasterRCNN, +7.3 SSD, +6.6 YOLOv3, +3.6 YOLOX, +2.8 DynamicRCNN); small-target gains
+- observationDays: TBD
+- crossLocationTesting: No
+- generalizationEvidence: D (no cross-testing)
+- generalizationType: 8A only
+- mainLimitation: Accumulation/occlusion scenarios deferred; site details TBD — waterBody verification required or row reverts to pending
+- notes: Auto-expansion batch 6 (keyword). Small-target anchor-design strand with P010/P029/P039
+- rqMapping: RQ2
+- sourceType: Original Study
+- included: Yes (provisional on waterBody confirmation)
+
+### P041 — Chen et al. (2023), Sustainability 15:10751 (Soft-NMS YOLOv5 + SIoU, small floaters)
+- paperID: P041
+- title: Soft-NMS-Enabled YOLOv5 with SIOU for Small Water Surface Floater Detection in UAV-Captured Images
+- journal: Sustainability (MDPI, peer-reviewed)
+- authors: F. Chen, L. Zhang, Kang, L. Chen, Dong, D. Li, Wu
+- year: 2023
+- country: TBD (site unspecified; ablation text says "sea surface floater dataset" — VERIFY river vs sea)
+- waterBody: TBD (water-surface floaters, UAV; river-vs-sea unconfirmed — row provisional pending verification)
+- wasteType: Small water-surface floaters (classes TBD)
+- imageSource: UAV
+- imageType: RGB (presumed — confirm)
+- datasetSize: TBD (water-surface floater dataset; counts TBD)
+- datasetName: TBD (not released)
+- datasetPublic: TBD
+- task: Object Detection (small-target)
+- model: YOLOv5 + 160×160 small head + SIoU + soft-NMS (+weight fn) vs vanilla/SIoU-only/NMS-only ablations
+- backbone: YOLOv5 (modified neck)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: Rotation set (30–330°) + Gaussian noise + brightness ±(0.6/1.3)
+- imagePreprocessing: Brightness pre-processing (illumination mitigation)
+- classifiers: Enhanced YOLOv5
+- algorithms: CNN
+- performanceMetrics: AP 86.3% / R 79.4% / 92 FPS (+5.0pp AP, +6.1pp R over vanilla 81.3/73.3); ablation: head +3.2/+4.3, SIoU +1.4/+1.7, soft-NMS +0.2/+3.1
+- observationDays: TBD
+- crossLocationTesting: No
+- generalizationEvidence: D (no cross-testing)
+- generalizationType: 8A only
+- mainLimitation: Overlapping/complex-situation category confusion; unstable UAV altitude (trees/wires/birds); site ambiguity
+- notes: Auto-expansion batch 7 (backward: Reinhardt P033 citation). Ablation-disciplined small-target design — RQ2 value; DO NOT cite until sea-vs-inland confirmed
+- rqMapping: RQ2
+- sourceType: Original Study
+- included: Yes (provisional on waterBody confirmation; revert to pending if marine)
+
+### P042 — van Emmerik et al. (2025), Environ Res: Water 1:045001 (Saigon hyacinth-plastic YOLOv8)
+- paperID: P042
+- title: Plastic pollution and water hyacinths consistently co-occur in the lower Saigon river
+- journal: Environmental Research: Water 1:045001 (doi 10.1088/3033-4942/ae10d7 — confirmed 2026-09-08)
+- authors: van Emmerik, Janssen, Jia, Bui, Taormina, Nguyen, Schreyers (Janssen + van Emmerik co-first)
+- year: 2025
+- country: Vietnam (lower Saigon, HCMC; 5 sites over 42km, dry season Feb–Apr 2023)
+- waterBody: Saigon River (tropical; ebb+flood tides covered; 3 fixed-cam + 2 UAV sites)
+- wasteType: Macroplastic ≥2.5cm (85% plastic) + water hyacinths (dual-target detection)
+- imageSource: Fixed bridge cameras + UAV (14,925 images; min detectable ~2cm)
+- imageType: RGB (presumed — confirm)
+- datasetSize: ~15k images (14,925 collected per early record / 15,495 per full text — minor discrepancy flagged); 69k plastics + 57k hyacinths (one of largest river datasets)
+- datasetName: TBD (release TBD)
+- datasetPublic: TBD
+- task: Object Detection (dual: plastic + hyacinth; patch-size measurement)
+- model: Custom COCO-fine-tuned YOLOv8 (transfer learning, not from scratch)
+- backbone: YOLOv8 (variant TBD)
+- pretrained: Yes (COCO)
+- transferLearning: No cross-site (single-river multi-site deployment)
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: YOLOv8
+- algorithms: CNN
+- performanceMetrics: Hyacinths carry 73% plastics (58–82%/site); 197× concentration in hyacinths (781× most downstream); 1.3% cover → majority transport
+- observationDays: ~8 weeks (4 two-week periods; 3–4h morning+afternoon)
+- crossLocationTesting: Multi-site same-river deployment (5 locations, per-site ratios) — no held-out-river test
+- generalizationEvidence: B (multi-site deployment with per-site metrics = indirect; same river)
+- generalizationType: 8A (within-river multi-site)
+- mainLimitation: Dry-season only; flow velocity unmeasured; capture-release dynamics unresolved (future work); hyacinth-as-space-proxy + joint-removal proposals untested
+- notes: Auto-expansion batch 7 (keyword). Quantifies Schreyers-2021 context (78%) at river scale with DL — vegetation-confound flagship for challenges; scale (69k items) sets dataset-size benchmark
+- rqMapping: RQ1, RQ2, RQ5, RQ6
+- sourceType: Original Study
+- included: Yes
+
+### P043 — MP-FasterRCNN Yellow River (2024, JOCA 1001-9081.2023030368)
+- paperID: P043
+- title: Faster-RCNN water-floating garbage recognition based on multi-scale feature and polarized self-attention (MP-Faster-RCNN)
+- journal: Journal of Computer Applications (JOCA, Chinese peer-reviewed — venue prestige TBD)
+- authors: TBD (retrieve from full text)
+- year: 2024
+- country: China (Yellow River, Lanzhou section; small-target dataset)
+- waterBody: Yellow River (Lanzhou part)
+- wasteType: Small-target water-floating garbage, variable morphology (8-class table; classes TBD)
+- imageSource: TBD (platform unspecified — confirm)
+- imageType: TBD (presumed RGB — confirm)
+- datasetSize: TBD (new Lanzhou dataset; counts TBD)
+- datasetName: Lanzhou Yellow River small-target set (release TBD)
+- datasetPublic: TBD
+- task: Object Detection
+- model: MP-FasterRCNN (atrous-ResNet50 instead of VGG16 + multi-scale 3×3/1×1 RPN + polarized self-attention) vs vanilla Faster R-CNN
+- backbone: ResNet-50 + atrous conv
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: MP-FasterRCNN
+- algorithms: CNN + polarized self-attention
+- performanceMetrics: mAP 65.02%→71.39% (+6.37pp); recall 70.56→74.16; 521MB→108MB; faster convergence; per-class 30–87%
+- observationDays: TBD
+- crossLocationTesting: No
+- generalizationEvidence: D (no cross-testing)
+- generalizationType: 8A only
+- mainLimitation: Two-stage latency (20.1 vs 27.5 speed units — confirm metric); platform/dataset details TBD
+- notes: Auto-expansion batch 7 (keyword). Two-stage + attention strand (complements one-stage dominance); first Yellow River row — geographic value
+- rqMapping: RQ2
+- sourceType: Original Study
+- included: Yes
+
+### P044 — Tomas et al. (2022), IEEA (ACM): Scaled-YOLOv4 on Water Surface
+- paperID: P044
+- title: Trash Detection for Computer Vision using Scaled-YOLOv4 on Water Surface
+- journal: Proc. IEEA 2022 (ACM, peer-reviewed conference — prestige TBD)
+- authors: Tomas, Celis, Chan, Flores
+- year: 2022
+- country: TBD (likely Philippines — author team; site unspecified)
+- waterBody: Water surface (site TBD — confirm river/canal vs open water)
+- wasteType: Trash on water surface (classes TBD)
+- imageSource: TBD (phone images per P008 citation — confirm)
+- imageType: TBD (presumed RGB — confirm)
+- datasetSize: TBD
+- datasetName: TBD (not released)
+- datasetPublic: TBD
+- task: Object Detection
+- model: Scaled-YOLOv4
+- backbone: Scaled-YOLOv4 CSP (confirm)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: Scaled-YOLOv4
+- algorithms: CNN
+- performanceMetrics: TBD (retrieve from full text; YOLO-family success cited in P008)
+- observationDays: TBD
+- crossLocationTesting: TBD
+- generalizationEvidence: D-provisional (no cross-testing evidence retrieved; full-text verification required)
+- generalizationType: 8A (pending confirm)
+- mainLimitation: TBD (thin evidence — priority PDF pass)
+- notes: Auto-expansion batch 8 (backward: P008 citation). Cited as YOLO-from-phone-images success — RQ1 phone-platform value if confirmed
+- rqMapping: RQ2 (pending RQ1 confirm)
+- sourceType: Original Study (conference)
+- included: Yes (provisional on waterBody confirmation)
+
+### P045 — Vandaele et al. (2024), J Hydro: DL trash-screen blockage, UK 54 cameras
+- paperID: P045
+- title: Deep learning for automated trash screen blockage detection using cameras: Actionable information for flood risk management
+- journal: Journal of Hydroinformatics (peer-reviewed)
+- authors: Vandaele, Dance, Ojha
+- year: 2024
+- country: UK (Environment Agency; 54 trash-screen cameras)
+- waterBody: Engineered river infrastructure (trash screens; river-adjacent — scoping note below)
+- wasteType: Mixed screen debris (branches, misc trash incl. plastic bottles; blockage state, not item detection)
+- imageSource: Fixed trash-screen cameras (80,452 labeled images; blocked/clear/other)
+- imageType: RGB (presumed — confirm)
+- datasetSize: 80,452 images / 54 cameras (open release + trained weights)
+- datasetName: UK trash-screen dataset (open)
+- datasetPublic: Yes (data + weights released)
+- task: Classification (blockage state) + Similarity matching + Anomaly detection
+- model: ResNet-50 binary classifier vs Siamese (5–10 shot) vs unsupervised anomaly detector
+- backbone: ResNet-50
+- pretrained: TBD (confirm)
+- transferLearning: Few-shot Siamese adaptation per new camera (5 images, +5% bal-acc)
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: ResNet-50 / Siamese net
+- algorithms: CNN + metric learning
+- performanceMetrics: Bal-acc 0.88 (binary, on unseen cameras); Siamese +5% with 5 shots, better low-FAR trade-off; anomaly detector worst (FOV variety blamed)
+- observationDays: TBD (multi-camera archive)
+- crossLocationTesting: Yes — tested on cameras NOT in training (cross-camera deployment) with metrics + few-shot adaptation curve
+- generalizationEvidence: A (explicit cross-camera generalization test, quantitative; few-shot efficiency measured)
+- generalizationType: 8B (cross-site deployment) + 8F note (few-shot adaptation)
+- mainLimitation: Task is blockage state (not item detection); image/task mismatch vs river-litter rows (state in notes); human-in-loop retained for clearing decisions
+- notes: Auto-expansion batch 8 (keyword). SCOPING: adjacent (infrastructure debris, not floating-litter detection) — synthesize as deployment/few-shot exemplar, NOT as litter-detection evidence; only open-weights row besides P017
+- rqMapping: RQ4, RQ5, RQ6
+- sourceType: Original Study
+- included: Yes (scoped adjacent)
+
+### P046 — Nguyen & Tran (2022), IEEE NICS: Efficient YOLOv5s floating trash
+- paperID: P046
+- title: An Efficient Model for Floating Trash Detection based on YOLOv5s
+- journal: Proc. IEEE NICS 2022 (peer-reviewed conference)
+- authors: T.-T. Nguyen, H.-L. Tran (Vietnam)
+- year: 2022
+- country: TBD (Vietnam team; site/benchmarks unspecified in retrieved text)
+- waterBody: TBD (floating trash; water type unspecified — confirm)
+- wasteType: Floating trash (classes TBD)
+- imageSource: TBD (confirm)
+- imageType: TBD (presumed RGB — confirm)
+- datasetSize: TBD (multiple benchmarks claimed; counts TBD)
+- datasetName: TBD (not released)
+- datasetPublic: TBD
+- task: Object Detection (lightweight)
+- model: Efficient YOLOv5s (lightweight arch; comparative vs original across benchmarks)
+- backbone: YOLOv5s (modified)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: Efficient YOLOv5s
+- algorithms: CNN
+- performanceMetrics: TBD ("comparative performance" claimed; numbers TBD from full text)
+- observationDays: TBD
+- crossLocationTesting: TBD (multi-benchmark claim unconfirmed)
+- generalizationEvidence: D-provisional (no cross-testing evidence retrieved)
+- generalizationType: 8A (pending confirm)
+- mainLimitation: Thin evidence — priority PDF pass (metrics/sites/platforms all TBD)
+- notes: Auto-expansion batch 8 (backward: Vandaele citation). Lightweight strand with P023/P028/P029 if confirmed
+- rqMapping: RQ2
+- sourceType: Original Study (conference)
+- included: Yes (provisional on waterBody confirmation)
+
+### P047 — Trinh et al. (2022), IEEE NICS: Fixed-camera Mask R-CNN riverbank quantification
+- paperID: P047
+- title: A Model for Floating Garbage Detection and Quantification Using Fixed Camera
+- journal: Proc. IEEE NICS 2022 (peer-reviewed conference)
+- authors: Trinh, Hoa, Le (Vietnam)
+- year: 2022
+- country: TBD (Vietnam team; riverbank site unspecified)
+- waterBody: Riverbank (fixed-camera; bird's-eye calibrated)
+- wasteType: Floating garbage (classes TBD; cites Wolf APLASTIC-Q + FloW)
+- imageSource: Fixed camera (+ autonomous surface vehicle mention — confirm platform)
+- imageType: RGB (presumed — confirm)
+- datasetSize: TBD
+- datasetName: TBD (not released)
+- datasetPublic: TBD
+- task: Object Detection + Quantification (5-step pipeline; calibrated bird's-eye → counts)
+- model: Pre-trained Mask R-CNN
+- backbone: TBD (confirm)
+- pretrained: Yes (pre-trained Mask R-CNN)
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: Bird's-eye calibration
+- classifiers: Mask R-CNN
+- algorithms: CNN (instance segmentation architecture used for OD+quantification)
+- performanceMetrics: TBD ("potential" claimed; numbers TBD from full text)
+- observationDays: TBD
+- crossLocationTesting: TBD
+- generalizationEvidence: D-provisional (no cross-testing evidence retrieved)
+- generalizationType: 8A (pending confirm)
+- mainLimitation: Thin evidence — priority PDF pass
+- notes: Auto-expansion batch 8 (backward: Wolf/FloW citations). Fixed-cam quantification strand (P007/P024/P031/P032/P038) if confirmed
+- rqMapping: RQ2, RQ6 (pending confirm)
+- sourceType: Original Study (conference)
+- included: Yes (provisional on waterBody confirmation)
+
+### P048 — Cheng et al. (2021), ICCV: FloW inland-waters USV dataset + benchmark
+- paperID: P048
+- title: "FloW: A Dataset and Benchmark for Floating Waste Detection in Inland Waters"
+- journal: Proc. IEEE/CVF ICCV 2021:10953–10962 (top-tier peer-reviewed conference)
+- authors: Y. Cheng, J. Zhu, M. Jiang, J. Fu, C. Pang, P. Wang, Sankaran, Onabola, Y. Liu, D. Liu, Bengio
+- year: 2021
+- country: TBD (inland waters USV collection; sites unspecified in retrieved text)
+- waterBody: Inland waters (USV viewpoint; diverse illumination/wave/range/angle)
+- wasteType: Floating wastes (5,271 labels; small objects >50%)
+- imageSource: USV (unmanned surface vehicle) + mmWave radar (FloW-RI)
+- imageType: RGB + radar (multimodal; first radar row)
+- datasetSize: FloW-Img 2,000 imgs/5,271 wastes (6:4 split) + 200 unlabeled videos (20k+ frames) + FloW-RI 4,000 synced radar-image frames
+- datasetName: FloW (FloW-Img + FloW-RI)
+- datasetPublic: Likely Yes (benchmark release convention; verify URL)
+- task: Object Detection (+ tracking-ready videos; radar fusion supported)
+- model: Benchmark: DSSD / RetinaNet / YOLOv3 / Faster R-CNN / FPN / Cascade R-CNN (+ radar detectors)
+- backbone: Various (confirm)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: Benchmark suite (used downstream by P014 on Flow-Img: AP 92.18%)
+- algorithms: CNN (+ radar)
+- performanceMetrics: "Relatively low" across all 6 detectors (exact mAP TBD); small-object split harder than UAV-BD; GTX 1070 FPS recorded
+- observationDays: N/A (dataset collage)
+- crossLocationTesting: No (single-benchmark eval)
+- generalizationEvidence: D (dataset/benchmark paper; no cross-testing)
+- generalizationType: 8A only
+- mainLimitation: Low baseline accuracy (honest benchmark); exact numbers TBD from full text
+- notes: Auto-expansion batch 8 (backward: P014/P047 citations). FIRST USV-viewpoint + FIRST radar-modality + FIRST ICCV-tier dataset row; enables P014 — cite dataset→method lineage
+- rqMapping: RQ1, RQ2, RQ6 (benchmark/small-object challenge)
+- sourceType: Dataset + Benchmark (original)
+- included: Yes
+
+### P049 — Renfei et al. (2023), Deqing improved-SSD + JSUESE tracking companion
+- paperID: P049
+- title: Intelligent Detection of Floating Objects on Water Surface Based on Deep Learning (+ Deqing multi-camera improved-SSD study)
+- journal: Advanced Engineering Sciences 55(3):165–174 (peer-reviewed)
+- authors: R. Chen, Y. Peng, J. Wu et al.
+- year: 2023
+- country: China (Deqing water conservation demonstration zone; multi-location cameras)
+- waterBody: Waterways (Deqing zone; camera network)
+- wasteType: Floating objects/items (classes TBD)
+- imageSource: Fixed multi-location cameras (network)
+- imageType: RGB (presumed — confirm)
+- datasetSize: TBD
+- datasetName: TBD (not released)
+- datasetPublic: TBD
+- task: Object Detection + Tracking (improved SSD + adaptive filtering)
+- model: Improved SSD (+ tracking companion: F1 95.86/94.74%, 64 FPS, 6.27MB, 0.75 GFLOPs)
+- backbone: TBD (confirm)
+- pretrained: TBD
+- transferLearning: No
+- augmentation: TBD
+- imagePreprocessing: TBD (adaptive filtering for tracking)
+- classifiers: Improved SSD
+- algorithms: CNN
+- performanceMetrics: Avg accuracy 91.1% (Deqing multi-cam study); tracking F1 95.86/94.74%
+- observationDays: TBD
+- crossLocationTesting: Multi-location camera network (same zone; aggregated reporting)
+- generalizationEvidence: B-provisional (multi-location deployment = indirect; per-site metrics unconfirmed — verify)
+- generalizationType: 8A (pending confirm)
+- mainLimitation: Thin evidence (two citations fused; full-text pass required); EAAI-UDA + ESWA-multi-camera companions NOT merged (separate future rows)
+- notes: Auto-expansion batch 8 (backward: P037-paper citation). Camera-network deployment strand with P007/P032
+- rqMapping: RQ1, RQ2 (pending RQ5 confirm)
+- sourceType: Original Study
+- included: Yes (provisional on detail confirmation)
+
+### P050 — Li et al. (2022), J Cleaner Production (135816): DL floating-litter cleanup + recovery
+- paperID: P050
+- title: An accurate and adaptable deep learning-based solution to floating litter cleaning up and its effectiveness on environmental recovery
+- journal: Journal of Cleaner Production 2022 (peer-reviewed; published Jan 2023 per record — year TBD 2022/23, use 2022 per doi record pending verification)
+- authors: Q. Li, Z. Wang, G. Li, C. Zhou, P. Chen, C. Yang (full list TBD)
+- year: 2022
+- country: TBD (sites unspecified in retrieved text)
+- waterBody: TBD (floating-litter cleanup sites — confirm river vs lake vs coastal)
+- wasteType: Floating litter (cleanup + environmental-recovery framing; classes TBD)
+- imageSource: TBD (confirm)
+- imageType: TBD (presumed RGB — confirm)
+- datasetSize: TBD
+- datasetName: TBD (not released)
+- datasetPublic: TBD
+- task: Object Detection (cleanup-application + recovery-effectiveness angle)
+- model: TBD (DL solution; architecture TBD from full text)
+- backbone: TBD
+- pretrained: TBD
+- transferLearning: TBD ("adaptable" claim — verify mechanism)
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: TBD
+- algorithms: CNN (presumed — confirm)
+- performanceMetrics: TBD ("accurate" claimed; numbers TBD from full text)
+- observationDays: TBD
+- crossLocationTesting: TBD
+- generalizationEvidence: D-provisional ("adaptable" in title without retrieved cross-test evidence — full-text verification required; do NOT credit)
+- generalizationType: 8A (pending confirm)
+- mainLimitation: Thin evidence — priority PDF pass (all technical fields TBD)
+- notes: Auto-expansion batch 9 (final-3 closer; backward lead). Cleanup-effectiveness framing is unique RQ6 value if confirmed
+- rqMapping: RQ2, RQ6 (pending confirm)
+- sourceType: Original Study
+- included: Yes (provisional on waterBody confirmation)
+
+### P051 — Chen et al. (2023), EAAI 120:105857 (UDA-SSD floating objects)
+- paperID: P051
+- title: Solving floating pollution with deep learning: A novel SSD for floating objects based on continual unsupervised domain adaptation
+- journal: Engineering Applications of Artificial Intelligence 120:105857 (peer-reviewed; citation verified 2026-09-08 via CMC review + ICICT refs)
+- authors: R. Chen, J. Wu, Y. Peng, Z. Li, S. Hua (citation-verified)
+- year: 2023
+- country: TBD (China presumed — Renfei cluster; confirm)
+- waterBody: TBD (floating objects; Deqing lineage presumed — confirm)
+- wasteType: Floating objects (classes TBD)
+- imageSource: TBD (fixed cameras presumed — confirm)
+- imageType: TBD (presumed RGB — confirm)
+- datasetSize: TBD
+- datasetName: TBD (not released)
+- datasetPublic: TBD
+- task: Object Detection (continual unsupervised domain adaptation)
+- model: Novel SSD + continual UDA (details TBD from full text)
+- backbone: TBD (confirm)
+- pretrained: TBD
+- transferLearning: UDA across domains (mechanism TBD — core RQ4 interest)
+- augmentation: TBD
+- imagePreprocessing: TBD
+- classifiers: UDA-SSD
+- algorithms: CNN + unsupervised domain adaptation
+- performanceMetrics: TBD (numbers TBD from full text)
+- observationDays: TBD
+- crossLocationTesting: UDA implies cross-domain evaluation (unconfirmed — verify)
+- generalizationEvidence: A (UPGRADED 2026-09-08 via author-supplied full snippets: CDA-SSD-FT (VGG16) multi-scenario adaptation — ambient→dynamic light, foggy→heavy rain — with +13.4/+8.3/+9.4% over CM-SSD/D-adapt/PSDA-FRCNN; 82.2% acc, 68.5 FPS, 3.3 GFLOPs/25.3 MB; buffer-replay + info-max loss vs catastrophic forgetting)
+- generalizationType: 8D + 8F notes (pending confirm)
+- mainLimitation: Thin evidence — priority PDF pass (all technical fields TBD)
+- notes: Auto-expansion batch 9; author-snippet verified 2026-09-08. First explicit UDA row — RQ4 continual-adaptation flagship; companion ESWA-2025 multi-camera (P052). Forward leads from snippet refs: double-labelled domain-generalization 2024, ICCCNT-2024 floating-bottles study (pending queue).
+- rqMapping: RQ2, RQ4, RQ5 (pending confirm)
+- sourceType: Original Study
+- included: Yes (provisional on detail confirmation)
+
+### P052 — Chen et al. (2025), ESWA 290:128535 (multi-camera joint detection+tracking)
+- paperID: P052
+- title: "Solutions to floating pollution with deep learning: A multi-camera joint-based method for floating object detection and tracking"
+- journal: Expert Systems with Applications 290:128535 (peer-reviewed)
+- authors: R. Chen, Y. Peng, Z. Li, S. Hua
+- year: 2025
+- country: TBD (China presumed — Renfei cluster; confirm)
+- waterBody: TBD (multi-camera floating-object sites — confirm)
+- wasteType: Floating objects (classes TBD)
+- imageSource: Fixed multi-camera network (joint method)
+- imageType: TBD (presumed RGB — confirm)
+- datasetSize: TBD
+- datasetName: TBD (not released)
+- datasetPublic: TBD
+- task: Object Detection + Tracking (multi-camera joint)
+- model: TBD (multi-camera joint DL; architecture TBD from full text)
+- backbone: TBD
+- pretrained: TBD
+- transferLearning: TBD
+- augmentation: TBD
+- imagePreprocessing: TBD (multi-camera association)
+- classifiers: TBD
+- algorithms: CNN + tracking (presumed — confirm)
+- performanceMetrics: TBD (numbers TBD from full text)
+- observationDays: TBD
+- crossLocationTesting: Multi-camera deployment (same-system; per-camera metrics unconfirmed)
+- generalizationEvidence: B-provisional (multi-camera deployment = indirect; verify)
+- generalizationType: 8A/8C notes (pending confirm)
+- mainLimitation: Thin evidence — priority PDF pass (all technical fields TBD)
+- notes: Auto-expansion batch 9 (final-3 closer; 50th paper). Multi-camera-network strand with P007/P032/P049; companion P051
+- rqMapping: RQ1, RQ2 (pending confirm)
+- sourceType: Original Study
+- included: Yes (provisional on detail confirmation)
+
+## Documentation Addendum — Title/Journal Backfill for P001–P012 (2026-09-08)
+- P001: Leveraging UAV Data and Deep Learning Models for Detecting Waste in Rivers — Pati et al. — venue TBD (IEEE Access-format manuscript; base_published_paper/main.tex).
+- P002: Remote Sensing for Monitoring Macroplastics in Rivers: A Review — Marye et al. 2025 — WIREs Water 12:e70020 (review, context-only).
+- P003: Deep learning for detecting macroplastic litter in water bodies: A review — Jia et al. 2023 — Water Research 231:119632 (review, context-only).
+- P004: A Deep Learning Model for Automatic Plastic Mapping Using Unmanned Aerial Vehicle (UAV) Data — Jakovljevic et al. 2020 — Remote Sensing 12:1515.
+- P005: Machine learning for aquatic plastic litter detection, classification and quantification (APLASTIC-Q) — Wolf et al. 2020 — Environ Res Lett 15 (page TBD).
+- P006: Detection of River Plastic Using UAV Sensor Data and Deep Learning — Maharjan et al. 2022 — Remote Sensing 14:3049.
+- P007: Automated River Plastic Monitoring Using Deep Learning and Cameras — van Lieshout et al. 2020 — Earth and Space Science 7:e2019EA000960.
+- P008: Advancing Deep Learning-Based Detection of Floating Litter Using a Novel Open Dataset — Jia, Vallendar et al. 2023 — Frontiers in Water 5:1298465.
+- P009: A learning approach for river debris detection — Solé Gómez et al. 2022 — Int J Appl Earth Obs Geoinf 107:102682.
+- P010: Improved YOLO Based Detection Algorithm for Floating Debris in Waterway — Lin et al. 2021 — Entropy 23:1111.
+- P011: Toward Robust River Plastic Detection: Combining Lab and Field-Based Hyperspectral Imagery — Tasseron et al. 2022 — Earth and Space Science (doi 10.1029/2022EA002518) + companion Remote Sens 13:2335 (2021).
+- P012: Trash Detection on Water Channels — Tharani et al. 2021 — ICONIP 2021, LNCS 13108:379–389 (preprint arXiv 2007.04639).
+
+## Agent Workflow for This Table
+1. Assign ID when adding row.
+2. Fill ALL available fields. If unknown, write `TBD` and add to `notes`.
+3. Cross-check with `.bib` file for citation details.
+4. After filling 3-5 papers, review for consistency (e.g., `model` naming conventions).
+5. Before finalizing synthesis, filter by RQ and check for missing fields that are critical.
+
+## File Maintenance
+This file should be maintained as `synthesis/extraction_table/literature_extraction_table.md` (markdown for readability) or exported to `.csv` when needed. Agents should append to this file, not replace it.
+Collection expanded. Target batch: P009 (Solé Gómez 2022), P010 (Lin 2021), P011 (Tasseron 2022), P012 (Tharani 2021) + backward/forward from P003/P004 citations. Threshold: 50 papers before writing.

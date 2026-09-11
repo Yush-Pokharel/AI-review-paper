@@ -1,0 +1,876 @@
+\documentclass{ieeeaccess}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{algorithm}
+\usepackage{array}
+\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+\usepackage{stfloats}
+\usepackage{url}
+\usepackage{verbatim}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{gensymb}
+\usepackage{lipsum}
+
+\usepackage{bm}
+\makeatletter
+\AtBeginDocument{\DeclareMathVersion{bold}
+\SetSymbolFont{operators}{bold}{T1}{times}{b}{n}
+\SetSymbolFont{NewLetters}{bold}{T1}{times}{b}{it}
+\SetMathAlphabet{\mathrm}{bold}{T1}{times}{b}{n}
+\SetMathAlphabet{\mathit}{bold}{T1}{times}{b}{it}
+\SetMathAlphabet{\mathbf}{bold}{T1}{times}{b}{n}
+\SetMathAlphabet{\mathtt}{bold}{OT1}{pcr}{b}{n}
+\SetSymbolFont{symbols}{bold}{OMS}{cmsy}{b}{n}
+\renewcommand\boldmath{\@nomath\boldmath\mathversion{bold}}}
+\makeatother
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+%Your document starts from here ___________________________________________________
+\begin{document}
+% \history{Date of publication xxxx 00, 0000, date of current version xxxx 00, 0000.}
+\doi{-}
+
+\title{Leveraging UAV Data and Deep Learning Models for Detecting Waste in Rivers}
+\author{\uppercase{Bipun Man Pati}\authorrefmark{1},
+\uppercase{Bishnu Khadka}\authorrefmark{1}, 
+\uppercase{Ukesh Thapa}\authorrefmark{1},
+\uppercase{Sujay Kumar Pal}\authorrefmark{1},
+\uppercase{Subarna Sakya}\authorrefmark{2},
+\uppercase{Anup Shrestha}\authorrefmark{3},
+\uppercase{Hemant Joshi}\authorrefmark{4},
+\uppercase{Dhiraj Pyakurel}\authorrefmark{5},
+and \uppercase{Prem Chandra Roy}\authorrefmark{5}}
+
+\address[1]{AI Research Center, Advanced College of Engineering and Management, Tribhuvan University, Kathmandu, Nepal}
+\address[2]{Department of Electronics and Computer Engineering, Pulchowk Campus, Tribhuvan University, Kathmandu, Nepal}
+\address[3]{Department of Electronics and Computer Engineering, Thapathali Campus, Tribhuvan University, Kathmandu, Nepal}
+\address[4]{Department of Computer Engineering, Universal Engineering and Science College, Pokhara University, Kathmandu, Nepal}
+\address[5]{Department of Electronics and Computer Engineering, Advanced College of Engineering and Management, Tribhuvan University, Kathmandu, Nepal}
+
+\markboth
+{B. Man Pati \headeretal: Leveraging UAV Data and Deep Learning Models for Detecting Waste in Rivers}
+{B. Man Pati \headeretal: Leveraging UAV Data and Deep Learning Models for Detecting Waste in Rivers}
+
+\corresp{Corresponding author: Bishnu Khadka (e-mail: bishnu.khadka@acem.edu.np).}
+
+\begin{abstract}
+The growing problem of riverine waste pollution threatens water sustainability in Nepal, which is driven largely by rapid urban development and inadequate waste management. This study presents the first comparative evaluation of object detection and segmentation models for automated waste detection using novel UAV-captured imagery datasets. We introduce four datasets, two for object detection and two for segmentation in the Bishnumati and Bagmati rivers. We evaluated three training strategies—training from scratch, full-model fine-tuning, and fine-tuning with frozen layers—and assessed model generalizability through cross-river transfer learning. The study showed that fine-tuning pretrained weights is a better approach for training segmentation models, whereas freezing pretrained backbone layers is better for object detection. DeepLabv3+, trained by fine-tuning pretrained models, performed better than object detection models for waste detection, with precision and recall scores of 0.915 and 0.934 for Bagmati, and 0.913 and 0.939 for Bishnumati. Furthermore, transfer learning across locations improves object detection mAP scores and refines segmentation mask predictions, thereby uncovering previously undetected waste items. The transfer learning fine-tuned DeepLabv3+ model obtained an mIoU score of 0.849 for Bagmati to Bishnumati and 0.841 for Bishnumati to Bagmati transfer learning. Our novel datasets and methodological blueprint for optimizing deep learning training strategies in riverine environments offer a scalable and adaptable pipeline for automated waste monitoring in riverine environments, particularly for regions with limited surveying infrastructure and geographically proximate rivers where transfer learning can be effectively applied.
+\end{abstract}
+
+\begin{keywords}
+Deep Learning, Object Detection, Nepali River, Segmentation, Comparison, Transfer Learning, Uncrewed Aerial Vehicle (UAV), Environmental Monitoring, Floating Plastic, Solid Waste
+\end{keywords}
+
+\titlepgskip=-21pt
+
+\maketitle
+\section{Introduction}
+\label{sec:introduction}
+\PARstart{W}{aste} production is steadily increasing globally, driven by urbanization and population growth. In 2016 alone, an estimated 2.01 billion tons of municipal solid waste were generated, and without intervention, this figure is projected to reach 3.40 billion metric tons by 2050 \cite{RePEc:wbk:wbpubs:30317}. A significant portion of this waste comes from food and green waste, which accounts for over 50 percent of the total solid waste in low- and middle-income countries, whereas plastic accounts for approximately 14 percent. In addition, unlike food and green waste, plastics are not biodegradable. Since the start of plastic production in the 1950s, the total virgin plastic produced has reached 8.3 billion metric tons, of which 60\% has been discarded in natural ecosystems \cite{geyer2017production}. This highlights the global magnitude of plastic pollution. Although mass production remains the leading cause of plastic pollution, secondary sources such as agriculture \cite{cui2024impact, tian2024understanding, wang2024operating, chen2024global, lakhiar2024plastic} and industrial activities \cite{karakurt2025microplastics} are also significant. Moreover, the utilization of plastics in various sectors, such as construction, transportation, and healthcare, further amplifies this problem \cite{nayanathara2024world}. Plastic pollution, especially in water bodies, causes many problems, including environmental damage, economic losses, and adverse effects on human health \cite{GonzlezFernndez2021FloatingML, Lebreton2018EvidenceTT, Emmerik2019PlasticDI}.
+
+Rivers are a major contributor to marine plastic pollution, with estimated riverine plastic emissions of 1.15 to 2.7 million tons into the ocean each year \cite{Lebreton2017RiverPE}. In line with this, Meijer et al. \cite{Meijer2021MoreT1} identified that more than 1000 rivers account for approximately 80\% of global riverine plastic emissions into the ocean. These findings highlight the importance of waste management in the rivers worldwide.
+
+Recent studies have highlighted the complexity of microplastic transport in freshwater systems, where the polymer density and water flow govern their dispersion and deposition \cite{stride2024quantifying}. Additionally, the behavior of microplastics in freshwater depends on the intricate interplay between microplastic dynamic behaviors, local hydrodynamics, and water chemistry, which leads to the continuous evolution of microplastic physicochemical properties (e.g., size and surface charge) through interactions with suspended solids, organic natural matter, and microorganisms under light and wind exposure \cite{guo2024microplastics}. This additional complexity makes the accurate prediction of their transport and fate particularly difficult. A recent systematic review emphasized that citizen science is a promising tool for studying plastic pollution in freshwater. However, the lack of standardized methodologies for recruiting, training, and engaging citizen scientists limits the expansion of citizen science beyond the contributory model, in which participants primarily collect data without deeper involvement in the research process \cite{cook2021goals}. The disposal of solid waste close to water bodies is becoming a threat to the potability of water and survival of aquatic organisms \cite{Acholonu2023SolidWD}. For example, Devkota et al. \cite{Devkota2006ImpactOS} found that the haphazard disposal of solid waste on the banks of the Bishnumati River, one of our main study sites, has severely deteriorated the surface and subsurface water quality.
+
+Traditional methods for detecting and quantifying waste in rivers include in situ methodologies such as sampling and visual observations \cite{Emmerik2019PlasticDI, hardesty2017estimating, grosvik2018assessment}. Manual waste audits are based on trained personnel who classify debris along the riverbanks. Although these methods are accurate, their labor-intensive nature makes them prone to error. The significant variation in inspection performance results is due to the subjective judgment of inspectors \cite{10.1007/978-3-031-17629-6_72}. In addition, in situ methods are poorly suited for addressing the scale of riverine plastic pollution. However, advances in remote sensing and Machine Learning (ML) offer solutions to these limitations.
+
+Remote sensing addresses the spatial and temporal limitations of traditional methods, whereas ML overcomes human bottlenecks in data analysis, thereby enabling automatic detection. Methods based on Computer Vision (CV) have been proposed to replace these in situ methodologies \cite{kylili2020intelligent, van2020automated}. However, CV-based methods often rely on high-resolution images to obtain accurate results. Such images can be obtained using satellite imagery. Conversely, acquisition of high-resolution satellite imagery is expensive. Uncrewed Aerial Vehicles (UAVs) serve as a flexible and economical alternative for aerial imagery without compromising image quality. This is because UAVs provide images with high resolution and high image acquisition frequency \cite{Yao2017EstimationOW}. In addition, UAVs are suitable for resource management and visual inspection tasks that require high labor costs or may affect personal safety, such as bridge condition assessments, insulator inspections, early wildfire detection, and bridge damage detection \cite{cheng2024methods}.
+
+UAVs are categorized according to altitude (low or high) and size (small, medium, or large), where each has a unique altitude and range capability. High-altitude UAVs cover large areas quickly, whereas low-altitude UAVs capture high-resolution images, which are ideal for detailed analysis. Researchers have used UAVs at various altitudes; however, lower altitudes are typically used for higher resolutions and as a tool for more precise object detection, specifically for applications such as the detection of waste in rivers. Factors such as camera focal length, flight altitude, and Ground Sampling Distance (GSD) significantly affect the quality of the images. Therefore, in this study, we employ a low-altitude drone to obtain high-resolution images tailored to the requirements of precise waste detection.
+
+However, rigorous interpretation of aerial images from UAVs by humans is time-consuming, error-prone, and expensive. Modern Deep Learning (DL) methods, a subset of ML, particularly those utilizing Convolutional Neural Networks (CNNs), have emerged as a preferable alternative \cite{isprs-archives-XLII-2-419-2018}. DL is preferred owing to its ability to achieve State-Of-The-Art (SOTA) performance in many fields of science and technology, including water resource management and engineering \cite{sit2020comprehensive}. DL methodologies can handle a wide range of conditions, including scale transformations, background changes, occlusion, clutter, and low resolution, as well as the ability to use extensive image augmentation during training, making them a highly effective technique in contemporary CV \cite{zhao2019object}.
+ 
+In addition, the integration of UAVs with DL methods has revolutionized remote sensing. This synergy allows for the collection of high-resolution data coupled with sophisticated image analysis, thereby fostering advancements in vegetation mapping \cite{Kattenborn2020ConvolutionalNN}, land cover \cite{Li2018DeepLF}, evapotranspiration estimation \cite{Khanal2023IntegrationOU}, and environmental modeling \cite{Joshi2021EnsembleOD} for effective resource management. CNNs have also been shown to be a viable tool for solving both segmentation and object recognition tasks for remote sensing data, particularly with the geometrically corrected nature of ortho imagery.
+
+Although the integration of UAVs with DL systems holds significant transformative potential, the application of DL models for riverine waste detection is contingent on overcoming certain challenges. First, DL approaches rely strongly on enormous quantities of labeled data for training, which are limited for specialized applications such as macroplastic detection \cite{Jia2023DeepLF}. Second, class imbalance—a shortage of litter items relative to background pixels—can degrade the model performance. Third, the computational expense is high for offline training and online inference. Ultimately, differences in the environmental conditions (i.e., lighting levels, clarity,    and contrast) and configurations of UAV sensors require strong generalizable models \cite{zhao2019object, sit2020comprehensive}. 
+
+A considerable amount of literature has been published on the detection of waste in water bodies using DL, specifically macroplastic litter (plastic items greater than 5 mm) \cite{Jia2023DeepLF}. Among these studies, researchers have predominantly used object detection \cite{Maharjan2022DetectionOR, Pan2022THEAO, w16101373, 9984439, Putra2021LowRD, Zailan2022AnAS, Yang2022DetectionOR, Lin2021ImprovedYB} and segmentation techniques \cite{Tharani2021TrashDO, Jakovljevic2020ADL, Gmez2022ALA, ShijunPAN2024}, which have emerged as the most extensively used approaches to identify and analyze macroplastic litter in rivers. 
+Object detection and segmentation are preferred because they can address the specific issue of macroplastic monitoring. These approaches facilitate accurate spatial localization by producing bounding boxes for trash that can be employed to measure litter density. Segmentation methods offer pixel-level precision by labeling every pixel as waste or non-waste. This ability is necessary for estimating the size, shape, and coverage area of the trash. In addition, these methods are preferred because they can be easily adapted to imagery obtained using UAVs. 
+
+Recent advances in transformer neural networks have redrawn the CV landscape by challenging the monopoly of the CNNs. Transformers, originally developed for Natural Language Processing (NLP) \cite{Vaswani2017AttentionIA}, process images as a sequence of patches and rely on self-attention mechanisms to model long-range dependencies \cite{Dosovitskiy2020AnII}. Vision Transformers (ViTs), such as Swin \cite{Liu2021SwinTH} and DETR \cite{Zhu2020DeformableDD} have achieved SOTA performance on benchmark datasets, outperforming CNNs. DETR delivers performance comparable to the highly optimized Faster Region-based Convolutional Neural Networks (R-CNN) model on the COCO dataset \cite{Carion2020EndtoEndOD}. The Swin Transformer achieved 58.7 box Average Precision (AP) and 51.1 mask AP on the COCO object detection task (test-dev) and 53.5 Mean Intersection Over Union (mIoU) on the ADE20K validation set for semantic segmentation. However, their adoption in riverine waste detection remains limited due to three critical barriers. First, transformers scale quadratically with the input size owing to their self-attention mechanisms, making them resource-intensive for processing high-resolution UAV imagery. Second, they lack inductive biases of CNNs such as translation equivariance and contrast adaptivity. Third, they require extensive labeled datasets or stronger data enhancements for training \cite{Touvron2020TrainingDI}.  
+
+In contrast, CNNs can generalize well from relatively small datasets by incorporating architectural priors. With their local receptive fields and hierarchical structure, these models inherently support the spatial coherence of natural images, thereby providing strong feature extraction performance even with limited training data \cite{Zhao2018ObjectDW}. Given that riverine waste detection is a relatively niche domain with sparse and heterogeneous imagery, CNNs provide a practical trade-off between accuracy and efficiency.
+
+The waste composition and environmental conditions vary dramatically across different geographies. It has been demonstrated in the paper by Mao et al. \cite{Mao2022DeepLN} that nations and regions need to develop a unique dataset that reflects the type of waste found in their respective regions. However, there are no such datasets in the context of the Nepali rivers. One of the biggest challenges in research involving the creation of custom datasets is the size of the dataset. Usually, DL models demand large amounts of data to achieve robust generalization performance. Insufficient training data can lead to overfitting, wherein the model memorizes training examples rather than learning generalizable patterns. This can significantly degrade the ability of the model to make correct predictions on unseen data. To mitigate this problem, the use of pretrained weights as a starting point for training is beneficial. Researchers have utilized pretrained models to overcome the limitations of dataset size. The major advantages of using pretrained weights are as follows: they can greatly improve the baseline performance, thereby allowing the model to be trained from a much more stable starting point; the development time of a model can be reduced drastically; and the overall performance of the model, in particular, generalization, can be improved by exploiting the rich feature representations learned from large-scale datasets \cite{maitra2015cnn}.
+ 
+Currently, the field is divided into two strands: object detection and segmentation. However, there is no consensus regarding the optimal methodology for waste detection. Object detection models excel in real-time litter identification but provide bounding boxes that provide a coarse estimation and fail to quantify waste density. Segmentation architectures, on the other hand, offer pixel-level accuracy but incur high computational costs. The performance comparison between object detection and semantic segmentation has been performed differently in different domains, with metrics selected based on application requirements. In industrial applications, such as metal defect detection, metrics such as accuracy, precision, recall, F1-score, and processing time are used to balance the accuracy and computational efficiency \cite{Usamentiaga2022AutomatedSD}. In the medical domain, metrics such as sensitivity and specificity have been used in addition to precision and recall to combat the clinical risk of FN \cite{Shan2021AutomatedIO}.
+
+However, to the best of our knowledge, a key research gap exists in the application of these metrics for comparative analysis of detection and segmentation models in the context of waste detection within river systems. Furthermore, there has been limited investigation into the use of transfer learning across different rivers, and there is a notable absence of publicly available detection and segmentation datasets for waste detection in Nepali River systems.
+The primary contributions of this study are summarized as follows.
+\begin{enumerate}
+    \item We have compared the performance of the You Only Look Once (YOLO) family of object detection models and semantic segmentation models for river waste detection in two major rivers of Nepal from imagery acquired from low-altitude UAVs.
+    \item We explore the application of transfer learning to assess the adaptability of a detection model trained in one location to another.
+    \item We contribute object detection and binary semantic segmentation datasets for use by the public and evaluation for waste detection in rivers. 
+\end{enumerate}
+
+The remainder of this paper is organized as follows. Section \ref{sec:material_methods} provides the materials and methods used in the study, including the study area, materials used, methodology, and performance indicators of the models. Section \ref{sec:results} then describes the results. The results are discussed in Section \ref{sec:discussion}. In the same section, conclusions and directions for future research are discussed.
+
+\section{Materials and Methods}
+\label{sec:material_methods}
+
+In this section, we describe the study area and the materials and methods adopted to perform experiments on the task of river waste detection from UAV imagery in two locations using DL. 
+
+\subsection{Study Area}
+In this study, we collected aerial imagery of two major rivers in Kathmandu, that is, Bagmati and Bishnumati rivers as shown in Figure \ref{fig:study_site}. The Bishnumati River, situated in the central region of Nepal, is a tributary of the larger Bagmati River. The study area of the Bishnumati River is located at coordinates 27$\degree$ 42.0' N and 85$\degree$ 20.94' E, as shown in Figure \ref{fig:study_site-bishnumati}. The Bagmati River is a part of the Koshi River Basin, which eventually flows into the Ganges Basin. The river basin covers an area of 3750 square kilometers and includes eight districts in Nepal. This research was conducted for this river at a site with coordinates of 27$\degree$, 41.88' N, and 85$\degree$ 18.13' E, as shown in Figure \ref{fig:study_site-bagmati}. Accessibility for data collection, impact on local and worldwide rivers, and the fact that these places are primarily responsible for effluent flow into downstream areas were all taken into account when selecting the sites.
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/khadk1.pdf}
+    \caption{Location of the study site. (Background map: QGIS, 2025)}
+    \label{fig:study_site}
+\end{figure*}
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/khadk2.pdf}
+    \caption{Study area showing Bagmati River, Kathmandu, Nepal. (Background map: Open-StreetMap, 2025)}
+    \label{fig:study_site-bagmati}
+\end{figure*}
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=0.7\textwidth]{Images/khadk3.pdf}
+    \caption{Study area showing Bishnumati River, Kathmandu, Nepal. (Background map: Open-StreetMap, 2025)}
+    \label{fig:study_site-bishnumati}
+\end{figure*}
+
+\subsection{Materials}
+Aerial surveys were performed using a DJI Mavic 3 Enterprise drone with a 20 MP RGB imaging sensor over the Bagmati and Bishnumati Rivers in Kathmandu, Bagmati Province. 
+Photos were taken at a 5280 × 3956 pixel resolution, with ISO values set to 100 over the rivers at a height of 35 m. This enabled us to obtain a GSD of $\leq$ 0.6125 $cm$ over the study sites.
+
+\subsection{Methodology}
+\begin{figure*}
+    \centering
+    \includegraphics[width=0.95\textwidth]{Images/khadk4.pdf}
+    \caption{Methodological framework for assessment of performance of DL architectures for waste detection.}
+    \label{fig:methodology}
+\end{figure*}
+
+In this section, the proposed methodology is outlined and an illustration is provided in Figure \ref{fig:methodology}. First, for data preparation, aerial imagery was split into 256$\times$256 tiles and manually annotated for object detection and segmentation tasks, as detailed in Section \ref{sec:dataset_prep}. Subsequently, the annotated dataset was then split into train, test, and validation sets with a splitting ratio of 80:10:10. We trained the object detection and segmentation models on the Bagmati and Bishnumati datasets. The YOLOv5 and YOLOv7 models were used for object detection (see Section~\ref{sec:OD_selection}), whereas the Fully Convolutional Network (FCN) and DeepLabv3+ models were used for segmentation (see Section~\ref{sec:IS_selection}). The models were trained using the following three approaches. The first approach involves training the model using random weight initialization. This approach is also referred to as training from scratch (S1) and is used interchangeably in this study. The second training approach utilizes transfer learning by fine-tuning the entire model trained on a large generic dataset on the current dataset to leverage previously learned features and improve performance. 
+In other words, we fine-tune pretrained model (S2). 
+Similar to the second approach, the third approach also utilizes transfer learning, however, unlike the second approach, we are not required to fine-tune the entire model. The remaining layers were fine-tuned by freezing certain portions of model (S3). This requires fewer resources than normal training and allows for faster training times. The training strategies and transfer learning evaluation are described in Section \ref{sec:training_stratergy}.
+% This is referred to as the freeze layer of pretrained model (S3). 
+Thereafter, the trained models were evaluated using their respective evaluation metrics based on whether the task was object detection or segmentation. These metrics helped to create a baseline for model performance comparison and identify the best-performing DL model. Better-performing object detection and segmentation models from S1, S2, and S3 were selected for comparison. In addition, these models were fine-tuned on another dataset, that is, transfer learning from one location to another. For instance, a model trained on the Bagmati dataset was fine-tuned on the Bishnumati dataset and vice versa. Finally, the transfer learning performance of this fine-tuning was evaluated.
+
+\vspace{0.3cm}
+\subsubsection{Dataset Preparation}
+\label{sec:dataset_prep}
+As part of the dataset preparation process, we split the images obtained from the UAV into 256$\times$256 pixel tiles. Each of these tiles corresponds to 1.57m$\times$1.57m patches of terrain. These UAV image tiles were sourced from two rivers in Nepal: Bagmati and Bishnumati. Subsequently, the prepared tiles were manually annotated to create two distinct datasets for each river: an object detection dataset annotated with bounding boxes, and a segmentation dataset annotated with binary masks. Our dataset categorizes both biodegradable and non-biodegradable waste under a unified "waste" class, which not only simplifies annotation but also reflects real-world waste accumulation patterns, where distinguishing between degradable and non-degradable materials from aerial imagery is often impractical and less relevant to immediate mitigation efforts. The bounding box and segmentation labels were annotated using Supervisely \cite{supervisely}. We annotated 421 and 343 tiles for the Bishnumati River and Bagmati River datasets, respectively, for each identifiable piece of waste in each image. The datasets represent only floating or above-water wastes. Sample images from the Bishnumati and Bagmati datasets are shown in Figure \ref{fig:dataset_preview}. The manual labeling of waste in an image is a work-intensive task. Although some labeling errors are inevitable because of the difficulty in detecting the substance, labelers have made every effort to identify the waste. Figures \ref{fig:relative-mask-size} and \ref{fig:relative-bbox-size} show the relative segmentation mask and bounding box size, respectively. It is calculated by taking the square root of the product of the mask or bounding box area and the image area. For a detailed overview of the dataset statistics, including the number of annotated tiles, resolution, and the types of annotation, see Table \ref{tab:river-dataset}.
+
+\begin{table}[h]
+\centering
+\caption{Dataset statistics for Object Detection (OD) and Image Segmentation (IS) across Bagmati and Bishnumati rivers.}
+\renewcommand{\arraystretch}{1.2} % Adjusts row height for consistent spacing
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Parameter} & \multicolumn{2}{c|}{\textbf{Bagmati River}} & \multicolumn{2}{c|}{\textbf{Bishnumati River}} \\
+\cline{2-5}
+& \textbf{OD} & \textbf{IS} & \textbf{OD} & \textbf{IS} \\
+\hline
+Annotated Tiles/Images            & \multicolumn{2}{c|}{343}                    & \multicolumn{2}{c|}{421}                       \\
+\hline
+Annotation Types                  & YOLOv5         & Binary-Mask                & YOLOv5         & Binary-Mask                \\
+\hline
+Image Resolution                  & \multicolumn{4}{c|}{256×256}                                                    \\
+\hline
+Total Plastic Instances           & 449            & 444                        & 668            & 556                        \\
+\hline
+Avg. Plastic Objects per Tile     & 1.3090         & 1.2945                     & 1.6342         & 1.3207                     \\
+\hline
+File Format                       & \multicolumn{4}{c|}{JPEG}                                                       \\
+\hline
+Annotation File Format            & TXT            & PNG                        & TXT            & PNG                        \\
+\hline
+Average Object Area $(pixel^2)$   & 0.0990         & 0.0634                     & 0.0773         & 0.0401                     \\
+\hline
+\end{tabular}%
+}
+\label{tab:river-dataset}
+\end{table}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/khadk5.pdf}
+    \caption{Sample images from datasets used for training models for waste detection in rivers. (a) Bagmati River (b) Bishnumati River}
+    \label{fig:dataset_preview}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Images/khadk6.pdf}
+    \caption{Relative segmentation mask size (square root of mask area divided by image area) compared between Bagmati and Bishnumati datasets. Diagram inspired from \cite{Gupta2019LVISAD-relativeSeg}.}
+    \label{fig:relative-mask-size}
+\end{figure}
+
+\begin{figure}[!t]
+    \raggedright
+    \includegraphics[width=0.5\textwidth]{Images/khadk7.pdf}
+    \caption{Relative bounding box size (square root of mask area divided by image area) compared between Bagmati and Bishnumati datasets.}
+    \label{fig:relative-bbox-size}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=0.4\textwidth]{Images/khadk8.pdf}
+\caption{Distribution of object centers in normalized image coordinates for four datasets: Bagmati OD, Bishnumat OD, Bagmati IS,  and Bishnumati OD.  Diagram inspired from \cite{Gupta2019LVISAD-relativeSeg}. Here, OD represents Object Detection, and IS stands for Image Segmentation. }
+\label{fig:object-centers-contour-plot}
+\end{figure}
+
+\vspace{0.3cm}
+\subsubsection{Object Detection Architectures}
+Object detection is a method of locating an object in an image using a bounding box and classifying the object within the bounding box. Before the use of ML in object detection, it was mainly based on classical CV techniques such as template matching, edge detection, and feature-based methods. Object detection transitioned from the use of classical methods to ML-based techniques, such as the Viola-Jones framework, which leverages Haar-like features and cascades for real-time face detection. Even with innovations in ML-based object detection, such as Histogram of Oriented Gradients (HOG) and Deformable Part Models (DPM), which leverage gradient distributions and part-based representations, these methods still face limitations. Most of these methods are specific to the use case and do not have generalization capabilities, which redirected research toward DL-based methods.
+
+Overfeat introduced a DL approach for localization of objects by learning to predict object boundaries \cite{overfeat}. Overfeat pioneered DL-based object detection by combining classification and localization in a single CNN using a multi-scale sliding-window approach. However, its reliance on window size and stride makes localization challenging and increases the computational complexity. To address this, researchers have explored alternatives that focus on processing only Regions Of Interest (ROIs), obtained via region proposal methods (a two-stage approach) or direct regression. This involves finding the ROIs through color contrast and superpixel straddling in the first stage and classifying the resulting proposals using CNNs. R-CNN \cite{RCNN}, Fast R-CNN \cite{FastRCNN}, Faster R-CNN \cite{FasterRCNN}, and Feature Pyramid Network (FPN) \cite{FPN} are examples of region proposal methods, whereas YOLO is the most popular direct regression method. The direct regression method is a one-step method in which region proposals and object detection are carried out in a single step.
+
+YOLO divides the input image into an $S$ × $S$ grid, with each grid responsible for the detection of an object if its center falls in the grid, where $S$ refers to the number of cells (along both width and height) that the image is split into. The original YOLO architecture predicts only two bounding boxes per grid cell and confidence scores for these boxes \cite{Redmon2015YouOL}. The two subvariants introduced by YOLO are fast, with the standard version with 24 convolutional layers running at 45 Frames Per Second (FPS) and a faster version with only nine convolutional layers running at 155 FPS. Despite these real-time speeds, early YOLO variants lagged behind SOTA methods in terms of accuracy owing to limitations such as lower recall and localization errors. YOLO uses the more lightweight GoogLeNet architecture, with only 8.52 billion operations \cite{lin2013network}, as compared to VGG-16 used by earlier detection models. This increased the computational efficiency but at the cost of lower accuracy.
+
+YOLOv2 improved the YOLOv1 architecture and training process, making it faster and more accurate. Specifically, the training process benefited from the integration of batch normalization, skip connections inspired by ResNet, and a higher-resolution input. In addition, the selection of anchor boxes using k-means clustering instead of hand-picked anchor boxes in YOLOv1 enabled the use of dominant sizes of bounding boxes in the dataset as anchor boxes. Although these improvements were significant, YOLOv2 continued to have a low recall \cite{Redmon2016YOLO9000BF}. 
+
+To address this problem, YOLOv3 employs an expanded architecture that uses DartNet53 as the backbone. The use of Spatial Pyramid Pooling (SSP) within the backbone allowed the model to have a broader receptive field, and with the use of FPN, the model could leverage learning from all prior computations and fine-grained features early in the network. Unlike YOLOv2, YOLOv3 predicts classes for each bounding box predicted. In addition, YOLOv3 outputs bounding boxes at three different scales, which allows it to handle small objects. Using binary cross-entropy instead of softmax in YOLOv3 enables multilabel assignment to a single box. Even with the utilization of contemporary technological advancements, YOLOv3 maintains real-time processing capabilities. Transitioning from YOLOv2 to YOLOv3, GFLOPs decreased from 30 to 14 owing to architectural changes; however, the mAP improved from 21\% to 33\%. Despite its better accuracy, YOLOv3's added complexity means that it is no longer considered lightweight \cite{Redmon2018YOLOv3AI}.
+
+Aimed at improving YOLOv3 performance while maintaining real-time capabilities, YOLOv4 has made drastic architectural changes. Consequently, YOLOv4 achieved a fast speed and accuracy with only 66\% of the parameters used by YOLOv3. These architectural changes include the introduction of the “neck” part in the architecture, over the backbone, and head used by YOLOv3. This helped to collect the features of different stages from the backbone and pass them to the head using an SSP structure and a modified PANet architecture. The Cross Stage Partial (CSP) network in the CSPDarknet53 backbone maintained the original accuracy while improving the inference time. The CSP network also solves the problem of learning duplicate gradients for different layers of the network caused by multiple skip connections. This problem is solved by dividing the input into two parts, one of which goes through the usual in-between layers and the other is concatenated after that block. Additionally, YOLOv4 uses multiple anchor points for a single ground truth detection, reducing the imbalance between positive and negative samples and consequently increasing accuracy. The use of the Complete Intersection Over Union (CIoU) loss helped refine the localization accuracy by incorporating factors such as IoU, maximum IoU, and regularization.
+
+The YOLOv5 model, part of the YOLO family of architectures, is a SOTA object detection framework known for its speed and accuracy. YOLOv5, like other versions of the YOLO family of architectures, specializes in detecting and localizing multiple objects within an image by simultaneously predicting bounding boxes and class probabilities. This makes it particularly effective for tasks that require the detection of diverse objects in complex environments, such as waste detection in rivers using aerial imagery. The network is divided into the backbone, neck, and detection head. Owing to the advantage of CSP, the DarkNet53 backbone from YOLOv3 \cite{Redmon2018YOLOv3AI} was modified to utilize the CSP net, resulting in the CSPDarkNet53 backbone for feature extraction. To further enhance this feature extraction process, the neck part of the model is used. YOLOv5 achieves this enhanced feature extraction using Spatial Pyramid Pooling Fast (SPPF), a faster version of SPP, and CSP\_PANet, an adaptation of PANet that uses CSP between some of the PANet layers. It concatenates different-scale feature maps instead of adding them, as performed in PANet. This improves the processing speed of the model, making the feature enhancement process faster. Finally, anchors were used for the detection head of the network, as in the YOLOv3 model.
+
+YOLOv6 is a single-stage object detection framework designed for industrial applications \cite{Li2022YOLOv6AS}. For industrial applications, there is a requirement for high speed, accuracy, and model efficiency. This efficiency was achieved by YOLOv6 with the introduction of the CSPDarknet backbone and the integration of the FPN. The FPN helps the model expand the range of feature scales, assisting the model in improving its accuracy metrics. In addition, the separation of the classification and bounding box regression segregated these crucial steps from the final head \cite{Wang2023MosaicRL}. This architecture improves the performance of the model \cite{Alif2024YOLOv1TY}. 
+
+With a significant improvement in speed and accuracy, YOLOv7 marked a substantial improvement from its predecessors. The YOLOv7 model introduces novel modifications, such as an Extended Efficient Layer Aggregation Network (E-ELAN), model scaling, planned re-parameterized convolution, coarse for auxiliary, and penalty for lead loss. Similar to the YOLOv5 model, the YOLOv7 network is divided into three parts: the backbone, neck, and detection head. The use of E-ELAN enhances the management of the gradient pathway, thereby improving its efficiency. E-ELAN consists of multiple CBS structures. In this context, the CBS structure refers to a sequence comprising a convolutional layer, followed by a batch normalization layer, and subsequently, a SiLU activation function. Additionally, the implementation of model scaling allows scalable models, that is, the ability to create models of varying sizes. This helps maintain the optimal model structure while mitigating hardware resource consumption. The CUC layer is the basic unit of the feature map combination, including convolution, upsampling, and combining feature maps. The REP layer is a novel concept that uses structural reparameterization to adjust the structure to improve the performance of the model. There were multiple heads in the YOLOv7 architecture. The auxiliary head contributed to the training process, whereas the lead head produced the final output. YOLOv7 assigns coarse labels to the auxiliary head and fine labels to the lead head. Therefore, two types of losses were employed (auxiliary and main losses). The weights of the auxiliary heads are updated with the help of assistant loss. Additionally, a technique called reparameterization was used after training to improve the model. This does not increase the training time but improves the inference results. For this study, we used two variants of the YOLOv7 model: the regular YOLOv7 model and a larger YOLOv7x model.
+
+\vspace{0.3cm}
+\subsubsection{Selection of Object Detection Models}
+\label{sec:OD_selection}
+Plastic litter detection has become a vast area of research in which a number of object detection models have been adopted for detecting and locating waste under different environmental conditions.
+
+Fulton et al. \cite{Fulton2018RoboticDO} developed a single-class dataset for training and testing Autonomous Underwater Vehicles (AUVs) for real-time detection using models such as YOLOv2, Tiny-YOLO, Faster R-CNN, and SSD. The results showed that Faster R-CNN had the highest mAP of 81 but was slow, with an inference time of 0.97 FPS. A similar work was proposed by Panwar et al. \cite{Panwar2020AquaVisionAT} in 2022, named the AquaVision model, which uses deep transfer learning to detect underwater waste in bodies of water. The AquaTrash dataset used the RetinaNet architecture with ResNet-50 as the backbone and an FPN, with which the model achieved an mAP of 0.8148.
+
+Tharani et al. \cite{Tharani2021TrashDO} addressed the challenge of the precise identification of garbage, particularly small items, floating on the surface water of urban water channels. Researchers have overcome this challenge by creating a new large-scale dataset of trash in urban water channels and modifying the YOLOv3 model using a novel log-based attention layer to improve the detection of small objects. YOLOv3 with the attention layer had the best performance in the 'easy test set' with an AP of 48.1\%, while for the 'hard test set', YOLOv3 and the proposed model performed similarly. Other models, such as YOLOv3-Tiny and SSD, exhibit very poor performance. The main contributions of this study are the proposal of a new methodology for detecting rubbish in urban water channels, introduction of a log-based attention layer to a new method in this context, and creation of a new public dataset available for that particular task. Potential limitations of this research include the risk of overgeneralization to unseen environments, dataset biases that may affect model performance, and the high computational costs associated with training and deployment.
+
+Kumar et al. \cite{Kumar2020ANY} analyzed the performance of YOLOv3 and YOLOv3-tiny on segregation at source into biodegradable and non-biodegradable waste; YOLOv3 yielded better predictive performance, providing an accuracy of 85.29\%, while YOLOv3-tiny reduced computation time by fourfold. Cordova et al. \cite{Neira2022LitterDW} performed a comparison of SOTA approaches for object detection on the PlastOPol and TACO datasets. In this regard, the results demonstrate that YOLOv5-based detectors attain high AP scores. For instance, YOLOv5x achieved the best AP@0.5, with 84.9\% accuracy for the PlastOPol dataset, whereas for YOLO-v5s, the best AP@0.5 was 79.9\%. Furthermore, YOLO-v5s was considerably faster than other models such as RetinaNet, Faster R-CNN, and EfficientDet-d5, which were increased by 4.87, 5.31, 6.05, and 13.38 times, respectively.
+
+Nunkhaw and Miyamoto et al. \cite{Nunkhaw2024AnIA} proposed an automated waste measurement system that integrated YOLOv5 for object detection and DeepSORT for tracking, which was tested across three scenarios. The results show that YOLOv5 achieved an mAP of more than 88 \% for waste classification into seven categories. Patel et al. \cite{Patel2021GarbageDU} proposed a garbage-detection system that utilized AI-based object detection to identify and locate waste in images and videos. The system was evaluated on five different models: EfficientDet-D1, SSD ResNet-50 V1, Faster R-CNN ResNet-101 V1, CenterNet ResNet-101 V1, and YOLOv5m. Thus, the best performance was obtained by YOLOv5m, which obtained a value of mAP@0.5, amounting to 0.613, thereby ensuring reliable accuracy with increased speed and efficiency.
+
+Yang et al. \cite{Yang2022DetectionOR} proposed YOLOv5\_CBS, an improved version of YOLOv5 through Coordinate Attention (CA), BiFPN, and SloU for efficient waste detection in rivers. The results showed that YOLOv5\_CBS outperformed other models, such as YOLOv5, Faster R-CNN, YOLOv3, and YOLOv4, in terms of recall, average precision, and F1 score. However, the model had increased computational complexity and training time owing to CA.
+
+Maharjan et al. \cite{Maharjan2022DetectionOR} proposed a study on automated detection of plastic detection in rivers using UAV and YOLO-based DL models, aiming to enable efficient monitoring in hard-to-access regions. In this study, various YOLO models, starting from YOLOv1 to YOLOv5, were tested, and it was observed that YOLOv5s achieved a high mAP of 0.81 with low computational costs. The results also show that transfer learning enhances model performance; YOLOv4 had the highest mAP of 0.83 after fine-tuning. This study also provides further information on the strengths of each model, indicating that YOLOv5s offers the best tradeoff between computational complexity and accuracy, while YOLOv4 excels at localization, and YOLOv3 benefits most from transfer learning; thus, a proper choice of models is required to satisfy specific needs for certain use cases and applications.
+
+Building on the findings of Maharjan et al., who conducted a comprehensive evaluation of YOLO models from YOLOv1 to YOLOv5, this research adopts YOLOv5s as one of the primary models. In this regard, YOLOv5s was chosen as the reference model based on its established ability to achieve an optimal balance between computation speed and accuracy, making it suitable for real-time detection applications at the cost of accuracy. However, considering the results presented by Cordova et al. \cite{Neira2022LitterDW}, who demonstrated YOLOv5x's superior AP@0.5 of 84.9\% on the PlastOPol dataset compared to 79.9\% for YOLOv5s, the study also incorporated YOLOv5x to leverage its higher detection accuracy for more demanding scenarios. Although YOLOv5s still has advantages in situations where computational effectiveness is most needed, YOLOv5x is chosen to serve applications where accuracy is most critical.
+
+In this study, alongside YOLOv5s and YOLOv5x, we evaluated YOLOv7x, which demonstrated the highest performance among the YOLOv5, YOLOv6, and YOLOv7 series on the Microsoft Common Objects in Context (MSCOCO) dataset, tested on an RTX 4090 GPU with an image resolution of 640. In addition, we used YOLOv7 with an AP of 51.2\% on the validation set of the MSCOCO dataset (at the same resolution) as the baseline model to allow a comparative analysis with YOLOv7x \cite{Wang2022YOLOv7TB}.
+
+In river waste detection from UAV imagery, objects are often small, occluded, and set against reflective water. This is a challenging scenario, particularly with only a limited number of annotated images. YOLO models use multiscale feature heads and predefined anchors to detect small objects efficiently, whereas DETR uses a fixed number of transformer query slots. This can limit their performance for many tiny objects. A recent underwater detection study found that YOLOv5 achieved a higher mAP and speed than DETR, particularly for small, dense targets \cite{yuan2023performance}. Therefore, YOLOv5 and YOLOv7 (anchor-based, one-stage CNN detectors) are generally better suited than the transformer-based DETR under these conditions.
+
+
+\vspace{0.3cm}
+\subsubsection{Semantic Segmentation Architectures}
+
+Semantic segmentation is a process of assigning a semantic label to each pixel of an image, extending the concept of image classification where the image is classified.
+Semantic image segmentation is derived from image segmentation, where the image is divided into different segments.
+However, semantic segmentation places more emphasis on capturing the semantic information of the spatial context; therefore, segmented areas have semantic meanings.
+
+Remote sensing images collected by various platforms such as satellites, aircraft, and UAVs \cite{Toth2016RemoteSP, Bhardwaj2016UAVsAR} provide a data basis for semantic segmentation. The continuously evolving semantic segmentation technology not only demonstrates superior performance in diverse and data-rich remote sensing problems, but its integration with UAVs also offers a feasible solution for fine-grained scene analysis of low-altitude remote sensing \cite{Bhardwaj2016UAVsAR, Toth2016RemoteSP, Steenbeek2022CNNBasedDM}. 
+
+Prior methods of semantic segmentation used traditional ML techniques, which can be categorized into two categories: pixel- and region-based \cite{Weinland2011ASO}. 
+However, they are heavily dependent on manual feature design and feature threshold setting, which severely limits the use of these methods.
+Additionally, they faced problems when the images contained varied lighting conditions, textures, and object sizes. To overcome these challenges, DL methodologies have been used for semantic segmentation tasks.
+In particular, the use of CNNs and FCNs transforms the semantic segmentation task \cite{Guo2017ARO}.
+
+There are two main challenges in using Deep Convolutional Neural Networks (DCNNs). The reduction in feature resolution is due to the use of convolutional and pooling layers and the presence of objects of multiple scales.
+FCNs have attempted to solve this by aggressively upsampling the reduced feature resolution to recover the original image resolution from the reduced feature maps generated during the encoding process.
+However, aggressive upsampling can lead to the loss of fine-grained details and spatial information, resulting in coarse and inaccurate segmentations.
+To address this challenge, U-Net and SegNet concatenate high-level semantic features with low-level spatial details, whereas DeepLabv1 leverages dilated convolutions and Conditional Random Fields (CRFs) to produce precise and detailed segmentation maps.
+
+Although DeepLabv1 demonstrated promising results, it faced limitations in effectively handling objects of varying scales. To overcome this limitation, DeepLabv2 integrates Atrous Spatial Pyramid Pooling (ASPP) into the DeepLabv1 architecture, improving the model's performance on objects of distinct scales.
+However, Deeplabv2 lacked end-to-end trainability.
+DeepLabv3 addresses this issue by removing smoothing layers and CRFs from the architecture. Conversely, the performance of the network surpassed that of the previous architectures. DeepLabv3 achieved higher performance by the addition of cascade modules of atrous convolutions with varying dilation rates. This cascade of dilated convolutions helps in progressively extracting features from an image while simultaneously keeping the output size sufficiently large to allow for feature localization. 
+
+Additionally, to further refine the segmentation predictions, the architecture of DeepLabv3 was changed to an encoder-decoder network, resulting in the DeepLabv3+ architecture for semantic segmentation.
+In the encoder, separable atrous convolutions, instead of the more classic atrous convolutions, make the network less computationally extensive.
+The use of the decoder is motivated by the need to recover object boundaries, which are not sufficiently clear by employing the encoder (DeepLabv3) alone.
+These additions to the architecture improve the segmentation performance to a greater extent than DeepLabv3+, setting new standards for image segmentation architectures.
+
+\vspace{0.3cm}
+\subsubsection{Selection of Semantic Segmentation Models}
+\label{sec:IS_selection}
+Several studies have explored image segmentation techniques for litter detection in various water bodies, such as seashores \cite{Kylili2021ANP} \cite{Kako2020EstimationOP}, marine surfaces \cite{mifdal-isprs-annals-V-3-2021-285-2021}, underwater marine \cite{Deng2021AnEA}, lakes \cite{Jakovljevic2020ADL} and rivers \cite{Tharani2021TrashDO, Jakovljevic2020ADL, Gmez2022ALA, ShijunPAN2024}. Notably, research has focused on riverine waste detection leveraged various data sources. Furthermore, U-Net \cite{Ronneberger2015UNetCN} and DeepLabv3+ \cite{Chen2018EncoderDecoderWA} are popular CNNs that have found extensive applications in diverse segmentation tasks due to their flexibility in use across various domains \cite{Hadinata2023MulticlassSO}. 
+
+A study by Mifdal et al. \cite{mifdal-isprs-annals-V-3-2021-285-2021} proposed a DL approach that detects floating objects in Sentinel-2 data compared to conventional approaches based on pixel-wise spectral responses. They presented a hand-labeled dataset of floating objects on the sea surface and proposed a CNN model that could learn the spatial characteristics of floating objects with high accuracy (84.28\%) and an F1 score of 0.81. Furthermore, the proposed model outperformed alternative approaches such as SVM, Random Forest, Naive Bayes, and UNet methods. Even such positive results have some limitations; sometimes, this model misclassifies waves, coastlines, ships, or clouds as floating objects.
+
+Deng et al.\cite{Deng2021AnEA} focused on the challenges that exist in underwater garbage detection, such as limitations of methodologies existing at low-resolution images amidst complex marine conditions. The authors have proposed a new, updated Mask R-CNN model by implementing dilated convolution in FPN to enhance the detection of small objects, spatial channel attention to improve focused features, and a re-scoring branch to improve accuracy in instance segmentation. These results also indicate a substantial gain in the overall detection and instance segmentation performances as mAP50 (mAP with an IoU threshold of 0.5) increased by 65\%, which further increased by 9.6\% and 5.0\% in the detection and instance segmentation results, respectively. The contributions of this study include providing a much more accurate method for marine garbage detection, which can improve environmental monitoring. However, there is one particular limitation in this research: the proposed model has a very high computational cost, potentially not allowing real-time usage. This work should be extended to network architecture optimization by reducing the parameters and improving real-time performance.
+
+Jakovljeic et al. \cite{Jakovljevic2020ADL} presented a study that focused on plastic detection and correct classification into various types using ResUNet50 with very high accuracy. The influence of spatial resolution on the classification was investigated, drawing a relationship to the minimum size of detectable plastic with spatial resolution. Their findings stress the key practical implications for the planning of UAV surveys in terms of spatial resolution, flight patterns, and weather conditions. From the perspective of model performance, ResUNet50 had very good scores with respect to plastic detection and class separation, with F1-scores greater than 0.73, whereas ResUNext50 and XceptionUNet tended to overestimate floating plastic by misclassifying water pixels. Limitations include generalization issues and dataset bias, and there is probably some underestimation of the number detected. Nevertheless, this work shows the potential of DL for accurate and efficient mapping of floating plastic using UAV imagery.
+
+Gómez et al. \cite{Gmez2022ALA} proposed a learning-based approach using U-Net, DeepLabv3+, and U-Net3DE for detecting floating plastic debris in rivers from multispectral satellite imagery. Trained on manually labeled datasets, the models achieved SOTA performance with an mIoU of approximately 0.8. While cross-validation showed strong generalization, the performance on the Yangtze River was lower, highlighting the need for more diverse data. Limitations included spatial overfitting and limited dataset diversity. This study provides a novel method and valuable insights into satellite-based river debris monitoring.
+
+The use of FCN and DeepLabv3+ is warranted because of their complementary strengths in resolving riverine-specific issues. FCN's low-weight structure allows for the effective baseline segmentation of high-resolution UAV imagery with minimal computational expense, without spurious positives from shiny water surfaces. DeepLabv3+ adds strength to this with atrous convolutions that preserve spatial accuracy over heterogeneous riverine terrain (e.g., sediment and vegetation), and its decoder refines debris boundaries within cluttered flows, which is most important for discriminating embedded plastics. Although U-Net is widely used for biomedical image segmentation due to its simplicity and effectiveness in relatively structured data, recent comparative studies highlight its limitations when applied to more complex image domains. DeepLabv3+ consistently outperforms U-Net in complex image domains such as pelvic tumor segmentation in MRI images \cite{nobnop2024pelvic} and gastrointestinal tract disease detection \cite{aadarsh2023comparing}. Additionally, compared to U-Net, DeepLabv3+ outperforms U-Net in terms of both speed and accuracy in land cover segmentation of multispectral images \cite{handayanto2024land}. Therefore, DeepLabv3+ was selected over U-Net for this study of waste detection in riverine environments because it demonstrates superior performance, faster inference speed, and more efficient resource utilization.
+
+% \vspace{0.3cm}
+\subsubsection{Transfer Learning}
+Transfer learning in ML is a technique that uses a pretrained model on a source task as an initial point for a new, related task. It transfers knowledge encapsulated within the pretrained model into a new learning problem, particularly the learned features of the data. DL models are known for their capacity and complexity. Typically, they require a significant amount of data for effective training. Transfer learning mitigates this limitation by providing a pretrained base, which significantly reduces the need for massive data collection and accelerates the training process. This has some important advantages: transfer learning, by fine-tuning either some or all of the layers of a pretrained network, can speed up model development compared to training from scratch, thus allowing quicker adaptation to new datasets \cite{maitra2015cnn}. Second, it improves the performance of the model by leveraging the pretrained model's knowledge of relevant data features. This is particularly helpful in scenarios where not much data are available for the target task.
+
+According to the domain adaptation theory, the closer the distribution of features between the source and target domains, the more effectively the transferred model can generalize \cite{mansour2009domain}. This implies that transfer learning assumes that the source and target domains share an underlying structure, such as common low-level features or contextual patterns. This allows the knowledge gained in the source domain to remain useful in the target domain \cite{weiss2016survey}. However, it is also recognized that the transfer learning performance can degrade if the domain shift is too large. This is an issue known as negative transfer. The occurrence of negative transfer may depend on several factors, such as the relevance between the source and target domains and the learner's ability to identify the transferable and beneficial parts of the knowledge across domains \cite{zhuang2020comprehensive}. In this study, both rivers were from the same Koshi River basin. In addition, the Bishnumati River is a tributary of the larger Bagmati River. Therefore, the environments exhibit similar visual characteristics, such as floating debris, water surfaces, vegetation, and background clutter, supporting the assumption of domain similarity.
+
+The two basic approaches to transfer learning are feature extraction and fine-tuning. Feature extraction involves the use of a pretrained model to extract high-level features from the input data. The extracted features were then used to train a new model for specific tasks. This becomes particularly advantageous when the data availability is limited, thereby constraining the target task. On the other hand, fine-tuning involves further training of the pretrained model on the new dataset. This allowed the model to modify and enhance its understanding to adapt to the specific characteristics of the intended task. In the process of fine-tuning, certain layers of the pretrained model may be "frozen," indicating that their parameters are not altered, while other layers are adjusted to acquire the skills required for the new task. This technique maintains significant insights gained from the original task while facilitating the adaptation of the model to the distinct demands of the target domain. By leveraging pretrained models, researchers and practitioners can significantly accelerate model development and achieve competitive performance with limited data.
+
+In this study, we employed a transfer learning approach utilizing fine-tuning with and without frozen layers, and compared their performance against training from scratch. These experiments were conducted on datasets collected from the Bagmati and Bishnumati Rivers. Subsequently, the best-performing model from each dataset was further fine-tuned on the opposite dataset to assess cross-domain adaptability. This evaluation encompassed both object detection and semantic segmentation tasks. For object detection, we used pretrained weights on the MSCOCO \cite{Lin2014MicrosoftCC} dataset and freeze the backbone of the model when fine-tuning with frozen layers. For the segmentation task, we used the pretrained weights of a model trained on a subset of the MSCOCO dataset, where only the classes present in the Pascal VOC \cite{pascalvoc} dataset were included for training. We froze the encoder part of the segmentation models when fine-tuning with frozen layers.
+
+% \vspace{0.3cm}
+\subsubsection{Model Training and Transfer Learning Evaluation}
+\label{sec:training_stratergy}
+In these experiments, three different training approaches were adopted: (1) training from scratch, (2) end-to-end fine-tuning of the whole pretrained model, and (3) fine-tuning with frozen layers. The training process for these three approaches is explained in Algorithms \ref{alg:train-from-scratch}, \ref{alg:fine-tuning},  \ref{alg:freeze}. For this study, a batch size of 16 was used for both the object detection and semantic segmentation tasks. For training the object detection models YOLOv5 and YOLOv7, we used the Adam optimizer with a cosine learning rate scheduler. To train the segmentation models FCN and DeepLabv3+, we used a stochastic gradient descent (SGD) optimizer with a polynomial (poly) learning rate scheduler. The same training approach was applied across the models within each task to ensure a fair comparison of their performance. To maintain clarity and consistency, the terms "scratch," "finetune," and "freeze" are used to represent the three training approaches. For the latter, the first $N_1$ layers of the network were frozen, whereas the remaining $N_2$ layers were fine-tuned. The model architecture determines the number of $N_1$: the number of backbone layers in the case of object detection models, but for semantic segmentation models, $N_1$ determines the number of layers in the encoder. For semantic segmentation models, our aim was to freeze the encoder and fine-tune the decoder of the network. Then, the model that performs best in one location according to the evaluation metrics takes part in transfer learning to the other location, and vice versa. For each transferred model, the same performance metrics were computed to compare how different transfer learning strategies generalize in detecting waste across locations. Algorithm \ref{alg:transfer-learning} explains the transfer learning process. We use the following notation: 
+
+\begin{itemize}
+    \item $W_{scratch}$ represents the weights fixed by He initialization, 
+    \item $W_{pretrained}$ represents the pretrained weights for the task,
+    \item $\textit{l}$ denotes the location, namely Bagmati and Bishnumati,
+    \item $\textit{l}^{\prime}$ denotes location where transfer learning is applied,
+    \item $M$ denotes the model to be used for training,
+    \item $M(l)$ denotes the trained model in location $l$,
+    \item $M_{l^{\prime}}$ denotes the model after transfer learning from location $l$,
+    \item $\textit{E}_{\textit{max}}$  denotes the maximum epoch used for training,
+    \item $\textit{P}$ represents the patience used for early-stopping,
+    \item $\textit{b}$ represents the best score, 
+    \item $\textit{c}$ represents the counter,
+    \item $N_1$ represents the number of layers to be frozen, and 
+    \item $N_2$ represents the number of layers that will be unfrozen.
+\end{itemize}
+% \vspace{0.1cm}
+
+\paragraph{Training model from scratch (S1)}
+The following steps were performed to train the model from scratch:
+
+\begin{algorithm}[!ht]
+\caption{Training model from scratch}
+\label{alg:train-from-scratch}
+\begin{algorithmic}[1]
+\REQUIRE $W_{scratch}$, $D_{\textit{l}}$, $E_{max}$, $P$
+\STATE Set the patience $P$ 
+\STATE Initialize $\textit{b} = -\infty$ and $\textit{c} = 0$
+\STATE Create training, validation, and test sets from $D_{\textit{l}}$
+\STATE Initialize model $M$ with  $W_{scratch}$
+\FOR {epoch = 1 to $E_{max}$}
+    \STATE Train $M$ for one epoch using training and validation sets from $D_{\textit{l}}$
+    \STATE Evaluate $M$ on the validation set to get $\text{Eval}_{\text{T},\text{m}}$  
+    \IF{$\text{Eval}_{\text{T},\text{m}} > b$}
+        \STATE Update $b = \text{Eval}_{\text{T},\text{m}}$
+        \STATE Update $M(l)=M$
+        \STATE Reset $c = 0$
+    \ELSE
+        \STATE Increment $c$
+    \ENDIF
+    \IF{$c \geq P$}
+        \STATE Stop training
+        \STATE Test $M(l)$ on test set
+        \STATE Return $M(l)$
+    \ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\vspace{0.2cm}
+
+\paragraph{Training model from pretrained networks by fine-tuning the whole model (S2)}
+The steps taken to train the model from the pretrained networks by fine-tuning the entire model are given in Algorithm \ref{alg:fine-tuning}.
+
+\begin{algorithm}[!ht]
+\caption{Training model from pretrained networks by fine-tuning the whole model (S2)}
+\label{alg:fine-tuning}
+\begin{algorithmic}[1]
+\REQUIRE $W_{pretrained}$, $D_{\textit{l}}$, $E_{max}$, $P$
+\ENSURE $M(l)$
+\STATE Set the patience $P$ 
+\STATE Initialize $\textit{b} = -\infty$ and $\textit{c} = 0$
+\STATE Create Training, validation, and test sets from $D_{\textit{l}}$
+\STATE Initialize model $M$ with  $W_{pretrained}$
+\FOR{epoch = 1 to $E_{max}$}
+    \STATE Train $M$ for one epoch using training and validation sets from $D_{\textit{l}}$
+    \STATE Evaluate $M$ on the validation set to get $\text{Eval}_{\text{T},\text{m}}$  
+    \IF{$\text{Eval}_{\text{T},\text{m}} > b$}
+        \STATE Update $b = \text{Eval}_{\text{T},\text{m}}$
+        \STATE Update $M(l)=M$
+        \STATE Reset $c = 0$
+    \ELSE
+        \STATE Increment $c$
+    \ENDIF
+    \IF{$c \geq P$}
+        \STATE Stop training
+        \STATE Test $M(l)$ on test set
+        \STATE Return $M(l)$
+    \ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+% \vspace{0.2cm}
+\paragraph{Training model from pretrained networks by freezing some layers and fine-tuning the rest (S3)}
+The steps taken to train the model from pretrained networks by freezing some layers and fine-tuning the rest of the network are outlined in Algorithm \ref{alg:freeze}.
+
+\begin{algorithm}[!ht]
+\caption{Training model from pretrained networks by freezing some layers and fine-tuning the rest (S3)}
+\label{alg:freeze}
+\begin{algorithmic}[1]
+\REQUIRE $W_{pretrained}$, $D_{\textit{l}}$, $E_{max}$, $P$
+\ENSURE M(l)
+\STATE Set the patience $P$ 
+\STATE Initialize $\textit{b} = -\infty$ and $\textit{c} = 0$
+\STATE Create Training, validation, and test sets from $D_{\textit{l}}$
+\STATE Initialize model $M$ with  $W_{pretrained}$
+\STATE Freeze the weights of $N_{1}$ layers of the pretrained model $W_{pretrained}$ and unfreeze the rest $N_2$ layers. 
+\FOR{epoch = 1 to $E_{max}$}
+    \STATE Train $M$ for one epoch using training and validation sets from $D_{\textit{l}}$ and $W_{pretrained}$ 
+    \STATE Evaluate $M$ on the validation set to get $\text{Eval}_{\text{T},\text{m}}$  
+    \IF{$\text{Eval}_{\text{T},\text{m}} > b$}
+        \STATE Update $b = \text{Eval}_{\text{T},\text{m}}$
+        \STATE Update $M(l)=M$
+        \STATE Reset $c = 0$
+    \ELSE
+        \STATE Increment $c$
+    \ENDIF
+    \IF{$c \geq P$}
+        \STATE Stop training
+        \STATE Test $M(l)$ on test set
+        \STATE Return $M(l)$
+    \ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+\vspace{0.2cm}
+
+\paragraph{Transfer learning}
+The steps taken to assess the transfer learning from one location to another are outlined in Algorithm \ref{alg:transfer-learning}.
+
+\begin{algorithm}[!ht]
+\caption{Transfer learning Algorithm}
+\label{alg:transfer-learning}
+\begin{algorithmic}[1]
+\REQUIRE $M(l)$, $D_{\textit{l}^{\prime},\textit{e}^{\prime}}$, Maximum epochs $E_{max}$, $P$
+\ENSURE $M_{l^{\prime}}$
+\STATE Set the patience $P$ 
+\STATE Initialize $\textit{b} = -\infty$ and $\textit{c} = 0$
+\STATE Create Training, validation, and test sets from $D_{\textit{l}^{\prime},\textit{e}^{\prime}}$
+\STATE Initialize model $M$ with  $M(l)$
+\STATE Freeze the weights of $N_{1}$ layers of the model trained at the location $l$ with weights $W_{pretrained}$ and unfreeze the rest $N_2$ layers. 
+\FOR {epoch = 1 to $E_{max}$}
+    \STATE Train $M$ for one epoch using training and validation sets from $D_{\textit{l}^{\prime},\textit{e}^{\prime}}$
+    \STATE Evaluate $M$ on the validation set to get $\text{Eval}_{\text{T},\text{m}}$  
+    \IF{$\text{Eval}_{\text{T},\text{m}} > b$}
+        \STATE Update $b = \text{Eval}_{\text{T},\text{m}}$
+        \STATE Update $M_{l^{\prime}}$
+        \STATE Reset $c = 0$
+    \ELSE
+        \STATE Increment $c$
+    \ENDIF
+    \IF{$c \geq P$}
+        \STATE Stop training
+        \STATE Test $M_{l^{\prime}}$ on the test set
+        \STATE Return $M_{l^{\prime}}$
+    \ENDIF
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+
+\subsection{Performance Indicators}
+Different evaluation metrics for object detection and semantic segmentation were used to evaluate the performance of the models. Object detection tasks utilize evaluation metrics such as mAP, precision, and recall, whereas image segmentation uses metrics such as per-pixel precision, per-pixel accuracy, mIoU, and Dice score. However, most of these are based on the following notation. 
+
+\begin{itemize}
+    \item True Positive (TP): The number of correctly detected elements.
+    \item False Positive (FP): The number of erroneously detected elements.
+    \item False Negative (FN): The number of undetected elements.
+\end{itemize}
+
+Here, an element refers to object localization using bounding boxes for object detection tasks, whereas it refers to the pixel-wise classification for binary semantic segmentation tasks.
+
+% \vspace{0.3cm}
+\subsubsection{Performance Indicators for Object Detection}
+For object detection, the calculations of TP, FP, and FN are significantly more complicated than those of semantic segmentation. The outputs of the object detectors are bounding boxes that define detected objects, which can only partially overlap real objects. Thus, whether they should be counted as TP depends on the intersection threshold used. Currently, the most common method is to calculate the IoU for each detected object. The IoU is defined as the ratio of the overlapping region between the detected object and the actual object relative to the area of the union between them, as defined by Equation \ref{equ:iou_eq}. An IoU higher than a certain threshold was counted as positive detection. Otherwise, it was regarded as FP. The threshold used in this study was $0.5$. Based on the threshold, TP, FP, and FN were calculated.
+
+\begin{equation}     
+    \text{IoU} = \frac{\text{Area of overlap between GT and prediction}}{\text{Area of union between GT and prediction}} .
+    \label{equ:iou_eq}
+ \end{equation}
+
+ where, 
+ GT is Ground Truth
+% \vspace{0.1cm}
+
+With this foundation for understanding TP, FP, and FN, a description of precision, recall, and mAP@50 is provided below:
+% \vspace{0.1cm}
+
+\paragraph{Precision}
+It is a performance metric specifically designed to evaluate the proportion of TP predictions among all the predicted positives. This metric is important in assessing the number of FPs. Precision was calculated using Equation \ref{equ:precision}:
+\begin{equation}
+    \text{Precision} = \frac{\text{TP}}{\text{TP}+\text{FP}} .
+    \label{equ:precision}
+\end{equation}
+% \vspace{0.1cm}
+
+\paragraph{Recall}It is a metric to determine the ability of a model to predict actual positive cases. It shows the proportion of TPs detected out of all the actual positive instances. High recall is essential when missing positive cases has significant consequences. Recall was calculated using the following equation \ref{equ:recall}:
+\begin{equation}
+    \text{Recall} = \frac{\text{TP}}{\text{TP}+\text{FN}} .
+    \label{equ:recall}
+\end{equation}
+\vspace{0.1cm}
+
+\paragraph{mAP@50}
+In the context of object detection for binary classification, mAP is calculated by taking the average of the AP across all classes. For binary classification, this reduces to the AP of a single positive class because there are only two classes (positive and negative). AP measures the trade-off between precision and recall for a single class. It is defined as the area under the Precision-Recall (P-R) curve. In practice, this is approximated by summing the precision values at discrete recall thresholds, where the precision changes. Therefore, the mAP is the AP of the positive class.
+
+\vspace{0.3cm}
+\subsubsection{Performance Indicators for Semantic Segmentation}
+\vspace{0.1cm}
+\paragraph{Precision}For segmentation, precision is also calculated using equation \ref{equ:precision}.
+\vspace{0.1cm}
+
+\paragraph{Recall}Similar to recall calculation in semantic segmentation, equation \ref{equ:recall} is used to compute precision for object detection.
+\vspace{0.1cm}
+
+\paragraph{mIoU}  The mIoU for binary semantic segmentation is given in Equation \ref{equ:miou_eq}. 
+\begin{equation}     
+    \text{mIoU} = \frac{\text{TP}}{\text{TP}+\text{FP}+\text{FN}} .
+    \label{equ:miou_eq}
+ \end{equation}
+\vspace{0.1cm}
+
+\paragraph{Dice Score} The Dice score, also known as the F1 Score in the context of binary semantic segmentation, is expressed in terms of the confusion matrix components given in equation \ref{equ:dice_score}.:
+\begin{equation}   
+\text{Dice Score} = \frac{2 \cdot \text{TP}}{2 \cdot \text{TP} + \text{FP} + \text{FN}} .
+\label{equ:dice_score}
+\end{equation}
+
+
+% Tools and Instruments used for Data Analysis
+\vspace{0.5cm}
+\section{Results}
+\label{sec:results}
+In this section, we present the experimental findings on object detection and semantic segmentation for river waste identification using UAV imagery across two geographic locations. First, we report the object detection and segmentation results for different training approaches including training from scratch, fine-tuning, and freezing layers. The top-performing model for each architecture was selected and comparatively evaluated. These selected models were then adapted through transfer learning to the remaining locations that were not used during the initial training. Finally, the performance outcomes of the selected models are summarized, and their capabilities in detecting the smallest and largest object instances are quantified.
+
+
+\subsection{Experimental Results for Object Detection: }
+\begin{table*}[]
+\centering
+\caption{Object Detection performance using different training approaches}
+\begin{tabular}{llcccccccc}
+\hline
+& & & & & &Training &  Inference & Model & Computational\\
+Approach & Dataset & Model & Precision & Recall & mAP@50 & Time  & Time  & Size & Complexity\\
+& & & & & & (h) &  (s) & (MB) & (GFLOPs)\\
+\hline
+\multirow{8}{*}{Scratch} & \multirow{4}{*}{Bagmati}  
+& YOLOv5s & 0.815 & 0.694 & 0.772 & 0.330 & 0.032 & 14.3 &15.8 \\  
+& & YOLOv5x & 0.873 & 0.723 & 0.819 & 0.323 & 0.059 & 164 & 203.8\\  
+& & YOLOv7 & 0.775 & 0.776 & 0.807 & 0.445 & 0.048 & 74.8 & 103.2\\  
+& & YOLOv7x & 0.781 & 0.735 & 0.701 & 0.408 &  0.052 & 142.1 & 188.0\\  
+\cline{2-10}  
+& \multirow{4}{*}{Bishnumati}  
+& YOLOv5s & 0.803 & 0.729 & 0.825 & 0.073  & 0.031 & 14.3 &15.8 \\  
+& & YOLOv5x & 0.885 & 0.606  & 0.751  & 0.133 &  0.039 & 164 & 203.8\\  
+& & YOLOv7 & 0.721 & 0.803 & 0.813 & 0.042 & 0.053 & 74.8 & 103.2\\  
+& & YOLOv7x & 0.703 & 0.732 & 0.778 & 0.296 &  0.059 &142.1 & 188.0\\  
+\hline
+\multirow{8}{*}{Fine-Tuning} & \multirow{4}{*}{Bagmati}  
+& YOLOv5s & 0.795 & 0.744 & 0.830 & 0.444 &  0.034 & 14.3 &15.8 \\  
+& & YOLOv5x & 0.882 & 0.755 & 0.847 & 0.075 &  0.073 & 164 & 203.8\\  
+& & YOLOv7 & 0.822 & 0.755 & 0.817 & 0.363 &  0.033 & 74.8 & 103.2\\   
+& & YOLOv7x & 0.848 & 0.796 & 0.811 & 0.263 & 0.049 &142.1 & 188.0\\  
+\cline{2-10} 
+& \multirow{4}{*}{Bishnumati}  
+& YOLOv5s & 0.759 & 0.756  & 0.806 & 0.050 & 0.032  & 14.3 &15.8 \\  
+& & YOLOv5x & 0.858 & 0.691  & 0.785 & 0.160 & 0.065 & 164 & 203.8\\  
+& & YOLOv7 & 0.748 & 0.746 &0.824  &  0.416&  0.041 & 74.8 & 103.2\\  
+& & YOLOv7x &  0.732&  0.730& 0.779 & 0.165 &  0.047 &142.1 & 188.0\\  
+\hline
+\multirow{8}{*}{Freeze} & \multirow{4}{*}{Bagmati}  
+& YOLOv5s & 0.739 & 0.837 &0.850  & 0.021 &  0.031 & 14.3 &15.8 \\  
+& & YOLOv5x & 0.807 & 0.857 & 0.857 & 0.080 &  0.058 & 164 & 203.8\\  
+& & YOLOv7 & 0.884 & 0.775 & 0.812 & 0.307 &  0.040 & 74.8 & 103.2\\  
+& & YOLOv7x &  0.880& 0.755 &0.795  & 0.207 &  0.043 &142.1 & 188.0\\  
+\cline{2-10}
+& \multirow{4}{*}{Bishnumati}  
+& YOLOv5s & 0.860 & 0.786 & 0.844 & 0.042 &  0.033 & 14.3 &15.8 \\  
+& & YOLOv5x & 0.749 & 0.829 & 0.801 & 0.057 &  0.061 & 164 & 203.8\\  
+& & YOLOv7 & 0.797 & 0.755 & 0.821 & 0.097 & 0.041 & 74.8 & 103.2\\  
+& & YOLOv7x & 0.799 &  0.789&  0.835&  0.204&  0.045 &142.1 & 188.0\\  
+\hline
+\end{tabular}
+\label{table:OD}
+\end{table*}
+
+Table \ref{table:OD} presents the waste detection results for the object detection task in the Bagmati and Bishnumati datasets. It is apparent from the table that fine-tuning and freezing the backbone layers of the pretrained model yields better results than training the model from scratch. Moreover, the training time is also reduced in most cases when training the model with approaches using pretrained weights. However, training the Bishnumati model requires more time than the Bagmati model, likely owing to increased dataset complexity or higher computational demands. The inference time per image for each model is proportional to the size of the model and the computational complexity of the network. The highest mAP@50 score was achieved by the YOLOv5x (0.857) and YOLOv5s (0.844) models on the Bagmati and Bishnumati datasets using the freeze layer training approach. The best-performing models from the YOLOv7 family are YOLOv7, which achieved an optimal performance of 0.817 mAP on the Bagmati dataset using the fine-tuning approach, and YOLOv7x, which performed the best on the Bishnumati dataset using the freeze-layer approach with an mAP score of 0.835.
+
+\subsection{Experimental Results for Semantic Segmentation}
+
+\begin{table*}[]
+\centering
+\caption{Semantic Segmentation Performance Training Using Different Approaches}
+\begin{tabular}{lllcccccccc}
+\hline
+ &  &  &  &   &  &  & Training  & Inference & Model & Computational\\ 
+\multicolumn{1}{l}{Approach} & Dataset & Model & mIoU &  Dice Score   & Precision & Recall & Time & Time & Size & Complexity\\
+ &  &  &  &&  &  & (h) & (s) & (MB) & (GFLOPs) \\
+\hline
+\multirow{4}{*}{Scratch} & \multirow{2}{*}{Bagmati} & \multicolumn{1}{l}{FCN} & 0.666 & 0.762 & 0.747  &  0.779 & 0.543 & 0.125  & 207 & 54.23\\
+& & DeepLabv3+ &  0.757 &  0.845& 0.860 &  0.830 & 0.452 & 0.105 &227 & 22.14 \\ 
+\cline{2-11}
+& \multirow{2}{*}{Bishnumati} & \multicolumn{1}{l}{FCN} & 0.674 & 0.772 &0.736  & 0.827 & 0.532 & 0.325 &207 & 54.23  \\
+& & DeepLabv3+ & 0.732 & 0.824 & 0.805  &  0.846 & 0.584 &0.31 &227 & 22.14 \\ \hline
+\multirow{4}{*}{Fine-Tuning}        & \multirow{2}{*}{Bagmati}    & \multicolumn{1}{l}{FCN}  & 0.861 & 0.920 & 0.897 & 0.946 & 0.29 & 0.111  &207 &54.23 \\
+& & DeepLabv3+ & 0.867 & 0.924 & 0.915 & 0.934 & 0.584 & 0.101 &227 & 22.14  \\
+\cline{2-11}
+& \multirow{2}{*}{Bishnumati} & \multicolumn{1}{l}{FCN} &  0.853 & 0.915 & 0.899 &  0.933 & 0.409& 0.319 &207 &54.23\\
+& & DeepLabv3+ &  0.869 & 0.926 & 0.913 & 0.939 & 0.75 & 0.266 &227 & 22.14\\ \hline
+\multirow{4}{*}{Freeze} & \multirow{2}{*}{Bagmati}    & \multicolumn{1}{l}{FCN} & 0.788 & 0.869  & 0.849 & 0.891 &0.250 & 0.120  &207 &54.23 \\
+& & DeepLabv3+ &  0.733 & 0.825  & 0.790  &  0.873 & 0.490 & 0.108 &227 & 22.14\\
+\cline{2-11}
+& \multirow{2}{*}{Bishnumati} & \multicolumn{1}{l}{FCN} & 0.773 & 0.857 & 0.869 & 0.846 &  0.694 & 0.249 &207 &54.23\\
+& & DeepLabv3+ &  0.758& 0.846 & 0.810 & 0.895 & 0.41 & 0.264&227 & 22.14 \\ \hline
+\end{tabular}
+\label{table:IS}
+\end{table*}
+
+Table \ref{table:IS} highlights that fine-tuning pretrained networks yields the highest semantic segmentation performance, as opposed to training from scratch or freezing layers, while also reducing the training time in most cases. However, the greater complexity of Bishnumati prolongs training time. In addition, the inference time of FCN is higher than that of DeepLabv3+. Freezing layers provide a tradeoff, reducing the training time with reasonable accuracy. However, it is evident from Table \ref{table:IS} that fine-tuning is a better approach for training the segmentation tasks. Fine-tuning DeepLabv3+ achieves the highest performance on both the datasets. DeepLabv3+ achieved the highest mIoU of 0.867 for the Bagmati dataset, and 0.869 for the Bishnumati dataset. 
+
+\subsection{Comparison between Segmentation and Object Detection Models}
+
+\begin{table*}[]
+\centering
+\caption{Comparison of Object Detection and Segmentation Models}
+\begin{tabular}{lllcccc}
+\hline
+\textbf{Dataset} & \textbf{Task} & \textbf{Best Model} & \textbf{Precision} & \textbf{Recall} & \textbf{Training Time (h)} & \textbf{Inference Time (s)} \\
+\hline
+\multirow{4}{*}{Bagmati} & OD & Freeze-YOLOv5x & 0.807 & 0.857 & 0.08  & 0.058 \\
+                          & OD & Finetune-YOLOv7 & 0.822 & 0.755 & 0.363 & 0.033 \\
+                          & IS & Finetune-FCN    & 0.897 & 0.946 & 0.29  & 0.111 \\
+                          & IS & Finetune-DeepLabv3+ & 0.915 & 0.934 & 0.584 & 0.101 \\
+\hline
+\multirow{4}{*}{Bishnumati} & OD & Freeze-YOLOv5s & 0.860 & 0.786 & 0.042 & 0.033 \\
+                             & OD & Freeze-YOLOv7x  & 0.799 & 0.786 & 0.204 & 0.045 \\
+                             & IS & Finetune-FCN     & 0.899 & 0.933 & 0.409 & 0.319 \\
+                             & IS & Finetune-DeepLabv3+ & 0.913 & 0.939 & 0.75  & 0.266 \\
+\hline
+\end{tabular}
+\label{table:ODvsIS}
+\end{table*}
+
+Table \ref{table:ODvsIS} shows a performance comparison between the better-performing models for object detection and segmentation, as shown in Tables \ref{table:OD} and \ref{table:IS}. The criteria for selecting the models in this experiment were based on their mAP for object detection and mIoU for semantic segmentation. We selected the optimal YOLOv5, YOLOv7, FCN, and DeepLabv3+ models for the Bagmati and Bishnumati datasets. In this study, we follow a naming convention where the prefix 'Freeze-' added to a model name signifies that the model is trained by freezing specific layers of a pretrained network and fine-tuning others. Similarly, the prefix 'Finetune-' signifies that the model was trained by fine-tuning the pretrained model. This convention was uniformly applied across all models evaluated in our analysis.
+
+Based on the mAP, the best-performing YOLOv5 models are Freeze-YOLOv5x and Freeze-YOLOv5s for the Bagmati and Bishnumati datasets, respectively. Similarly, for YOLOv7, the optimal performance in terms of mAP was achieved by Finetune-YOLOv7 and Freeze-YOLOv7x for the Bagmati and Bishnumati datasets, respectively. For segmentation models, Finetune-FCN and Finetune-DeepLabv3+ achieved optimal performance in terms of mIoU in both datasets.
+
+It is clear from Table \ref{table:ODvsIS} that fine-tuning with DeepLabv3+ is still the best approach for achieving the optimal accuracy on both datasets. For instance, fine-tuned DeepLabv3+ yielded the highest segmentation precision (0.915) and recall (0.934) on the Bagmati and Bishnumati datasets, whereas Freeze-YOLOv5s yielded the highest object detection precision (0.860) on the Bagmati dataset, and Freeze-YOLOv5x achieved the highest object detection recall (0.857). This serves as an example of the advantages of using pretrained weights. Therefore, it is always advantageous to use pretrained weights for training object detection and segmentation models over training from scratch. 
+
+However, the training duration is highly dependent on task difficulty and model size. Bishnumati’s object detection tasks show narrower margins, likely due to its increased dataset complexity, evidenced by longer training times. Lightweight object detection architectures often exhibit faster inference times than image segmentation models due to their reduced computational overhead and sparser output requirements, reflecting their design for real-time efficiency. DeepLabv3+ is faster at inference than FCN because of its efficient architecture that uses depthwise separable convolutions and ASPP, which eliminates computational redundancy without affecting the size of the receptive field. In general, YOLOv5x emerges as a balanced choice for object detection, offering rapid training and inference with competitive accuracy, whereas DeepLabv3+ excels in segmentation tasks despite its higher computational demands, prioritizing precision over speed.
+
+\subsection{Transfer Learning Performance Comparison}
+\begin{table*}[ht]
+\centering
+\caption{Object Detection Performance Before and After Transfer Learning}
+\begin{tabular}{lcccccccc}
+\hline
+\multirow{2}{*}{Test Dataset} & \multirow{2}{*}{Transfer From} & \multirow{2}{*}{Best Model} & \multicolumn{2}{c}{Precision} & \multicolumn{2}{c}{Recall} & \multicolumn{2}{c}{mAP@50} \\    
+& & & Before & After & Before & After & Before & After \\ \hline
+\multirow{2}{*}{Bishnumati} & \multirow{2}{*}{Bagmati}
+  & Finetune-YOLOv5x & 0.793 &  0.901 & 0.703 & 0.816 & 0.759 & 0.886 \\   
+  &   & Finetune-YOLOv7 & 0.672 & 0.848 & 0.837 & 0.796 & 0.731 & 0.855 \\ 
+\cline{2-9}
+\multirow{2}{*}{Bagmati} & \multirow{2}{*}{Bishnumati}  
+  & Freeze-YOLOv5s & 0.799  &  0.811 & 0.727  & 0.829 & 0.781  &  0.838\\   
+  &   & Freeze-YOLOv7x & 0.787 & 0.796 & 0.521 & 0.775 & 0.521 & 0.882 \\ 
+\hline
+\end{tabular}
+\label{table:TL-OD}
+\end{table*}
+
+\begin{table*}[ht]
+\centering
+\caption{Semantic Segmentation Performance Before and After Transfer Learning}
+\begin{tabular}{lcccccccccc}
+\hline
+\multirow{2}{*}{Test Dataset} & \multirow{2}{*}{Transfer From} & \multirow{2}{*}{Best Model} & \multicolumn{2}{c}{mIoU} & \multicolumn{2}{c}{Dice Score} & \multicolumn{2}{c}{Precision} & \multicolumn{2}{c}{Recall} \\    
+& & & Before & After & Before & After & Before & After & Before & After \\ \hline
+\multirow{2}{*}{Bishnumati} & \multirow{2}{*}{Bagmati} 
+  & Finetune-FCN  & 0.762 & 0.826 & 0.849 & 0.897 & 0.876 & 0.865 & 0.826 & 0.937 \\   
+  &   & Finetune-DeepLabv3+ & 0.759 & 0.841 & 0.847 & 0.907 & 0.8126 & 0.867 & 0.893 & 0.959 \\ 
+\cline{2-11}
+\multirow{2}{*}{Bagmati} & \multirow{2}{*}{Bishnumati}  
+  & Finetune-FCN & 0.762 & 0.803 & 0.852 & 0.881 & 0.879 & 0.841 & 0.829 & 0.923 \\   
+  &   & Finetune-DeepLabv3+ & 0.613 & 0.849 & 0.714 & 0.913 & 0.669 & 0.924 & 0.810 & 0.903 \\ 
+\hline
+\end{tabular}
+\label{table:TL-IS}
+\end{table*}
+
+Tables \ref{table:TL-OD} and \ref{table:TL-IS} demonstrate that the application of transfer learning through fine-tuning consistently enhances performance in both object detection and semantic segmentation compared to cases without transfer learning. The 'before' section of the table shows the performance of models trained on one dataset and directly tested on another before transfer learning. The outcomes at this stage showcase the model's capacity for generalization and establish a starting point for evaluating the efficacy of transfer learning methods in later experiments. Similarly, the 'after' section of the table signifies the performance of models trained on one dataset after transfer learning to another. 
+
+For object detection, fine-tuning YOLOv5x on Bagmati (from Bishnumati) boosts the precision from 0.793 to 0.901 and mAP@50 from 0.759 to 0.886. Similarly, fine-tuning from Bagmati to Bishnumati improves Freeze-YOLOv7x's recall by 49\% (0.521 to 0.775), indicating that more extensive source datasets mitigate target domain deficiencies. For the segmentation task, DeepLabv3+ outperformed FCN after transfer learning. When fine-tuned on the Bishnumati dataset using weights from Bagmati, it achieves a higher mIoU (0.841) and recall (0.959) owing to its SOTA atrous convolution architecture. In contrast, the opposite transfer from Bishnumati to Bagmati yielded stunning improvements for DeepLabv3+ (mIoU: 0.613 to 0.849; Dice: 0.714 to 0.913), indicating its robustness to domain shift. Although the FCN shows some improvement (e.g., Bagmati mIoU increases from 0.762 to 0.803), the performance gain is modest because of its limited ability to capture complex spatial hierarchies. These findings highlight the effectiveness of transfer learning in bridging domain gaps, with deeper and more advanced architectures, such as DeepLabv3+, showing greater adaptability and performance gains across diverse datasets.
+
+\begin{table*}[ht]
+\centering
+\caption{Performance Comparison for Object Detection and  Segmentation Across Training Strategies}
+\label{tab:tfvsnon-tf}
+\begin{tabular}{lcccccc}
+\hline
+\multirow{2}{*}{Task} & \multirow{2}{*}{Model}  & Evaluation & From  & pretrained & Transfer  & \multirow{2}{*}{pretrained + Transfer}  \\
+ &   &  Dataset &  Scratch &  (No Transfer) &  From &  \\
+\hline
+% Object Detection (OD) Sections
+\multirow{4}{*}{Object Detection} 
+& Finetune-YOLOv5x &  Bagmati & 0.819 & 0.847& Bishnumati& 0.886\\
+& Finetune-YOLOv7 &  Bagmati & 0.807 & 0.817& Bishnumati& 0.855\\
+& Freeze-YOLOv5s &  Bishnumati & 0.825 & 0.85 & Bagmati & 0.858\\
+& Freeze-YOLOv7x&  Bishnumati & 0.778 & 0.835 & Bagmati& 0.882\\ \hline
+\multirow{4}{*}{Segmentation} 
+& Finetune-FCN & Bagmati&0.6657 &0.861 & Bishnumati& 0.803\\
+& Finetune-DeepLabv3+ & Bagmati & 0.757 & 0.867& Bishnumati& 0.849\\
+& Finetune-FCN & Bishnumati& 0.674& 0.853&Bagmati & 0.826\\
+& Finetune-DeepLabv3+ & Bishnumati&0.732 & 0.869& Bagmati& 0.841\\ \hline
+\multicolumn{7}{l}{\footnotesize \text{Note:} Object Detection uses mAP@50; Segmentation utilizes mIoU (values shown)}. \\
+% Table inspired form \cite{Maharjan2022DetectionOR}}\\
+\end{tabular}
+\end{table*}
+
+Table \ref{tab:tfvsnon-tf} presents a summary of the experiments conducted using the best-performing models for object detection and segmentation along with their respective training strategies. It includes performance metrics for models trained from scratch, either partially (with frozen layers) or fully fine-tuned, and those adapted through transfer learning to the counterpart dataset. According to the results presented in Table \ref{tab:tfvsnon-tf}, transfer learning typically provides incremental improvements over pretrained models without transfer, but both approaches substantially outperform training from scratch. For instance, for object detection, fine-tuning YOLOv5x on Bagmati increased the mAP from 0.819 (scratch) to 0.847 (pretrained) and then to 0.886 with transfer from Bishnumati, and freezing YOLOv7x on Bishnumati increases the mAP from 0.778 (scratch) to 0.835 (pretrained) and 0.882 after transfer. Interestingly, transferring from Bishnumati to Bagmati brings more gains to YOLOv5x (+6.4\%) over pretrained than to YOLOv7 (+4.7\%), suggesting architectural differences in flexibility. However, with a better mAP score of 0.886, Finetune-YOLOv5x is a better model for Bishnumati to Bagmati transfer learning compared to Finetune-YOLOv7 (0.855). Furthermore, Freeze-YOLOv7x achieved an mAP of 0.882 using transfer learning, outperforming Freeze-YOLOv5s in Bagmati to Bishnumati transfer learning.
+
+In segmentation, transferring DeepLabv3+ from Bishnumati to Bagmati improved the mIoU from 0.757 (scratch) to 0.849 (pretrained + transfer), whereas FCN recorded more volatile gains (e.g., Bagmati: 0.6657 to 0.803). Transferring in the opposite direction (Bagmati to Bishnumati) yields less for DeepLabv3+ (+14.9\% mIoU) than for the FCN (+22.6\%), suggesting dataset-dependent compatibility. Although the results of using transfer learning on the object detection task suggested similar results for segmentation, the overall gain remained limited. For instance, fine-tuning DeepLabv3+ from pretrained weights yielded an mIoU of 0.869 on Bishnumati, and transfer learning from Bagmati to Bishnumati yielded an mIoU of 0.841. Despite this, the inference result illustrated in Figure \ref{fig:bagmati-to-bishnumati-seg} shows a more precise mask prediction. This suggests that Finetune-DeepLabv3+ is preferred for Bagmati to Bishnumati as well as for Bishnumati to Bagmati transfer learning. 
+\subsection{Estimation of Waste Area in Different Detection Cases}
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/khadk9.pdf}
+    \caption{Smallest and Largest waste detected. (a) Transfer from Bishnumati to Bagmati for Segmentation (b) Transfer from Bagmati to Bishnumati for Segmentation (c) Transfer from Bishnumati to Bagmati for Object Detection (d) Transfer from Bagmati to Bishnumati for Object Detection}
+    \label{fig:smallest-largest}
+\end{figure}
+
+The smallest and largest ground truth bounding box areas are approximately 99.04 $\text{cm}^2$ and 13253.51 $\text{cm}^2$ for Bagmati and 56.87 $\text{cm}^2$ and 16638.94 $\text{cm}^2$ for Bishnumati, respectively. The smallest waste detected in Bagmati and Bishnumati is approximately 128.3 $\text{cm}^2$ and 73.16 $\text{cm}^2$, respectively. The largest waste objects detected were approximately 9606.25 $\text{cm}^2$ and 5942.48 $\text{cm}^2$ in Bagmati and Bishnumati, respectively, for the object detection task. The largest sizes detected were significantly smaller than the ground truth, suggesting the inability of the object-detection model to correctly predict larger objects.
+
+However, the segmentation masks, being more precise, have smaller ground-truth segmentation mask areas of 26.62 $\text{cm}^2$ and 12.01 $\text{cm}^2$ for the Bagmati and Bishnumati datasets, respectively. Similarly, the largest ground-truth segmentation mask areas were 7749.60 $\text{cm}^2$ and 10826.26 $\text{cm}^2$. The smallest waste masks predicted in Bagmati and Bishnumati were approximately 52.52 $\text{cm}^2$ and 19.13 $\text{cm}^2$, respectively, for the segmentation task. However, the largest waste objects detected were approximately 9606.25 $\text{cm}^2$ and 5942.48 $\text{cm}^2$ in Bagmati and Bishnumati for the object detection task. The approximate sizes predicted were larger than those of the ground-truth masks, suggesting that the models predicted a larger area than the ground-truth labels. At the same time, this bias is in line with the fundamental goals of environmental monitoring to ensure minimal waste is unnoticed. It is notable that the model successfully identified waste over a broad spectrum of size differences, thus demonstrating its high applicability for practical use.
+
+\section{Discussion}
+\label{sec:discussion}
+In this section, we discuss the detection results and examine specific examples. We used the results from the best-performing models for each dataset for each task (object detection and segmentation) and compared the performance of the models under transfer learning to a new location. Both the Bagmati and Bishnumati models struggle with instances of waste covered with soil and identify waste in cluttered waste examples. This is due to occlusion, low contrast, and spectral similarity between the waste and surrounding materials. 
+% Furthermore, partial coverage by soil reduces texture and edge features, which are crucial for object detection. 
+In addition, the complex spatial environment of clutter waste causes problems for models to learn distinguishable features.
+
+The data presented in Table \ref{table:OD} clearly indicate that freezing the backbone layers of a pretrained model is the most effective approach for training object detection models. The highest mAP scores were achieved on both the Bagmati and Bishnumati datasets, with values of 0.857 and 0.844, respectively, for this approach. However, the information in the Table \ref{table:IS} demonstrates that fine-tuning a pretrained model is a better approach for training segmentation models. The highest mIoU scores were achieved on both the Bagmati and Bishnumati datasets, with values of 0.867 and 0.869, respectively, for this approach. Both the full fine-tuning approach and the strategy of freezing certain layers while fine-tuning the rest lead to an improved performance. This aligns with findings in the literature, where fine-tuning, whether applied to the entire model or selectively to specific layers, has been shown to enhance task-specific performance \cite{8099989}. However, the finding that freezing the backbone layers yields superior performance for object detection, whereas fine-tuning is more effective for segmentation tasks, represents a novel contribution of our research.
+
+Several studies have used object detection \cite{Maharjan2022DetectionOR,  Yang2022DetectionOR, Nunkhaw2024AnIA} and segmentation for waste detection \cite{Tharani2021TrashDO, Jakovljevic2020ADL, Gmez2022ALA, ShijunPAN2024}; however, they tend to use either one or the other. A study by Usamentiaga et al. compared the performance of object detection and segmentation for metal surface defect detection \cite{Usamentiaga2022AutomatedSD}. However, to the best of our knowledge, a comparison between the two tasks in riverine environments is lacking. In our study, we assigned equal importance to performance, speed, and resources. Although YOLO models are more resource-efficient, require fewer computational resources, and offer faster inference speeds, DeepLabv3+ still outperforms them in our study in terms of precision and recall on both datasets. Notably, despite its higher performance, DeepLabv3+ maintained a relatively fast inference speed, striking a balance between efficiency and accuracy in this context, as shown in Table \ref{table:ODvsIS}. Therefore, DeepLabv3+ has a slight advantage over YOLO-based models. This is in contrast to the study by Usamentiaga et al., who compared the performance of U-Net and YOLOv5s and found that YOLOv5s was better in terms of precision and recall, but slower in terms of training time and inference time. In our study, we used DeepLabv3+ instead of U-Net, and found that it outperforms both YOLOv5 and YOLOv7 in terms of precision and recall.
+
+In our study, we utilized a well-balanced evaluation strategy in which we assigned equal weights to model accuracy, inference time, and the use of computational resources. However, the flexibility of our methodology allows for the option to tune the relative weight given to these factors depending on the nature of different applications' needs. For instance, assigning more weight to inference speed is of utmost importance in real-time detection use cases, where YOLO-based models such as YOLOv7x, due to their competitive performance and high-speed processing capabilities, dominate segmentation models such as DeepLabv3+. In contrast, when the aim is to precisely measure waste-covered river surface areas, DeepLabv3+, with its higher segmentation performance, has emerged as the most suitable choice. Additionally, in resource-constrained environments such as deployment on edge devices, lower computation and faster inference-speed models are preferred. YOLOv5s, in particular, is a great model in such scenarios because it offers a very satisfactory speed-resource trade-off without compromising much on detection accuracy.
+
+Furthermore, we examine the transfer learning potential of these models across various river locations in Nepal for both object detection and segmentation tasks, providing valuable insights into the adaptability and robustness of these approaches. Our findings revealed that transfer learning significantly enhances model performance when applied to different river environments. The performance metrics are listed in Tables \ref{table:TL-OD}, \ref{table:TL-IS}, and \ref{tab:tfvsnon-tf}. The results are further illustrated in Figures \ref{fig:bishnumati-to-bagmati-det}, \ref{fig:bishnumati-to-bagmati-seg}, \ref{fig:bishnumati-to-bagmati-no-det}, \ref{fig:bagmati-to-bishnumati-det}, and \ref{fig:bagmati-to-bishnumati-seg}. These results corroborate the conclusions drawn in \cite{Maharjan2022DetectionOR} that transfer learning with fine-tuning improves plastic detection in object detection models. However, our study extends this work by demonstrating that transfer learning also enhances plastic detection in segmentation models.
+
+Although DL networks have achieved remarkable performance across multiple domains, they tend to produce overconfident predictions. As a result, uncertainty quantification is paramount in high-stakes applications, such as autonomous driving and medical diagnosis \cite{he2023survey}, as well as in environmental modeling tasks, such as climate forecasting \cite{donnelly2024forecasting}, river flow forecasting \cite{khosravi2024daily}, water quality prediction \cite{khosravi2025enhanced}, and sediment concentration estimation \cite{shadkani2025prediction}. However, in waste detection systems, where classification errors pose minimal safety risks, computational and methodological simplicity outweighs the need for uncertainty quantification.
+
+
+\subsection{Analysis of Waste Detection with/without Transfer Learning from Dataset Bishnumati to Bagmati}
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/khadk10.pdf}
+    \caption{Bishnumati object detection model performs well in some cases. (a) Bagmati model results on Bagmati. (b) Bishnumati model results for Bagmati with fine-tuning. }
+    \label{fig:bishnumati-to-bagmati-det}
+\end{figure}
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/khadk11.pdf}
+    \caption{Bishnumati segmentation model performs well in some cases. (a) Bishnumati model results on Bagmati with fine-tuning. (b) Bagmati model results on Bagmati}
+    \label{fig:bishnumati-to-bagmati-seg}
+\end{figure}
+
+Figures \ref{fig:bishnumati-to-bagmati-det} and \ref{fig:bishnumati-to-bagmati-seg} show some good results for the Bishnumati model fine-tuned in Bagmati in object detection and segmentation tasks, respectively. Figure \ref{fig:bishnumati-to-bagmati-det} illustrates the successfully detected waste that was previously undetected when training the Bagmati River dataset without transfer learning. Figure \ref{fig:bishnumati-to-bagmati-seg} illustrates an improvement in localization ability, which reduces the FN rate. However, this occurs at the expense of an increase in the number of FPs. In the application of waste detection, as opposed to medical applications, a higher rate is seen as less of a problem and can be accepted as an acceptable compromise for enhanced detection capability.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/khadk12.pdf}
+    \caption{Models are weak in some cases. Bishnumati model results on Bagmati with fine-tuning for (a) Segmentation task, (b) Object Detection Task}
+    \label{fig:bishnumati-to-bagmati-no-det}
+\end{figure}
+Figure \ref{fig:bishnumati-to-bagmati-no-det} shows some of the weak results from the Bishnumati detection models fine-tuned on Bagmati. The segmentation task struggles to detect waste segments that share a similar color or spectral distribution with water, causing the model to fail to predict waste entirely. Similarly, the object detection model fails to accurately localize large waste fragments that are labeled as a single entity, likely owing to limitations in the representation of the bounding box for extensive waste regions. 
+
+\subsection{Analysis of Waste Detection with/without Transfer Learning from Dataset Bagmati to Bishnumati}
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/khadk13.pdf}
+    \caption{Bishnumati object detection model performs well in some cases. (a) Bishnumati model result on Bishnumati. (b) Bagmati model results on Bishnumati with fine-tuning. }
+    \label{fig:bagmati-to-bishnumati-det}
+\end{figure}
+Figure \ref{fig:bagmati-to-bishnumati-det} shows some strong results for the best-performing Bagmati object detection model fine-tuned on Bishnumati. The figure demonstrates the performance improvement achieved through transfer learning, which allows the detection of previously missed objects that the model trained without transfer learning failed to identify.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Images/khadk14.pdf}
+    \caption{Bishnumati segmentation model performs well in some cases. (a) Bishnumati model result on Bishnumati. (b) Bagmati model results on Bishnumati with fine-tuning. }
+    \label{fig:bagmati-to-bishnumati-seg}
+\end{figure}
+Figure \ref{fig:bagmati-to-bishnumati-seg} shows good results for the Bagmati segmentation model fine-tuned on Bishnumati. This illustrates the improvement in performance owing to transfer learning, resulting in more object mask predictions that were otherwise lost. It also generated more accurate segmentation masks than the model trained without transfer learning. Furthermore, no failed detection was found for transfer learning from Bagmati and Bishnumati. 
+
+\section{Conclusion}
+\label{sec:conclusion}
+In this study, we explored the detection of waste in rivers in Nepal using DL techniques, focusing on specific areas of the Bagmati and Bishnumati Rivers. We compared the effectiveness of object detection models from the YOLO family (YOLOv5 and YOLOv7) with segmentation models such as FCN and DeepLabv3+. We also tested various training methods, including training from scratch, fine-tuning the whole model, and freezing backbone layers, to determine which approach works best for detecting waste in river environments. In addition, we investigated the use of transfer learning between locations to assess how well models trained in one river setting generalize to another within a similar riverine environment.  
+
+The key novelty of this work lies in the use of a newly curated dataset from Nepali rivers, as well as in the first comparative evaluation, to our knowledge, of object detection and semantic segmentation methods, specifically for river waste detection. Additionally, we investigated the transfer learning capabilities of these models across different rivers in Nepal for both object detection and segmentation tasks, offering insights into the generalizability and robustness of these approaches. This contributes to the growing literature by addressing underexplored environmental applications using modern DL techniques.
+
+Our findings show that fine-tuning the entire model using a pretrained weight is a better approach for training segmentation models. In contrast, for the object detection models, freezing the backbone of the pretrained weights resulted in superior performance. These findings suggest that the optimal training strategy should be tailored to the specific task. 
+
+The study results indicate that segmentation is more appropriately utilized for the accurate estimation of waste patches in the river, as it yields greater precision and recall as compared to object detection models by delivering pixel-level boundaries instead of approximate bounding box annotations. Our findings indicate that fine-tuning DeepLabv3+ yields a superior performance for waste detection in riverine environments. Furthermore, transfer learning from one location to another has been found to facilitate the learning of generalizable features, while also improving localization accuracy and achieving a higher detection rate. The results of this research indicate that these methods can be applied to rivers other than Bagmati and Bishnumati, especially the rivers in the urban area of Nepal. This method can be modified for applications in different areas experiencing comparable waste management issues, encouraging the adoption of DL technologies in worldwide environmental monitoring initiatives. It provides a scalable solution for precise waste detection in riverine environments, supporting sustainable water resource management. 
+
+However, the study is subject to certain limitations. First, the generalization findings are based on rivers within the same geographical and hydrological region, which enables a positive transfer of learning; however, this may not hold across rivers with substantially different characteristics. Additionally, the dataset, while novel, is limited in scale and diversity; this could affect its robustness. Methodologically, standard segmentation and detection models were used without probabilistic or uncertainty-aware extensions, which may impact the performance in highly ambiguous or occluded environments.
+
+In terms of implementation, the demonstrated pipeline can be adapted to similar riverine environments affected by waste pollution. These techniques offer scalable and precise solutions for environmental monitoring, particularly in regions with limited access to conventional surveying infrastructure. Notably, the applicability of the results is strongest for rivers within the same basin and in close geographical proximity, where positive transfer learning can be more effectively realized.
+
+Future studies can refine segmentation boundaries through edge-aware loss functions or post-processing; however, the current performance adequately satisfies the operational requirements for large-scale waste mapping. Additionally, incorporating uncertainty quantification and expanding the dataset to include diverse geographic regions would strengthen the model robustness. Future studies can also categorize wastes as above-water and submerged for detection, which can provide more detailed insights into the environmental impact of waste and allow the DL model to adapt to real-world conditions and enhance its efficiency.
+
+\section*{Acknowledgment}
+The authors express sincere thanks to the Government of Nepal and the Kathmandu District Administration Office for providing us with the opportunity to collect the data. In addition, we would like to express our sincere thanks to Suraj Paudel of Airlift Technology for their kind support in data collection. The authors sincerely thank Sneha Subedi and Sahil Rai from the Advanced College of Engineering and Management, Nepal, for helping with data annotation. Special appreciation is also extended to the AI Research Center and Advanced College of Engineering and Management for their generous financial support and management of the experimental setup.
+
+\section*{Data Availability Statement}
+The waste dataset with images and annotations has been uploaded to our \href{https://github.com/AI-research-center/Leveraging-UAV-Data-and-Deep-learning-Models-for-Detecting-Waste-in-Rivers}{GitHub} (accessed on May 31, 2025). Please feel free to contact the corresponding author for their access.
+
+\bibliographystyle{IEEEtran}  
+\bibliography{references}  
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{authors/pati.jpg}}]{Bipun Man Pati} received the bachelor’s degree in information technology from the Nepal College of Information Technology, Nepal, in 2011, the M.Eng. and D.Eng. Degrees in telecommunication engineering from the Asian Institute of Technology, Thailand, in 2016 and 2020, respectively. His master’s degree was sponsored by the Asian Development Bank Japan Scholarship Program. He was a C2F Postdoctoral Fellow with Chulalongkorn University, from September 2021 to November 2022. He worked as a Senior Research Associate at the Glodal Inc., Yokohama, Japan from February 2021 to July 2022. He is currently a Senior Assistant Professor and Chief of AI Research Center at the Advanced College of Engineering and Management, Tribhuvan University, Kathmandu, Nepal. His research interests include wireless communications, signal processing, and machine learning.
+\end{IEEEbiography}
+\vspace{0.3cm}
+
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in, clip, keepaspectratio]{authors/khadk.jpg}}]{Bishnu Khadka} is a Research Assistant at the AI Research Center of the Advanced College of Engineering and Management (ACEM), working in collaboration with Research and Innovation Unit of the same institution and BASF, Germany. He is pursuing a bachelor’s degree in Electronics, Communication, and Information Engineering at Tribhuvan University. His current research focuses on the application of artificial intelligence in environmental monitoring. His broader research interests include computer vision, meta-learning, and tabular deep learning with a focus on developing intelligent systems to support data-driven decision-making in underrepresented and environmentally vulnerable regions.
+\end{IEEEbiography}
+\vspace{0.3cm}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{authors/thapa.png}}]{Ukesh Thapa} earned his bachelor's degree in Computer Engineering from the Advanced College of Engineering and Management, Nepal, in 2022. His research interests include Artificial Intelligence (AI) architecture development, optimization, medical imaging, wireless communication, and bioinformatics. Currently, Ukesh serves as an instructor at the Advanced College of Engineering and Management and is also a Research Assistant at the AI Research Center, where he continues to contribute to cutting-edge advancements in AI.
+\end{IEEEbiography}
+\vspace{0.3cm}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{authors/pal.jpg}}]{Sujay Kumar Pal} is an undergraduate student studying Electronics, Communication, and Information Engineering at the Advanced College of Engineering and Management, under Tribhuvan University. He is currently working as a Research Assistant at the college's AI Research Center, where he explores how artificial intelligence can be used in areas like finance, image analysis, and environmental monitoring. Beyond his academic work, he is also involved in community technology projects focused on sustainability, access to digital tools, and empowering young people. He is passionate about using AI to solve real-world problems and make a positive social impact.
+\end{IEEEbiography}
+\vspace{0.3cm}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{authors/sakya.jpg}}]{Subarna Sakya} holds a Ph.D. in Computer Engineering from Lviv Polytechnic National University, Ukraine. He is a professor of computer engineering at the Department of Electronics and Computer Engineering, Pulchowk Campus, Institute of Engineering, Tribhuvan University, and also served as a visiting professor at Brown University, Rhode Island, USA. He is also director of the IT Innovation Center at Tribhuvan University and an academician of the Nepal Academy of Science and Technology. He served as Executive Director at the National Information Technology Center, Government of Nepal, and also as head of the Department of Electronics and Computer Engineering, Director of the Center for Information Technology, and Chairperson of the Electronics and Computer Engineering Subject Committee, Institute of Engineering, Tribhuvan University. He has also served as coordinator of EURECA (European Research and Educational Collaboration with Asia), IDEAS (Innovation and Design for EuroAsian Scholars), and LEADER (Links in Europe and Asia for Engineering, Education, Enterprise, and Research Exchanges). The project is financed by the European Commission through the Erasmus Mundus Program. He is the advisor member of the National Information Technology Committee, Government of Nepal. He has delivered over 30 keynotes and invited speeches at international conferences and workshops. He has published over 150 scientific/technical articles and 5 books. He has been serving as an editor/guest editor for over 15 international journals. He is an expert member of the Board of Studies at South Asian University, India.
+
+He is a life member of the Indian Society for Mathematical Modeling and Computer Simulation, IIT, Kanpur, India, and a senior member of IEEE. He has served as chairman, technical committee chairman, and committee member in many international conferences, such as Springer and IEEE, related to computer science and ICT as chairman. He has a keen interest in research and development of ICT, e-government systems, information security for e-government systems, multimedia systems, computer systems simulation and modeling, cloud computing \& security, software \& information systems, and computer architecture.
+\end{IEEEbiography}
+\vspace{0.3cm}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{authors/shres.jpg}}]{Anup Shrestha} received his bachelor's degree in computer engineering in 2012 from Kathford International College of Engineering and Management, affiliated to Tribhuvan University, Kathmandu, Nepal, and his master's degree in computer engineering from Nepal College of Information Technology in 2018, affiliated to Pokhara University. He worked as a junior associate professor and HoD in the National College of Engineering, Lalitpur, Nepal, affiliated with Tribhuvan University, for eleven years. He is currently working as an assistant professor and deputy head at the Department of Electronics and Computer Engineering, Thapathali Campus, Kathmandu, Nepal. His research interests include image analysis and processing, machine learning, deep learning, and natural language processing.
+\end{IEEEbiography}
+\vspace{0.3cm}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{authors/joshi.jpg}}]{Hemant Joshi} received the bachelor's degree in Electronics and Communication Engineering from IOE, Western Region Campus, Nepal, in 2018, and the master's degree in Information and Communication Engineering from IOE, Pulchowk Campus, Nepal, in 2024. He is currently the Head of the Department of Computer Engineering at Universal Engineering and Science College, where he has served since 2021. In addition, he has been a part-time faculty member at several institutions, including IOE, Thapathali Campus; Advanced College of Engineering and Management; Lalitpur Engineering College; and Aryan School of Engineering and Management. Hemant's research interests include data science and machine learning.
+\end{IEEEbiography}
+\vspace{0.3cm}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{authors/pyaku.jpeg}}]{Dhiraj Pyakurel} received the B.Eng. degree in electronics and communication engineering from the Advanced College of Engineering and Management, Nepal, in 2018. He is currently pursuing his M.Sc. degree in Data Science from the School of Mathematical Science, Tribhuvan University, Nepal. He is also currently working as a lecturer at the Advanced College of Engineering and Management, Kathmandu, Nepal. His research interests include data science, machine learning, and bioinformatics.
+\end{IEEEbiography}
+\vspace{0.3cm}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{authors/roy.jpg}}]{Prem Chandra Roy} received a bachelor’s degree in Electronics and Communication Engineering from Institute Of Engineering (IOE), Paschimanchal Campus, and a Master’s degree in Climate Change and Development Engineering from IOE, Pulchowk in 2011 and 2018 respectively. He also pursued a Master’s in Information System Engineering from Purbanchal University in 2023. He is currently a Senior Assistant Professor at the Department of Electronics and Computer Engineering at the Advanced College of Engineering and Management, Tribhuvan University, Kathmandu, Nepal. Previously, he served as the Coordinator of the BCA program at the same institution. His research interests include data science, machine learning, and climate change adaptation and mitigation.
+\end{IEEEbiography}
+\vspace{0.3cm}
+\EOD
+\end{document}

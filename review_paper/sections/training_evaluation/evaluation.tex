@@ -1,0 +1,13 @@
+\section{Evaluation: Metrics, Speed, and Cost}
+\label{sec:evaluation}
+
+Metrics are reported strictly within task scope: detection mAP, segmentation IoU, classification accuracy, and counting reliability are not pooled.
+
+\subsection{Detection and Segmentation Metrics}
+Object-detection mAP@0.5 spans 65\% on tiny low-resource sets to 94\% on controlled releases, clustering at 77--89\% for river work. Small-target metrics reveal a crisis averages conceal: small-object average precision sits at 2.7--5.2\% even in strong pipelines \cite{Tharani2021}, motivating attention heads, slicing inference, and tiling \cite{Lin2021,JiaFlux2025,FrontEnv2025}. Segmentation mIoU ranges from $\sim$0.5 on satellite debris to 0.87 on UAV tiles \cite{SoleGomez2022,Pati2025}, with polymer-level F1 up to 0.92 \cite{Jakovljevic2020} and debris IoU 0.61 on held-out regions \cite{SoleGomez2022}. Classification accuracy spans 83--95\% across airborne, canal, hyperspectral, and multispectral settings \cite{Wolf2020,JiaFrontiers2023,Tasseron2022,Cortesi2022}.
+
+\subsection{Speed and Computational Cost}
+Where reported, efficiency favors nano-scale one-stage models: 3.1~ms per frame at 8.3M parameters \cite{Liu2025}, 30.5~ms on edge hardware \cite{Yan2025}, $\sim$100~ms TensorRT-accelerated streams \cite{FrontEnv2025}, and tenfold compression via separable convolutions at modest accuracy cost \cite{Tharani2021}. Most studies omit speed and cost entirely; absence is stated rather than imputed.
+
+\subsection{From Detection Scores to Trustworthy Counts}
+High detection scores do not imply reliable quantification: a 0.992 mAP@0.5 model counts 6 of 32 debris items on unseen video \cite{Lee2025}; dense aggregations defeat tracking-based counting \cite{FrontEnv2025}; and the best flux framework underestimates human measurements three- to fourfold on transparent and entrapped items \cite{JiaFlux2025}. inflated overall accuracy under class imbalance (water majority) further cautions against headline metrics \cite{Mohsen2023}. Evaluation for riverine waste must therefore report counting-conditioned metrics alongside detection scores.

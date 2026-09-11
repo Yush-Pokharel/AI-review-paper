@@ -1,0 +1,2390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1 20151215//EN" "JATS-journalpublishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.1" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">remotesensing</journal-id>
+      <journal-title-group>
+        <journal-title>Remote Sensing</journal-title>
+        <abbrev-journal-title abbrev-type="publisher">Remote Sens.</abbrev-journal-title>
+        <abbrev-journal-title abbrev-type="pubmed">Remote Sensing</abbrev-journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">2072-4292</issn>
+      <publisher>
+        <publisher-name>MDPI</publisher-name>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="doi">10.3390/rs12091515</article-id>
+      <article-id pub-id-type="publisher-id">remotesensing-12-01515</article-id>
+      <article-categories>
+        <subj-group>
+          <subject>Article</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>A Deep Learning Model for Automatic Plastic Mapping Using Unmanned Aerial Vehicle (UAV) Data</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Jakovljevic</surname>
+            <given-names>Gordana</given-names>
+          </name>
+          <xref rid="af1-remotesensing-12-01515" ref-type="aff">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid" authenticated="true">https://orcid.org/0000-0003-1698-0800</contrib-id>
+          <name>
+            <surname>Govedarica</surname>
+            <given-names>Miro</given-names>
+          </name>
+          <xref rid="af2-remotesensing-12-01515" ref-type="aff">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid" authenticated="true">https://orcid.org/0000-0002-1530-3309</contrib-id>
+          <name>
+            <surname>Alvarez-Taboada</surname>
+            <given-names>Flor</given-names>
+          </name>
+          <xref rid="af3-remotesensing-12-01515" ref-type="aff">3</xref>
+          <xref rid="c1-remotesensing-12-01515" ref-type="corresp">*</xref>
+        </contrib>
+      </contrib-group>
+      <aff id="af1-remotesensing-12-01515"><label>1</label>Faculty of Architecture, Civil Engineering and Geodesy, University of Banja Luka, 78000 Banja Luka, Bosnia and Herzegovina; <email>gordana.jakovljevic@aggf.unibl.org</email></aff>
+      <aff id="af2-remotesensing-12-01515"><label>2</label>Faculty of Technical Science, University of Novi Sad, 21000 Novi Sad, Serbia; <email>miro@uns.ac.rs</email></aff>
+      <aff id="af3-remotesensing-12-01515"><label>3</label>GEOINCA, Universidad de Le&#xF3;n, 24404 Ponferrada, Spain</aff>
+      <author-notes>
+        <corresp id="c1-remotesensing-12-01515"><label>*</label>Correspondence: <email>flor.alvarez@unileon.es</email>; Tel.: +34-661-266-671</corresp>
+      </author-notes>
+      <pub-date pub-type="epub">
+        <day>09</day>
+        <month>05</month>
+        <year>2020</year>
+      </pub-date>
+      <pub-date pub-type="collection">
+        <month>05</month>
+        <year>2020</year>
+      </pub-date>
+      <volume>12</volume>
+      <issue>9</issue>
+      <elocation-id>1515</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>01</day>
+          <month>04</month>
+          <year>2020</year>
+        </date>
+        <date date-type="accepted">
+          <day>07</day>
+          <month>05</month>
+          <year>2020</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-statement>&#xA9; 2020 by the authors.</copyright-statement>
+        <copyright-year>2020</copyright-year>
+        <license license-type="open-access">
+          <license-p>Licensee MDPI, Basel, Switzerland. This article is an open access article distributed under the terms and conditions of the Creative Commons Attribution (CC BY) license (<ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/">http://creativecommons.org/licenses/by/4.0/</ext-link>).</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <p>Although plastic pollution is one of the most noteworthy environmental issues nowadays, there is still a knowledge gap in terms of monitoring the spatial distribution of plastics, which is needed to prevent its negative effects and to plan mitigation actions. Unmanned Aerial Vehicles (UAVs) can provide suitable data for mapping floating plastic, but most of the methods require visual interpretation and manual labeling. The main goals of this paper are to determine the suitability of deep learning algorithms for automatic floating plastic extraction from UAV orthophotos, testing the possibility of differentiating plastic types, and exploring the relationship between spatial resolution and detectable plastic size, in order to define a methodology for UAV surveys to map floating plastic. Two study areas and three datasets were used to train and validate the models. An end-to-end semantic segmentation algorithm based on U-Net architecture using the ResUNet50 provided the highest accuracy to map different plastic materials (<italic>F</italic>1-score: Oriented Polystyrene (OPS): 0.86; Nylon: 0.88; Polyethylene terephthalate (PET): 0.92; plastic (in general): 0.78), showing its ability to identify plastic types. The classification accuracy decreased with the decrease in spatial resolution, performing best on 4 mm resolution images for all kinds of plastic. The model provided reliable estimates of the area and volume of the plastics, which is crucial information for a cleaning campaign. </p>
+      </abstract>
+      <kwd-group>
+        <kwd>deep learning</kwd>
+        <kwd>mapping plastic</kwd>
+        <kwd>automatic detection</kwd>
+        <kwd>AI</kwd>
+        <kwd>remote sensing</kwd>
+        <kwd>UAV</kwd>
+        <kwd>segmentation</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec1-remotesensing-12-01515" sec-type="intro">
+      <title>1. Introduction</title>
+      <p>Plastic pollution has become one of the most significant environmental issues of our age. Since the 1950s, when it was invented, as sanitary and cheap material, plastic took the place of paper and glass in food packaging, wood in furniture, and metal in car production. Global plastic production has increased annually, reaching almost 360 million tons in 2018 [<xref ref-type="bibr" rid="B1-remotesensing-12-01515">1</xref>]. Only nine percent of the nine billion tons of plastic that has ever been produced has been recycled [<xref ref-type="bibr" rid="B2-remotesensing-12-01515">2</xref>]. Subsequently, more than 8 million tons of plastic end up in the ocean each year [<xref ref-type="bibr" rid="B3-remotesensing-12-01515">3</xref>]. Plastic is not biodegradable, and over time, macro plastic pieces degrade into smaller and smaller pieces called microplastic (less than five millimeters long [<xref ref-type="bibr" rid="B4-remotesensing-12-01515">4</xref>]). Microplastic can be swallowed by a wide variety of marine organisms and then rise through the food chain, ending up on our dinner tables. Marine plastic litter is a global environmental problem with significant economic, ecological, public health, and aesthetic impacts. Effective measures to prevent negative effects of marine plastics require an understanding of its origin, pathways, and trends.</p>
+      <p>Land-based litter, transported by rivers to oceans, is estimated to be a major contributor to this problem [<xref ref-type="bibr" rid="B4-remotesensing-12-01515">4</xref>,<xref ref-type="bibr" rid="B5-remotesensing-12-01515">5</xref>]. The research presented by [<xref ref-type="bibr" rid="B6-remotesensing-12-01515">6</xref>] estimates that just 10 river systems transport more than 90% of the global input. The global estimations of plastic debris entering oceans annually, although numerous, are typically based on local or regional scale surveys, and they vary from 250,000 tons [<xref ref-type="bibr" rid="B7-remotesensing-12-01515">7</xref>] to 4.8&#x2013;12.7 million tons of plastic [<xref ref-type="bibr" rid="B8-remotesensing-12-01515">8</xref>]. Therefore, the amount of plastic in the global oceans remains poorly understood with a knowledge gap in terms of the temporal and spatial distribution of plastics, degradation, and beach processes. This information is vital for the development of activity plans for reducing land-based litter impact in oceans. Several efforts have been made to establish a standardized monitoring methodology, such as Oslo and Paris Conventions (OSPAR) [<xref ref-type="bibr" rid="B9-remotesensing-12-01515">9</xref>], Commonwealth Scientific and Industrial Research Organization (CSIRO) [<xref ref-type="bibr" rid="B10-remotesensing-12-01515">10</xref>], National Oceanic and Atmospheric Administration (NOAA) [<xref ref-type="bibr" rid="B11-remotesensing-12-01515">11</xref>], and United Nations Environment Programme /Intergovernmental Oceanographic Commission (UNEP/IOC) [<xref ref-type="bibr" rid="B12-remotesensing-12-01515">12</xref>]. Those methodologies are based on traditional beach monitoring by visual counting of plastic pieces along transects. Many guidelines on survey and monitoring of marine litter, such as OSPAR [<xref ref-type="bibr" rid="B9-remotesensing-12-01515">9</xref>], NOAA [<xref ref-type="bibr" rid="B11-remotesensing-12-01515">11</xref>], and UNEP/IOC [<xref ref-type="bibr" rid="B12-remotesensing-12-01515">12</xref>] record the counts of all items larger than 2.5 cm &#xD7; 2.5 cm, since this is the minimum disposal size permitted under the International Convention for the Prevention of Pollution from Ships (MARPOL) for ground shipping waste [<xref ref-type="bibr" rid="B13-remotesensing-12-01515">13</xref>]. According to [<xref ref-type="bibr" rid="B12-remotesensing-12-01515">12</xref>], each person is responsible for noticing or collecting all litter in the 2 m wide zone along a transect and, as a consequence, traditional beach surveys involve a large number of people. As an example, CSIRO engaged thousands of students, teachers, and employees in order to survey coastal debris in 175 sites in Australia, surveying 575 two-meter wide transects over a period of 18 months [<xref ref-type="bibr" rid="B10-remotesensing-12-01515">10</xref>]. Visual surveys are, therefore, time and labor consuming, and usually only a sub-sample of the target study area is covered. In addition, the surveyors can be in unsafe situations due to heavy wind, slippery rocks, hazards such as rain and snow, or exposed to dangerous substances (such as chemical substances, medical waste, etc.). Plastic litter is mostly concentrated on banks, coastlines and in the upper layer of surface water bodies, mostly within the first 0.5 m [<xref ref-type="bibr" rid="B14-remotesensing-12-01515">14</xref>]. Taking that into account, remote sensing technologies with a high spatial, temporal and spectral resolution have the potential to become reliable sources of information on floating plastics. Two examples of using these techniques have been provided by [<xref ref-type="bibr" rid="B15-remotesensing-12-01515">15</xref>] and [<xref ref-type="bibr" rid="B16-remotesensing-12-01515">16</xref>]. Jakovljevic et al. [<xref ref-type="bibr" rid="B15-remotesensing-12-01515">15</xref>] developed an algorithm for the detection of floating plastic in freshwater, based on Artificial Neural Networks and high-resolution multispectral WorldView-2 images, reporting a Root Mean Square Error (RMSE) of 0.03 during the test phases. Aoyama [<xref ref-type="bibr" rid="B16-remotesensing-12-01515">16</xref>] used high-resolution WordView-3 satellite images and the Spectral Angle Mapper algorithm for the extraction of marine debris in the Sea of Japan.</p>
+      <p>In recent years, Unmanned Aerial Vehicles (UAVs) have been recognized as an effective low-cost image-capturing platform, suitable for monitoring aquatic environments with high accuracy [<xref ref-type="bibr" rid="B17-remotesensing-12-01515">17</xref>,<xref ref-type="bibr" rid="B18-remotesensing-12-01515">18</xref>]. Customizable flight routes at low-level altitudes in combination with new algorithms for photogrammetric processing, such as the Structure from Motion (SfM) algorithm, provide a cost-effective acquisition of geospatial data with high spatial and temporal resolution, suitable for qualitative and quantitative analysis of natural and artificial structures of streams and floodplains. In addition to infrared and standard sensors, UAV can be equipped with multispectral cameras enabling its data to be combined with satellite imagery. Martin et al. [<xref ref-type="bibr" rid="B19-remotesensing-12-01515">19</xref>] used high-resolution (&lt;1 cm) UAV images and the Random Forest algorithm for the detection of plastic on the beaches, obtaining detection rates of 44%, 5%, and 3.7% for drinking containers, bottle caps, and plastic bags, respectively. Topouzelis et al. [<xref ref-type="bibr" rid="B20-remotesensing-12-01515">20</xref>] compared the spectral response of Sentinel 2 and high-resolution UAV images over a large plastic floating target (100 m<sup>2</sup>). Geraeds et al. [<xref ref-type="bibr" rid="B21-remotesensing-12-01515">21</xref>] used images obtained by UAV at different flight heights to manually label the riverbank and floating plastic. Moy et al. [<xref ref-type="bibr" rid="B22-remotesensing-12-01515">22</xref>] created a hot spot map of debris on Hawaii Island beaches by visually interpreting orthorectified imagery mosaics with a ground sample distance of 2 cm. Although UAVs can provide appropriate spatial and temporal resolution to produce suitable data for mapping floating plastic, most of the methods developed so far are based on visual interpretation and manual labeling of plastic pieces, which is time-consuming and labor-intensive. </p>
+      <p>Recently, the deep Convolution Neural Network (CNN) has been widely used in image classification tasks such as automatic classification, object detection [<xref ref-type="bibr" rid="B17-remotesensing-12-01515">17</xref>,<xref ref-type="bibr" rid="B18-remotesensing-12-01515">18</xref>], and semantic segmentation [<xref ref-type="bibr" rid="B23-remotesensing-12-01515">23</xref>,<xref ref-type="bibr" rid="B24-remotesensing-12-01515">24</xref>,<xref ref-type="bibr" rid="B25-remotesensing-12-01515">25</xref>]. With the rapid improvement of Graphics Processing Unit (GPU) computing and the increase of open training datasets, CNN models, such as AlexNet [<xref ref-type="bibr" rid="B26-remotesensing-12-01515">26</xref>], VGGNet [<xref ref-type="bibr" rid="B27-remotesensing-12-01515">27</xref>], ResNet [<xref ref-type="bibr" rid="B28-remotesensing-12-01515">28</xref>], DenseNet [<xref ref-type="bibr" rid="B29-remotesensing-12-01515">29</xref>], and Inception [<xref ref-type="bibr" rid="B30-remotesensing-12-01515">30</xref>], used for image classification or for semantic segmentation in combination with Fully Convolutional Network (FCN), U-Net or DeepLab architecture, have achieved state-of-art accuracy in this topic. However, they completely discard the spatial information in the top layer, thus, producing a lack of accurate positioning and class boundary characterization. </p>
+      <p>Semantic segmentation aims to assign the set of predefined class labels to each pixel in the image. In early research, deep semantic segmentation used the patch-based CNN method [<xref ref-type="bibr" rid="B31-remotesensing-12-01515">31</xref>,<xref ref-type="bibr" rid="B32-remotesensing-12-01515">32</xref>], where images are first divided into patches and then fed into CNN networks. The network predicts the central pixel label based on the surrounding image patches. This process is repeated for each pixel, producing a high computational cost, especially in overlapping patches. To solve this problem Long et al. [<xref ref-type="bibr" rid="B33-remotesensing-12-01515">33</xref>] proposed to use a Fully Convolutional Network (FCN). The FCN is an end-to-end model that maintains a two-dimensional structure of a feature map and uses contextual and location information to predict class labels, reducing the computational cost significantly. Semantic segmentation models based on FCN can be divided into four categories: encoder-decoder structure [<xref ref-type="bibr" rid="B23-remotesensing-12-01515">23</xref>,<xref ref-type="bibr" rid="B24-remotesensing-12-01515">24</xref>], dilated convolutions [<xref ref-type="bibr" rid="B34-remotesensing-12-01515">34</xref>], and spatial pyramid pooling [<xref ref-type="bibr" rid="B35-remotesensing-12-01515">35</xref>], which are described below. </p>
+      <p>The encoder-decoder structure is widely applied to semantic segmentation. Firstly, the encoder generates feature maps with high-level semantic but low resolution by using convolutions, pooling and an activation layer. Finally, the decoder upsamples the low-resolution encoder feature maps, retrieving the location information and obtaining fine-scaled segmentation results. SegNet [<xref ref-type="bibr" rid="B23-remotesensing-12-01515">23</xref>] and U-Net [<xref ref-type="bibr" rid="B24-remotesensing-12-01515">24</xref>] are typical architectures with encoder-decoder structures. On the one hand, SegNet [<xref ref-type="bibr" rid="B23-remotesensing-12-01515">23</xref>] stores the index of each max pooling window in the encoder, which then stores the indices of the maximum pixel, so the decoders upsample the input using the indices coming from the encoder stage. On the other hand, U-Net [<xref ref-type="bibr" rid="B24-remotesensing-12-01515">24</xref>] is a highly symmetric U-shaped architecture where the skip connection is used to directly link the output of each level from encoder to the corresponding level of the decoder. Therefore, comparing U-Net to SegNet, the first does not reuse indices but instead it transfers the entire feature map to the corresponding decoders and consonant them to the upsampled decoder feature maps. This process produces more accurate maps than using SegNet, but it consumes more memory [<xref ref-type="bibr" rid="B23-remotesensing-12-01515">23</xref>]. Also, U-Net can produce a precise segmentation with very few training images [<xref ref-type="bibr" rid="B24-remotesensing-12-01515">24</xref>]. Zhao et al. [<xref ref-type="bibr" rid="B36-remotesensing-12-01515">36</xref>] used UAV RGB and multispectral images and U-Net architecture to extract rice lodging, obtaining the dice coefficients of 0.94 and 0.92, respectively. Xu et al. [<xref ref-type="bibr" rid="B37-remotesensing-12-01515">37</xref>] used ResUNet for building extraction from Very High Resolution (VHR) multispectral satellite images reporting an <italic>F</italic>1 score of 0.98. In that case, the ResUNet adopted the U-Net as basic architecture but the U-Net learning units were replaced with residual learning units. Similarly, Yi et al. [<xref ref-type="bibr" rid="B38-remotesensing-12-01515">38</xref>] used DeepResUNet and aerial VHR to map urban buildings, reaching high accuracies (<italic>F</italic>1 score: 0.93).</p>
+      <p>Chen et al. [<xref ref-type="bibr" rid="B35-remotesensing-12-01515">35</xref>] introduced DeepLab architecture, which uses a parallel atrous convolution design instead of deconvolution for upsampling, performing similarly to other state-of-the-art models. Recent studies show that U-Net architecture outperforms DeepLab in cases with complex water environments [<xref ref-type="bibr" rid="B39-remotesensing-12-01515">39</xref>,<xref ref-type="bibr" rid="B40-remotesensing-12-01515">40</xref>]. Furthermore, U-Net architecture is preferred to DeepLab architecture because due to a higher number of hyperparameters the DeepLab architecture is more computationally intensive (processing time is increased by 58%) [<xref ref-type="bibr" rid="B39-remotesensing-12-01515">39</xref>] and it needs more training steps to reach a performance comparable to U-Net [<xref ref-type="bibr" rid="B40-remotesensing-12-01515">40</xref>].</p>
+      <p>The first step in addressing the ocean&#x2019;s plastic problem is to do an estimation of the amount of plastic, where it is accumulating and its pathways. However, the differences in the protocols which attempt to monitor the temporal and spatial distribution of plastic pollution (OSPAR [<xref ref-type="bibr" rid="B9-remotesensing-12-01515">9</xref>], CSIRO [<xref ref-type="bibr" rid="B10-remotesensing-12-01515">10</xref>]), and the fact that the accuracy of the collected data varies depending on the observer&#x2019;s skill, make the integration and comparison of the estimations challenging. The research presented in this paper aims to fulfill the need for an efficient and rapid estimation of floating plastic. The main goals of this paper are to: (1) examine the performance of different deep learning algorithms for mapping floating plastic using high-resolution UAV images, (2) to examine the relationship between the spatial resolution of the UAV imagery and the size of the detected plastic, (3) to test the possibility of mapping different plastic materials such as Oriented Polystyrene (OPS), Polyethylene terephthalate (PET), and Nylon, and (4) to define a methodology for UAV surveying to map floating plastic. </p>
+    </sec>
+    <sec id="sec2-remotesensing-12-01515">
+      <title>2. Study Area</title>
+      <p>Two study areas near Mrkonji&#x107; Grad (Bosnia and Herzegovina) were defined (<xref ref-type="fig" rid="remotesensing-12-01515-f001">Figure 1</xref>): (i) the artificial Lake Balkana, with clear water, and (ii) the confluence of the Crna Rijeka and the Vrbas Rivers.</p>
+    </sec>
+    <sec id="sec3-remotesensing-12-01515" sec-type="materials">
+      <title>3. Materials</title>
+      <p>For the study area in the artificial Lake Balkana, targets were designed to examine the possibility of mapping plastics of different sizes using UAV imagery. The targets consisted of (i) a wooden frame (100 cm &#xD7; 80 cm) with thin and transparent gauze and plastic squares, with side lengths from 1 to 10 cm (<xref ref-type="fig" rid="remotesensing-12-01515-f002">Figure 2</xref>b), (ii) a wooden frame (100 cm &#xD7; 80 cm) with thin and transparent gauze and plastic squares, with sides from 11 to 16 cm long, (iii) a wooden frame (100 cm &#xD7; 80 cm) attached to a metal frame located 20 cm below it, with thin and transparent gauze and plastic squares, with sides from 1 to 10 cm long (<xref ref-type="fig" rid="remotesensing-12-01515-f002">Figure 2</xref>a), and (iv) plastic bottles of different sizes and colors connected by ropes (<xref ref-type="fig" rid="remotesensing-12-01515-f002">Figure 2</xref>d). A rope with a diameter of 4 mm was used to keep the frames in the area of interest during the surveys (<xref ref-type="fig" rid="remotesensing-12-01515-f002">Figure 2</xref>c), while the wood made them floatable. The targets were released in the water in the deepest part of the lake, to exclude the reflection of the lake bottom. Besides, three different plastic materials were used: OPS (used for the plastic squares (<xref ref-type="fig" rid="remotesensing-12-01515-f002">Figure 2</xref>a,b), PET (plastic bottles <xref ref-type="fig" rid="remotesensing-12-01515-f002">Figure 2</xref>d)), and Nylon (rope <xref ref-type="fig" rid="remotesensing-12-01515-f002">Figure 2</xref>c).</p>
+      <p>For the second study area, upstream of the confluence of the Crna Rijeka and the Vrbas Rivers a net for collecting floating garbage was installed. Floating waste is the major source of litter in this area, due to the disposal of the garbage in illegal landfills and picnic sites along the river or directly in the river. The net collects about 10,000 m<sup>3</sup> of material annually, from which 60% is wood, 35% plastic packaging, and 5% other [<xref ref-type="bibr" rid="B41-remotesensing-12-01515">41</xref>]. The plastic packaging consists of 55% PET, while 45% consists of Polyethylene (PE), and Polypropylene (PP) [<xref ref-type="bibr" rid="B41-remotesensing-12-01515">41</xref>]. The amount of litter depends mostly on the weather conditions. The largest quantity is captured during the rainy periods (spring and autumn) when water level increases and washes away the garbage from the river banks. In May 2019, due to heavy rains, the net broke and 10,000 tons of floating garbage ended up in the head pond of the hydroelectric power plant. In order to detect and map the plastic (the self-built targets and the plastic stopped by the net), 6 UAV surveys were conducted, using a DJI Mavic pro equipped with an RGB camera. Five surveys with different flight heights (12&#x2013;90 m) took place over the Balkana Lake area, and one (at a 90 m flight height) over the Crna Rijeka River. The flight heights and spatial resolutions of the surveys are presented in <xref ref-type="table" rid="remotesensing-12-01515-t001">Table 1</xref>.</p>
+    </sec>
+    <sec id="sec4-remotesensing-12-01515" sec-type="methods">
+      <title>4. Methods</title>
+      <p>In this paper, a pixel classification method to extract floating plastic pieces from water bodies within VHR remote sensing images based on deep learning algorithms is proposed. Semantic segmentation of floating plastic is highly challenging due to several limitations: low amount of training data, highly imbalanced data sets, limited accuracy of ground truth data, and frequent scene changes due to constant plastic movement. To address those limitations, we propose the workflow showed in <xref ref-type="fig" rid="remotesensing-12-01515-f003">Figure 3</xref>, which summarizes the approach followed in this paper and consists of three main steps: preprocessing, classification, and accuracy assessment.</p>
+      <sec id="sec4dot1-remotesensing-12-01515">
+        <title>4.1. Preprocessing</title>
+        <p>For each flight, the acquired images and the SfM algorithm were used to generate a high-resolution orthophoto. The SfM algorithm comprises of three main steps [<xref ref-type="bibr" rid="B42-remotesensing-12-01515">42</xref>]: (1) the SIFT algorithm detects and describes key points while the RANdom SAmple Consensus (RANSCAN) method matches key points across multiple images. The bundle block adjustment of matching key points was used to compute the extrinsic and intrinsic camera parameters and three-dimensional (3D) coordinates for a sparse unscaled point cloud; (2) point cloud densification; and (3) digital terrain model and orthophoto generation. </p>
+        <p>To train the deep learning classifier ground truth data are necessary. Since this study represents the first attempt to map floating plastic based on UAV images, previous ground truth data was not available. Therefore, we created our labels, which was challenging and time consuming, due to the small size, the different colors, the different spectral signatures, the different level of submersion and the constant moving of the floating plastic items. </p>
+        <p>To reduce the errors caused by the manual delineation of classes, the multiresolution segmentation algorithm implemented in eCognition was used [<xref ref-type="bibr" rid="B43-remotesensing-12-01515">43</xref>]. This algorithm merges pixels to obtain meaningful non-overlapping objects/polygons. The algorithm results are controlled by three factors: (1) scale parameter, i.e., the maximum allowed heterogeneity for the resulting object; (2) shape, i.e., the weight of the object&#x2019;s shape in comparison to the spectral characteristics of the object (color); and (3) compactness, i.e., the weight representing the compactness of object (please see [<xref ref-type="bibr" rid="B43-remotesensing-12-01515">43</xref>] for more information). The selection of the optimal value combination was based on the trial-and-error process. Each segment was then manually labeled using QGIS software, based on a visual inspection of the orthophoto. In the Balkana study area, plastics were classified into three classes: PET, OPS, and nylon. In the Crna Rijeka area, plastic was classified in two groups: plastic and maybe plastic. The maybe plastic class was created to reduce the spectral confusion in the plastic class, and it was assigned to the segments where the operators were not able to state whether it was plastic by visual inspection and by analyzing the spectral signature. </p>
+        <p>The Balkana study area was surveyed five times but we were not able to use the same mask for the orthophotos from the different flights (i.e., different spatial resolutions) due to the movement of the plastic. Therefore, for each orthophoto a new ground truth mask was created. This limited the accuracy of the mask and algorithm performance for the lower spatial resolution images. </p>
+      </sec>
+      <sec id="sec4dot2-remotesensing-12-01515">
+        <title>4.2. Classification</title>
+        <p>This paper proposes an end-to-end semantic segmentation model for a floating plastic segmentation based on U-net architecture, which has the ability to work with very little training data and provides a precise segmentation [<xref ref-type="bibr" rid="B24-remotesensing-12-01515">24</xref>]. U-Net has a symmetrical encoder-decoder architecture. The encoder side effectively extracts and abstracts the image pixel information while the decoder aims to extract the plastic from the feature maps. The U-Net architecture has been widely used in the semantic segmentation of remote sensing imagery [<xref ref-type="bibr" rid="B36-remotesensing-12-01515">36</xref>,<xref ref-type="bibr" rid="B37-remotesensing-12-01515">37</xref>,<xref ref-type="bibr" rid="B38-remotesensing-12-01515">38</xref>]. Its success is largely attributed to the several skip connections [<xref ref-type="bibr" rid="B24-remotesensing-12-01515">24</xref>,<xref ref-type="bibr" rid="B44-remotesensing-12-01515">44</xref>] between encoding and decoding parts which are used to combine spatial details from lower layers and semantic ones from higher layers of the network. Due to a combination of contextual information at different scales of the input resolution, spatial information can be better restored, producing sharper boundaries of predicted objects after the decoder [<xref ref-type="bibr" rid="B45-remotesensing-12-01515">45</xref>]. </p>
+        <sec id="sec4dot2dot1-remotesensing-12-01515">
+          <title>4.2.1. Encoder</title>
+          <p>CNN models consist of a series of layers that are combined in the network. They start with a series of convolutions and a pooling layer, called the convolutional base, and end with a densely connected classifier [<xref ref-type="bibr" rid="B46-remotesensing-12-01515">46</xref>]. The convolutions operate on feature maps with two spatial axes (height and width of the image) and depth (number of channels). The convolutions extract the patches by sliding a window of a fixed size (usually 3 &#xD7; 3 or 5 &#xD7; 5) and perform the transformation for all patches, via a dot product with a weight matrix followed by adding bias and the application of the activation function, and finally producing output feature maps [<xref ref-type="bibr" rid="B46-remotesensing-12-01515">46</xref>,<xref ref-type="bibr" rid="B47-remotesensing-12-01515">47</xref>]. The depth of the output feature maps is defined by the number of filters which encode specific aspects of the input data allowing CNN to learn spatial hierarchical patterns. The batch normalization (BN) layer is placed after each convolution to speed up the training process and reduce the internal covariance of each batch of features maps.</p>
+          <p>The most common way of improving the performance of the deep neural network is increasing the depth (number of layers) and width (number of units within a layer) of the network. However, enlarged networks are more prone to overfitting especially if the size of the training set is limited [<xref ref-type="bibr" rid="B48-remotesensing-12-01515">48</xref>]. Besides, an increase in the network size dramatically increases the use of computational resources. </p>
+          <p>With the increase of the network depth problems like the vanishing gradient start to emerge. The vanishing gradient problem refers to a dramatic gradient decrease as it backpropagates the true network and by the time they reach close to the shallower layers, the updates for the weights nearly vanish. In order to avoid the vanishing gradient problem, a rectified linear unit (ReLU) [<xref ref-type="bibr" rid="B49-remotesensing-12-01515">49</xref>] was used as a nonlinear activation function. The ReLU significantly accelerates the training phase in comparison with the activation functions with a descent gradient such as a sigmoid or hyperbolic tangent function. The pooling layers are used after the convolutional layer to spatially downsample the image and to reduce the number of coefficients to process. Although the stride factor (the distance between two successive windows) can be used for downsampling, the max-pooling tends to work better since it increases the variance by looking at the maximum values of the extracted features over small patches. Since there is not any information about the performance of available models in the case of plastic detection, the encoder side was based on the state of the art CNN models, pre-trained on ImageNet [<xref ref-type="bibr" rid="B50-remotesensing-12-01515">50</xref>] datasets, such as ResNet50 [<xref ref-type="bibr" rid="B28-remotesensing-12-01515">28</xref>], ResNeXt50 [<xref ref-type="bibr" rid="B51-remotesensing-12-01515">51</xref>], Inception-ResNet v2 [<xref ref-type="bibr" rid="B30-remotesensing-12-01515">30</xref>], and Xception [<xref ref-type="bibr" rid="B52-remotesensing-12-01515">52</xref>]. These four architectures were used in this work for the semantic segmentation of floating plastics and are described below.</p>
+          <p>ResNet50: the deep ResNet architecture addresses the vanishing gradient problem by employing identity skip-connections, which add neither extra parameters nor computational complexity but they lead to a more efficient training and optimization of very deep networks [<xref ref-type="bibr" rid="B28-remotesensing-12-01515">28</xref>]. ResNet is constructed by stacking multiple bottleneck blocks called residual blocks (<xref ref-type="fig" rid="remotesensing-12-01515-f004">Figure 4</xref>a), which consist of three layers of 1 &#xD7; 1, 3 &#xD7; 3, and 1 &#xD7; 1 convolutions. The 1 &#xD7; 1 convolution is introduced as the bottleneck layer (to reduce and restore dimensionality) before a 3 &#xD7; 3 layer to reduce the number of input feature maps and to improve computational efficiency. In this paper, a 50-layer ResNet network was used.</p>
+          <p>Inception-ResNet v2: this network is constructed by the integration of ResNet [<xref ref-type="bibr" rid="B28-remotesensing-12-01515">28</xref>] and Inception v4 [<xref ref-type="bibr" rid="B23-remotesensing-12-01515">23</xref>], so a residual connection is used to avoid the gradient vanishing problem while the Inception modules increase the network. In the Inception-ResNet v2, the batch normalization is used only on top of the traditional layer enabling the increase of an overall number of Inception blocks [<xref ref-type="bibr" rid="B30-remotesensing-12-01515">30</xref>]. In the Inception blocks, the convolutions with the varying size of the same layer were concatenated at the end of block i.e., the convolution blocks were parallel (<xref ref-type="fig" rid="remotesensing-12-01515-f004">Figure 4</xref>b). Although the Inception-ResNet v2 shows roughly the same recognition performance as Inception v4, the usage of the residual connection leads to a dramatic improvement in the training speed [<xref ref-type="bibr" rid="B30-remotesensing-12-01515">30</xref>]. Therefore, in this paper, the Inception-ResNet v2 was used.</p>
+          <p>Xception: the Extremely Inception (Xception) architecture replaces the Inception modules with stacked depthwise separable convolution layers followed by a pointwise convolution. It represents the extreme form of the Inception module, where the spatial features and channel-wise features are fully separated [<xref ref-type="bibr" rid="B46-remotesensing-12-01515">46</xref>]. The Xception architecture has 36 layers structured into 14 modules, all of which have linear residual connections around them, except for the first and last modules (<xref ref-type="fig" rid="remotesensing-12-01515-f004">Figure 4</xref>c) [<xref ref-type="bibr" rid="B52-remotesensing-12-01515">52</xref>]. The residual connection helps with the vanishing gradient problem both in terms of speed and accuracy.</p>
+          <p>ResNeXt50: this model is similar to the Inception model since they both follow the split-transform-merge paradigm. However, in the ResNeXt all paths share the same topology and the outputs of different paths are merged by adding them together i.e., ResNeXt consists of a stack of residual blocks that have the same topology (<xref ref-type="fig" rid="remotesensing-12-01515-f004">Figure 4</xref>d). This architecture introduced the new dimension called cardinality (C) (the number of paths) in addition to depth and width. The results presented in [<xref ref-type="bibr" rid="B51-remotesensing-12-01515">51</xref>] show that an increase in cardinality reduces the error rate while keeping the complexity. In this work a cardinality of 32 was used (<xref ref-type="fig" rid="remotesensing-12-01515-f004">Figure 4</xref>d).</p>
+        </sec>
+        <sec id="sec4dot2dot2-remotesensing-12-01515">
+          <title>4.2.2. Decoder</title>
+          <p>The decoder block aims to upsample the densified encoder (low resolution) feature map to assign a classification result to each pixel of the input image [<xref ref-type="bibr" rid="B23-remotesensing-12-01515">23</xref>]. The encoder and decoder architecture are fully symmetrical i.e., for each encoder there is a corresponding decoder. The decoder gradually recovers the resolution of the original input image by replacing the pooling operation (in the encoder) with 2 &#xD7; 2 up-sampling operators followed by 3 &#xD7; 3 convolutions, BN, and the ReLU activation function. The upsampled outputs are combined with contextual information derived from the corresponding encoder via skip connection. In the final layer, a 1 &#xD7; 1 convolution with the Sigmoid activation function is used to predict the probability of being assigned to one of the pre-defined classes.</p>
+        </sec>
+        <sec id="sec4dot2dot3-remotesensing-12-01515">
+          <title>4.2.3. Data Augmentation and Transfer Learning</title>
+          <p>The performance of deep neural networks is highly limited by the low number of training data. The size of the dataset needed for network training is a function of the size of the network (width and depth) and the complexity of the problem. If a model with a large learning capacity is trained on very few data, it can memorize the training sets producing a low generalization power of the model, i.e., overfitting. This overfitting can be reduced by using data augmentation, which artificially enlarges the training set by a random transformation of the existing training samples [<xref ref-type="bibr" rid="B26-remotesensing-12-01515">26</xref>]. Although the produced images are intercorrelated they are not the same, contributing to a better generalization of the network. In addition to reducing overfitting, data augmentation improves the performance when there are imbalanced class problems [<xref ref-type="bibr" rid="B53-remotesensing-12-01515">53</xref>]. </p>
+          <p>Transfer learning is another efficient approach when a limited number of training samples are available. It is based on the idea of fine-tuning (adapting) the models that are already pre-trained on large datasets, such as ImageNet, for completely new classification problems. Transfer learning between different tasks is possible due to the property of deep networks that the first layers are general (i.e., in CNN, first layers tend to learn standard features such as edges, patterns, textures, corners, etc.) while the last layer computes specific features that greatly depend on the chosen dataset and task (such as object parts and objects) [<xref ref-type="bibr" rid="B54-remotesensing-12-01515">54</xref>]. The usual transfer learning approach is based on a fine-tuning which unfreezes (updating weights during the training phase) and adjusts to the parameters of the few top layers in the pre-trained network, while the first layers, representing the general features remain frozen. </p>
+        </sec>
+      </sec>
+      <sec id="sec4dot3-remotesensing-12-01515">
+        <title>4.3. Accuracy Assessment</title>
+        <p>To test the accuracy of the classification results three standard parameters were calculated: precision, recall, and F-score. Precision (Equation (1)) computes the percent of detected pixels in each class that actually belong to the assigned class, while recall (Equation (2)) represents the fraction of correctly labeled pixels of each class. In a perfect model, the precision and recall are equal to 1. <italic>F</italic>1-score (Equation (3)) is a quantitative metric useful for imbalanced training data, and it represents the balance between precision and recall [<xref ref-type="bibr" rid="B55-remotesensing-12-01515">55</xref>].
+        <disp-formula id="FD1-remotesensing-12-01515"><label>(1)</label><mml:math id="mm1" display="block"><mml:semantics><mml:mrow><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mi>c</mml:mi><mml:mi>i</mml:mi><mml:mi>s</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi></mml:mrow><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>P</mml:mi></mml:mrow></mml:mfrac></mml:mrow></mml:semantics></mml:math></disp-formula>
+        <disp-formula id="FD2-remotesensing-12-01515"><label>(2)</label><mml:math id="mm2" display="block"><mml:semantics><mml:mrow><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mi>c</mml:mi><mml:mi>a</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi></mml:mrow><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi></mml:mrow></mml:mfrac></mml:mrow></mml:semantics></mml:math></disp-formula>
+		Where <italic>TP, FP, FN</italic> are true positive, false positive and false negative respectively.
+        <disp-formula id="FD3-remotesensing-12-01515"><label>(3)</label><mml:math id="mm3" display="block"><mml:semantics><mml:mrow><mml:mi>F</mml:mi><mml:mn>1</mml:mn><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mn>2</mml:mn><mml:mo>&#xD7;</mml:mo><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mi>c</mml:mi><mml:mi>a</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo>&#xD7;</mml:mo><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mi>c</mml:mi><mml:mi>i</mml:mi><mml:mi>s</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi></mml:mrow><mml:mrow><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mi>c</mml:mi><mml:mi>a</mml:mi><mml:mi>l</mml:mi><mml:mi>l</mml:mi><mml:mo>&#xD7;</mml:mo><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mi>c</mml:mi><mml:mi>i</mml:mi><mml:mi>s</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi></mml:mrow></mml:mfrac></mml:mrow></mml:semantics></mml:math></disp-formula></p>
+        <p>The higher the value of the <italic>F</italic>1-score, the better the model performance regarding the positive class [<xref ref-type="bibr" rid="B56-remotesensing-12-01515">56</xref>]. </p>
+      </sec>
+      <sec id="sec4dot4-remotesensing-12-01515">
+        <title>4.4. Implementation</title>
+        <p>Due to the limited processing power, the original images were decomposed to 256 &#xD7; 256 px patches. The models were based on U-Net architecture, which uses ResNet 50, ResNeXt50, Xception, and Inception-ResNet v2 as encoders. The parameters of the original deep architecture pre-training to the ImageNet datasets were maintained during the fine-tuning. The six different models were trained on three different datasets, as follows. ResNet50, ResNeXt50, Xception, and Inception-ResNet v2 were trained on Dataset 1 (Balkana 4 mm), ResUNet50 was trained on Dataset 2 (which consisted of Balkana 4 mm, 13 mm, 18 mm, 23 mm, and 30 mm resolution orthophotos), and ResUNet was trained on Dataset 3 (Crna Rijeka 30 mm resolution orthophoto) (<xref ref-type="fig" rid="remotesensing-12-01515-f003">Figure 3</xref>). Dataset 1, Dataset 2, and Dataset 3 contained 328, 434, and 1846 images respectively. All datasets were split into 80% of the data for training and 20% for validation. The batch size was limited by the GPU and it was chosen as big as possible for each network. Different loss functions, such as cross entropy, cross entropy weighted, and focal loss were tested. Since the highest accuracy was obtained using cross entropy, this loss function was used for all the models. The models were implemented in the Python 3 programming language by using artificial intelligence libraries such as PyTorch, TensorFlow, Keras, and Matplotlib. The training of the networks was done using the publicly available cloud platform Colaboratory (Google Colab), which is based on Jupyter Notebooks. The hyperparameters used for the model training are presented in <xref ref-type="table" rid="remotesensing-12-01515-t002">Table 2</xref>.</p>
+      </sec>
+    </sec>
+    <sec id="sec5-remotesensing-12-01515" sec-type="results">
+      <title>5. Results and Discussion</title>
+      <p>In this paper, U-Net networks were used for semantic segmentation of floating plastics. <xref ref-type="table" rid="remotesensing-12-01515-t003">Table 3</xref> shows the performance of the four different encoder architectures tested for the extraction of different kinds of plastic materials. Each architecture was pre-trained on the ImageNet datasets and the performance was tested on Dataset 1. Due to simplicity, the results are shown only for the classes that represent plastic. </p>
+      <p>As shown, ResUNet50 has the highest accuracy (<italic>F</italic>1-score &gt; 0.86) for detecting any of the three plastic classes, while the InceptionResUNet v2 has the lowest (<xref ref-type="table" rid="remotesensing-12-01515-t003">Table 3</xref>). Ground truth data and the results of the classification using the four algorithms are shown in <xref ref-type="fig" rid="remotesensing-12-01515-f004">Figure 4</xref> for visual inspection (Data set 1). On the one hand, the results show that the ResUNet50 model detected and classified all plastic types with almost no commission or omission errors, matching the ground truth data very accurately (<xref ref-type="fig" rid="remotesensing-12-01515-f004">Figure 4</xref> (ResUNet50)). On the other hand, the high recall and low precision obtained by ResUNext50 and XceptionUNet (<xref ref-type="table" rid="remotesensing-12-01515-t003">Table 3</xref>.) indicated an overestimation of floating plastic, due to misclassification of water pixels (<xref ref-type="fig" rid="remotesensing-12-01515-f004">Figure 4</xref>. (ResUNext50, XceptionUNet)). In addition to the misclassification of water pixels, the low accuracy obtained with the InceptionResUNet v2 model (<italic>F</italic>1: 0; 0.75; 0.65 for each plastic type) was caused by the misclassification between nylon (rope) and PET (bottles), and PET and wood (<xref ref-type="fig" rid="remotesensing-12-01515-f004">Figure 4</xref>. (InceptionResUNet v2)). The plastic squares were completely omitted by the InceptionResUNet v2, while ResUNext50 strongly misclassified them as wood. On the one hand, the XceptionUNet was capable of detecting small variations in the reflection of different plastic materials (squares <italic>F</italic>1: 0.53) while, on the other hand, it showed the highest sensitivity to the edge-effect, misclassifying them and decreasing the <italic>F</italic>1 score. Innamorati et al. [<xref ref-type="bibr" rid="B57-remotesensing-12-01515">57</xref>] showed that segmentation errors are higher for pixels near the edges and even worse at corners [<xref ref-type="bibr" rid="B58-remotesensing-12-01515">58</xref>], due to the lack of the contextual information. </p>
+      <p>For the underwater squares (<xref ref-type="fig" rid="remotesensing-12-01515-f005">Figure 5</xref>a), all algorithms, except ResUNet50, misclassified OPS as PET. It should be noted that the total reflection of transparent floating plastic on the water surface is defined as the sum of water reflection, plastic reflection, and the reflection of the light transmitted through the plastic [<xref ref-type="bibr" rid="B15-remotesensing-12-01515">15</xref>,<xref ref-type="bibr" rid="B59-remotesensing-12-01515">59</xref>]. In this study, the presence of plastic bottles (PET) increased, on average, the amount of reflected energy from water by 19%, while OPS increased the reflection by only 3.5% (<xref ref-type="fig" rid="remotesensing-12-01515-f006">Figure 6</xref>), making it challenging to differentiate between these two classes. This difference is even lower in the case of underwater plastic, due to water absorption, and it can explain the low accuracy of the OPS class for three of the tested models. The quantitative accuracy assessment and the visual inspection confirmed that, among the tested models and for the Lake Balkana study area, ResUNet50 was the most sensitive to detect small differences in the amount of reflected energy, which is crucially important for plastic detection and for identifying different types of plastic. Therefore, all the tests used to achieve the remaining goals of this paper (2, 3, 4) were performed using the ResUNet50 model.</p>
+      <p>The relationship between the image spatial resolution and the size of the detected plastic was evaluated by using the ResUNet50 model and the ground truth data from Dataset 2. The results of the accuracy assessment are shown in <xref ref-type="table" rid="remotesensing-12-01515-t004">Table 4</xref>.</p>
+      <p>The results showed that the spatial resolution of the image and the accuracy of the model were directly related, i.e., the accuracy decreased with the decrease in spatial resolution. Those findings are in line with the results presented by [<xref ref-type="bibr" rid="B60-remotesensing-12-01515">60</xref>]. As expected, ResUNet50 performed the best on the 4 mm resolution images for all kinds of plastics and the lowest accuracy was obtained for the 30 mm spatial resolution image (<xref ref-type="table" rid="remotesensing-12-01515-t004">Table 4</xref>.). The exception was the OPS class, which was mostly omitted in the 23 mm classified orthophoto. Due to changes in of weather conditions (sunny intervals) between the flights, sun glint appeared in the 23 mm orthophoto and increased the reflection [<xref ref-type="bibr" rid="B61-remotesensing-12-01515">61</xref>], in comparison with other images, which led to the misclassification between OPS and gauze (<xref ref-type="fig" rid="remotesensing-12-01515-f007">Figure 7</xref> (23 mm), a, b, c), causing the low <italic>F</italic>1 value. In addition, the amount of reflected energy decreased with the decrease in spatial resolution, due to the larger amount of mixed pixels, resulting in a lower classification accuracy. Visual inspection showed that the algorithm tended to classify mixed pixels as water when the plastic fraction of the target area was larger than the water fraction (e.g., <xref ref-type="fig" rid="remotesensing-12-01515-f007">Figure 7</xref>d). This result agrees with Ji et. al. [<xref ref-type="bibr" rid="B62-remotesensing-12-01515">62</xref>], who reported that in the case of imbalanced training datasets, mixed pixels tend to be classified as the majority class, even when most of the mixed pixel represents a minority class. </p>
+      <p>In general, for all the tested spatial resolutions, the algorithm achieved high precision and lower recall values indicating that the model cannot detect all plastic pixels, but that it can be trusted when it does. Taking as a reference value the classification obtained from the 4 mm orthophoto, the largest difference in the extension of the area classified as plastic was obtained from the 23 mm orthophoto (OPS: &#x2212;16.1%; Nylon: &#x2212;33.2%; PET: &#x2212;22.3 %) (<xref ref-type="fig" rid="remotesensing-12-01515-f008">Figure 8</xref>). The smallest difference for the OPS and Nylon classes was obtained from the 18 mm orthophoto (OPS: &#x2212;1.8%; Nylon: &#x2212;4.2%), while the 30 mm orthophoto provided the closest area to the reference for PET plastic (PET: &#x2212;8.9%) (<xref ref-type="fig" rid="remotesensing-12-01515-f007">Figure 7</xref>).</p>
+      <p>The visual inspection showed that with the 4 mm orthophoto the algorithm detected all the OPS squares, while with the 13 mm and 18 mm orthophotos the algorithm omitted the 1 and 2 cm squares on the water surface, and the 1 to 4 cm squares that were underwater. For the 23 mm image, it omitted all the OPS squares smaller than 11 cm, while for 30 mm image, the 1 to 4 cm squares, which were on the water surface, and the 1 to 6 cm squares located underwater, were misclassified as water (<xref ref-type="fig" rid="remotesensing-12-01515-f007">Figure 7</xref>). Based on these results it can be concluded that the algorithm needs at least one pure pixel (a pixel that includes a single surface material) for detecting plastics on the water surface, and two pure pixels for the detection of underwater plastics. According to the presented results, orthophotos with of 18 mm spatial resolution can be used for litter surveys which follow OSPAR [<xref ref-type="bibr" rid="B9-remotesensing-12-01515">9</xref>], NOAA [<xref ref-type="bibr" rid="B11-remotesensing-12-01515">11</xref>] or UNEP/IOC [<xref ref-type="bibr" rid="B12-remotesensing-12-01515">12</xref>] guidelines, while 4 mm orthophotos should be used for CSIRO [<xref ref-type="bibr" rid="B10-remotesensing-12-01515">10</xref>] surveys, since according to CSIRO guidelines, the minimum size of detected plastic should be 1 cm<sup>2</sup>.</p>
+      <p>On the one hand, floating plastic is more accurately extracted from images with higher spatial resolution. On the other hand, the higher the spatial resolution of the image, the smaller the extension of the area covered by the image, as showed in <xref ref-type="fig" rid="remotesensing-12-01515-f009">Figure 9</xref>. Therefore, a compromise between spatial resolution and the covered area needs to be found. </p>
+      <p>To test the model performance in an independent scenario, the Crna Rijeka study area was surveyed. Based on the size of the study area and the size of the majority of the plastic items (bottles) that were present, a 30 mm orthophoto was used (Dataset 3), as well as the ResUNet50 model. The results of the accuracy assessment are presented in <xref ref-type="table" rid="remotesensing-12-01515-t005">Table 5</xref>. </p>
+      <p>The ResUNet50 showed a stable performance to classify plastic in the different datasets (Dataset 2 (PET class) and Dataset 3 (plastic class)) when comparing the same spatial resolution (<italic>F</italic>1: 0.73 vs. 0.78, respectively) (<xref ref-type="table" rid="remotesensing-12-01515-t004">Table 4</xref> and <xref ref-type="table" rid="remotesensing-12-01515-t005">Table 5</xref>). The highest confusion was obtained for the &#x201C;maybe plastic&#x201D; class, which was misclassified as water or plastic. For that class the precision was high, while recall was low, indicating the underestimation of the area covered by the maybe plastic class. Although precision, recall, and <italic>F</italic>1 score provide a deeper insight into the performance of the algorithm, the area and volume of the detected plastics are more useful for stakeholders. From an operational point of view, when planning a cleaning campaign, that information is the basis for site selection, and for estimating the number of people required and the approximate time needed. In the Crna Rijeka case study, the algorithm only underestimated the plastic area by 3.4%, proving the great potential of its application to optimize cleaning campaigns. </p>
+      <p>The visual inspection shows (<xref ref-type="fig" rid="remotesensing-12-01515-f010">Figure 10</xref>) that the locations of the plastic pieces were accurately detected, but some plastic pixels on the border were misclassified as the surrounding class. No differences were observed in the performance of the model between grouped (<xref ref-type="fig" rid="remotesensing-12-01515-f010">Figure 10</xref>a) or single plastic items (<xref ref-type="fig" rid="remotesensing-12-01515-f010">Figure 10</xref>b). </p>
+      <p>Unexpectedly, the algorithm detected plastic accurately in shallow water (<xref ref-type="fig" rid="remotesensing-12-01515-f010">Figure 10</xref>c). Shallow water is highly challenging for mapping plastic because the presence of the river bed increases water reflectance (same as plastic does) [<xref ref-type="bibr" rid="B15-remotesensing-12-01515">15</xref>]. In this study case, the algorithm accurately extracted the plastic pieces that were omitted from the training data (<xref ref-type="fig" rid="remotesensing-12-01515-f010">Figure 10</xref>d), showing good generalization abilities, Moreover, the model showed its potential for plastic detection not just in water but also on land, with lower accuracy compared with the floating plastics (<xref ref-type="fig" rid="remotesensing-12-01515-f010">Figure 10</xref>e).</p>
+      <p>It should be also taken into account that the results are also affected by the accuracy of the training data. The creation of training data was time consuming and a tedious task. Just in the case of the Crna Rijeka orthophoto (Dataset 3), the 418,542 segments were manually labeled, assigning 5519 to the plastic class and 4014 to the maybe plastic one. Visual labeling of plastic pieces is a difficult task which involves errors due to the limited ability to exactly determine the boundary between plastic and maybe plastic. Therefore, in the case of misclassifications between those two classes, it cannot be stated if it was an error in the algorithms or if it was due to a misclassification during the manual labeling stage. To address this limitation, we suggest that during the collection of training data, two UAVs with the same flight pattern should be used (<xref ref-type="fig" rid="remotesensing-12-01515-f011">Figure 11</xref>). The first UAV would fly at a higher altitude while the second UAV would fly lower to provide higher resolution images which can be used for precise delineation and labeling of the plastic class and other classes, to therefore obtain an accurate data mask. Since floating plastic moves continuously, especially on windy days, the speed of the second UAV should be lower than the first one, to synchronize their flight missions and reduce time overlap between surveys.</p>
+      <p>Moreover, the UAV surveys should be carried out during cloudy weather to reduce the sunglint effect, since it limits the quality and accuracy of remote sensing data from water bodies [<xref ref-type="bibr" rid="B61-remotesensing-12-01515">61</xref>]. Anggoro et al. [<xref ref-type="bibr" rid="B63-remotesensing-12-01515">63</xref>] reported that the reduction of the sunglint effect increased the overall accuracy by 7%. The same accuracy degradation of was noted in the classification of the 23 mm orthophoto (<xref ref-type="table" rid="remotesensing-12-01515-t004">Table 4</xref>.; <xref ref-type="fig" rid="remotesensing-12-01515-f007">Figure 7</xref> (23 mm)). Also, the wind speed should be as low as possible, especially in the case of small UAVs. The stability of the camera is affected by the wind and it can cause blurred imagery. In addition, the SfM reconstructs a 3D point cloud based on the matching of multiple views, so if the plastic pieces shift their relative position from image-to-image due to wind-induced movements, the reliability of the point cloud and the accuracy of the produced orthophoto is compromised. </p>
+    </sec>
+    <sec id="sec6-remotesensing-12-01515" sec-type="conclusions">
+      <title>6. Conclusions</title>
+      <p>Automatic floating plastic extraction from high-resolution UAV orthophotos can be accurately achieved using the end-to-end semantic segmentation ResUNet50 algorithm. Among the other tested algorithms, ResUNet50 showed a stable performance to detect and classify floating plastic in the different datasets and for different spatial resolutions, for underwater and floating targets (<italic>F</italic>1 score &gt; 0.73). The ResUNext50 and XceptionUNet models led to an overestimation of the floating plastic due to misclassification of water pixels. The model also showed its suitability for plastic detection on water, shallow water and also on land, with lower accuracy compared with the floating plastics. An underestimation of the plastic area of only 3.4% showed its utility to monitor plastic pollution effectively and makes it possible to use it to optimize cleaning campaigns, as well as the integration and comparison of the estimations.</p>
+      <p>It was possible to accurately detect and classify the three different plastic types located in the study area (OPS, PET, Nylon) using the ResUNet50 model (<italic>F</italic>1: OPS: 0.86; Nylon: 0.88; PET: 0.92), which was the most sensitive to detect small differences in the amount of reflected energy. </p>
+      <p>Regarding the relationship between spatial resolution and detectable plastic size, the classification accuracy decreased with the decrease in spatial resolution, performing best on 4 mm resolution images for all the different kinds of plastic. The model cannot detect all plastic pixels, but it can be trusted when it does, for all the tested spatial resolutions. Moreover, the algorithm needs at least one pure plastic pixel (a pixel that only contains that material) to detect plastics on the water surface, and two pure pixels for the detection of underwater plastics. The results obtained with the 18 mm spatial resolution orthophotos and the proposed method meet the requirements described in OSPAR [<xref ref-type="bibr" rid="B9-remotesensing-12-01515">9</xref>], NOAA [<xref ref-type="bibr" rid="B11-remotesensing-12-01515">11</xref>] or UNEP/IOC [<xref ref-type="bibr" rid="B12-remotesensing-12-01515">12</xref>] guidelines, while CSIRO [<xref ref-type="bibr" rid="B10-remotesensing-12-01515">10</xref>] surveys will require the use of 4 mm orthophotos.</p>
+      <p>Taking as a reference value the classification obtained for the 4 mm orthophoto, the largest difference in the extension of the area classified as plastic was obtained using the 23 mm orthophoto (OPS: 16.1%; Nylon: 33.2%; PET: 22.3 %) (<xref ref-type="fig" rid="remotesensing-12-01515-f008">Figure 8</xref>). The smallest difference for the OPS and Nylon classes was obtained using the 18 mm orthophoto (OPS: 1.8%; Nylon: 4.2%), while the 30 mm orthophoto provided the closest area to the reference for PET plastic (PET: 8.9%) (<xref ref-type="fig" rid="remotesensing-12-01515-f008">Figure 8</xref>).</p>
+      <p>When planning a UAV survey to map floating plastic, the following issues should be taking into account: (i) reaching a compromise between the spatial resolution and the area covered by each image, (ii) two UAVs with the same flight pattern should be used, one to collect the imagery to obtain the maps and a second one flying lower than the other, so it can capture very high spatial resolution data to delineate an accurate training dataset, (iii) synchronizing the two flight missions and reduce time overlap between surveys, (iv) flying during cloudy weather to reduce the sunglint effect, and (v) wind speed should be as low as possible, so the quality of the orthophoto is not compromised.</p>
+    </sec>
+  </body>
+  <back>
+    <notes>
+      <title>Author Contributions</title>
+      <p>Conceptualization, G.J., M.G., and F.A.-T.; methodology, G.J. and M.G.; software, G.J.; validation, G.J; formal analysis, G.J, M.G., and F.A.-T.; investigation, G.J.; writing&#x2014;original draft preparation, G.J. and M.G.; writing&#x2014;review and editing, G.J., M.G., and F.A.-T.; visualization, G.J.; supervision M.G. and F.A.-T. All authors have read and agreed to the published version of the manuscript.</p>
+    </notes>
+    <notes>
+      <title>Funding</title>
+      <p>This research received no external funding.</p>
+    </notes>
+    <ack>
+      <title>Acknowledgments</title>
+      <p>The authors would like to thank the three anonymous reviewers who helped improve the manuscript with their comments and suggestions.</p>
+    </ack>
+    <notes notes-type="COI-statement">
+      <title>Conflicts of Interest</title>
+      <p>The authors declare no conflict of interest.</p>
+    </notes>
+    <ref-list>
+      <title>References</title>
+      <ref id="B1-remotesensing-12-01515">
+        <label>1.</label>
+        <element-citation publication-type="web">
+          <article-title>Plastics Europe</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.plasticseurope.org/application/files/9715/7129/9584/FINAL_web_version_Plastics_the_facts2019_14102019.pdf" ext-link-type="uri">https://www.plasticseurope.org/application/files/9715/7129/9584/FINAL_web_version_Plastics_the_facts2019_14102019.pdf</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-27">(accessed on 27 April 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B2-remotesensing-12-01515">
+        <label>2.</label>
+        <element-citation publication-type="web">
+          <article-title>United Nations Environment Program</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.unenvironment.org/news-and-stories/press-release/un-declares-war-ocean-plastic-0" ext-link-type="uri">https://www.unenvironment.org/news-and-stories/press-release/un-declares-war-ocean-plastic-0</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-27">(accessed on 27 April 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B3-remotesensing-12-01515">
+        <label>3.</label>
+        <element-citation publication-type="web">
+          <person-group person-group-type="author">
+            <collab>United Nations Environment Program</collab>
+          </person-group>
+          <article-title>The state of plastic</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://wedocs.unep.org/bitstream/handle/20.500.11822/25513/state_plastics_WED.pdf?isAll owed=y&amp;sequence=1" ext-link-type="uri">https://wedocs.unep.org/bitstream/handle/20.500.11822/25513/state_plastics_WED.pdf?isAllowed=y&amp;sequence=1</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-27">(accessed on 27 April 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B4-remotesensing-12-01515">
+        <label>4.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Lebreton</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>van der Zwet</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Damsteeg</surname>
+              <given-names>J.W.</given-names>
+            </name>
+            <name>
+              <surname>Slat</surname>
+              <given-names>B.</given-names>
+            </name>
+            <name>
+              <surname>Andrady</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Reisser</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>River plastic emissions to the world&#x2019;s oceans</article-title>
+          <source>Nat. Commun.</source>
+          <year>2017</year>
+          <volume>8</volume>
+          <fpage>15611</fpage>
+          <pub-id pub-id-type="doi">10.1038/ncomms15611</pub-id>
+          <pub-id pub-id-type="pmid">28589961</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B5-remotesensing-12-01515">
+        <label>5.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Jambeck</surname>
+              <given-names>J.R.</given-names>
+            </name>
+            <name>
+              <surname>Hardesty</surname>
+              <given-names>B.D.</given-names>
+            </name>
+            <name>
+              <surname>Brooks</surname>
+              <given-names>A.L.</given-names>
+            </name>
+            <name>
+              <surname>Friend</surname>
+              <given-names>T.</given-names>
+            </name>
+            <name>
+              <surname>Teleki</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Fabres</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Beaudoin</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Bamba</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Francis</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Ribbink</surname>
+              <given-names>A.J.</given-names>
+            </name>
+            <etal/>
+          </person-group>
+          <article-title>Challenges and emerging solutions to the land-based plastic waste issue in Africa</article-title>
+          <source>Mar. Policy</source>
+          <year>2018</year>
+          <volume>96</volume>
+          <fpage>256</fpage>
+          <lpage>263</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.marpol.2017.10.041</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B6-remotesensing-12-01515">
+        <label>6.</label>
+        <element-citation publication-type="web">
+          <article-title>The guardian</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.theguardian.com/science/2017/nov/05/terrawatch-the-rivers-taking-plastic-to-the-oceans" ext-link-type="uri">https://www.theguardian.com/science/2017/nov/05/terrawatch-the-rivers-taking-plastic-to-the-oceans</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-27">(accessed on 27 April 2020.)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B7-remotesensing-12-01515">
+        <label>7.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Eriksen</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Lebreton</surname>
+              <given-names>L.C.M.</given-names>
+            </name>
+            <name>
+              <surname>Carson</surname>
+              <given-names>H.S.</given-names>
+            </name>
+            <name>
+              <surname>Thiel</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Moore</surname>
+              <given-names>C.J.</given-names>
+            </name>
+            <name>
+              <surname>Borerro</surname>
+              <given-names>J.C.</given-names>
+            </name>
+            <name>
+              <surname>Galgani</surname>
+              <given-names>F.</given-names>
+            </name>
+            <name>
+              <surname>Ryan</surname>
+              <given-names>P.G.</given-names>
+            </name>
+            <name>
+              <surname>Reisser</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Plastic pollution in the world&#x2019;s oceans: More than 5 trillion plastic pieces weighing over 250,000 tons afloat at sea</article-title>
+          <source>PLoS ONE</source>
+          <year>2014</year>
+          <volume>9</volume>
+          <elocation-id>e111913</elocation-id>
+          <pub-id pub-id-type="doi">10.1371/journal.pone.0111913</pub-id>
+          <pub-id pub-id-type="pmid">25494041</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B8-remotesensing-12-01515">
+        <label>8.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Jambeck</surname>
+              <given-names>J.R.</given-names>
+            </name>
+            <name>
+              <surname>Geyer</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Wilcox</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Siegler</surname>
+              <given-names>T.R.</given-names>
+            </name>
+            <name>
+              <surname>Perryman</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Andrady</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Narayan</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Law</surname>
+              <given-names>K.L.</given-names>
+            </name>
+          </person-group>
+          <article-title>Plastic waste inputs from land into the ocean</article-title>
+          <source>Science</source>
+          <year>2015</year>
+          <volume>347</volume>
+          <fpage>768</fpage>
+          <lpage>771</lpage>
+          <pub-id pub-id-type="doi">10.1126/science.1260352</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B9-remotesensing-12-01515">
+        <label>9.</label>
+        <element-citation publication-type="web">
+          <person-group person-group-type="author">
+            <collab>OSPAR commission</collab>
+          </person-group>
+          <article-title>Guideline for Monitoring Marine Litter on the Beaches in the OSPAR Monitoring Area</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.ospar.org/documents?v=7260" ext-link-type="uri">https://www.ospar.org/documents?v=7260</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-22">(accessed on 22 April 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B10-remotesensing-12-01515">
+        <label>10.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Hardesty</surname>
+              <given-names>B.D.</given-names>
+            </name>
+            <name>
+              <surname>Lawson</surname>
+              <given-names>T.J.</given-names>
+            </name>
+            <name>
+              <surname>van der Velde</surname>
+              <given-names>T.</given-names>
+            </name>
+            <name>
+              <surname>Lansdell</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Wilcox</surname>
+              <given-names>C.</given-names>
+            </name>
+          </person-group>
+          <article-title>Estimating quantities and sources of marine debris at a continental scale</article-title>
+          <source>Front. Ecol. Environ.</source>
+          <year>2016</year>
+          <volume>15</volume>
+          <fpage>18</fpage>
+          <lpage>25</lpage>
+          <pub-id pub-id-type="doi">10.1002/fee.1447</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B11-remotesensing-12-01515">
+        <label>11.</label>
+        <element-citation publication-type="gov">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Opfer</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Arthur</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Lippiatt</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>NOAA Marine Debris Shoreline Survey Field Guide, 2012</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://marinedebris.noaa.gov/sites/default/files/ShorelineFieldGuide2012.pdf" ext-link-type="uri">https://marinedebris.noaa.gov/sites/default/files/ShorelineFieldGuide2012.pdf</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-25">(accessed on 25 April 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B12-remotesensing-12-01515">
+        <label>12.</label>
+        <element-citation publication-type="gov">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cheshire</surname>
+              <given-names>A.C.</given-names>
+            </name>
+            <name>
+              <surname>Adler</surname>
+              <given-names>E.</given-names>
+            </name>
+            <name>
+              <surname>Barbi&#xE8;re</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Cohen</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Evans</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Jarayabhand</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Jeftic</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Jung</surname>
+              <given-names>R.T.</given-names>
+            </name>
+            <name>
+              <surname>Kinsey</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Kusui</surname>
+              <given-names>E.T.</given-names>
+            </name>
+            <etal/>
+          </person-group>
+          <article-title>UNEP/IOC Guidelines on Survey and Monitoring of Marine Litter. UNEP Regional Seas Reports and Studies 2009, No. 186; IOC Technical Series No. 83: xii + 120 pp</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.nrc.govt.nz/media/10448/unepioclittermonitoringguidelines.pdf" ext-link-type="uri">https://www.nrc.govt.nz/media/10448/unepioclittermonitoringguidelines.pdf</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-25">(accessed on 25 April 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B13-remotesensing-12-01515">
+        <label>13.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Ribic</surname>
+              <given-names>C.A.</given-names>
+            </name>
+            <name>
+              <surname>Dixon</surname>
+              <given-names>T.R.</given-names>
+            </name>
+            <name>
+              <surname>Vining</surname>
+              <given-names>I.</given-names>
+            </name>
+          </person-group>
+          <article-title>Marine Debris Survey Manual</article-title>
+          <source>Noaa Tech. Rep. Nmfs</source>
+          <year>1992</year>
+          <volume>108</volume>
+          <fpage>92</fpage>
+        </element-citation>
+      </ref>
+      <ref id="B14-remotesensing-12-01515">
+        <label>14.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Kooi</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Reisser</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Slat</surname>
+              <given-names>B.</given-names>
+            </name>
+            <name>
+              <surname>Ferrari</surname>
+              <given-names>F.F.</given-names>
+            </name>
+            <name>
+              <surname>Schmid</surname>
+              <given-names>M.S.</given-names>
+            </name>
+            <name>
+              <surname>Cunsolo</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Brambini</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Noble</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Sirks</surname>
+              <given-names>L.-A.</given-names>
+            </name>
+            <name>
+              <surname>Linders</surname>
+              <given-names>T.E.W.</given-names>
+            </name>
+            <etal/>
+          </person-group>
+          <article-title>The effect of particle properties on the depth profile of buoyant plastics in the ocean</article-title>
+          <source>Sci. Rep.</source>
+          <year>2016</year>
+          <volume>6</volume>
+          <fpage>33882</fpage>
+          <pub-id pub-id-type="doi">10.1038/srep33882</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B15-remotesensing-12-01515">
+        <label>15.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Jakovljevic</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Govedarica</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Alvarez Taboada</surname>
+              <given-names>F.</given-names>
+            </name>
+          </person-group>
+          <article-title>Remote Sensing Data in Mapping Plastic at Surface Water Bodies</article-title>
+          <source>Proceedings of the FIG Working Week 2019 Geospatial Information for A Smarter Life and Environmental Resilience</source>
+          <conf-loc>Hanoi, Vietnam</conf-loc>
+          <conf-date>22&#x2013;26 April 2019</conf-date>
+        </element-citation>
+      </ref>
+      <ref id="B16-remotesensing-12-01515">
+        <label>16.</label>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Aoyama</surname>
+              <given-names>T.</given-names>
+            </name>
+          </person-group>
+          <article-title>Extraction of marine debris in the Sea of Japan using high-spatial resolution satellite images</article-title>
+          <source>SPIE Remote Sensing of the Oceans and Inland Waters: Techniques, Applications, and Challenges</source>
+          <publisher-name>SPIE&#x2014;International Society for Optics and Photonics</publisher-name>
+          <publisher-loc>New Delhi, India</publisher-loc>
+          <year>2016</year>
+          <pub-id pub-id-type="doi">10.1117/12.2220370</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B17-remotesensing-12-01515">
+        <label>17.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Gray</surname>
+              <given-names>P.C.</given-names>
+            </name>
+            <name>
+              <surname>Fleishman</surname>
+              <given-names>A.B.</given-names>
+            </name>
+            <name>
+              <surname>Klein</surname>
+              <given-names>D.J.</given-names>
+            </name>
+            <name>
+              <surname>McKown</surname>
+              <given-names>M.W.</given-names>
+            </name>
+            <name>
+              <surname>Bezy</surname>
+              <given-names>V.S.</given-names>
+            </name>
+            <name>
+              <surname>Lohmann</surname>
+              <given-names>K.J.</given-names>
+            </name>
+            <name>
+              <surname>Jhonston</surname>
+              <given-names>D.W.</given-names>
+            </name>
+          </person-group>
+          <article-title>A Convolutional Neural Network for Detecting Sea Turtles in Drone Imagery</article-title>
+          <source>Methods Ecol. Evol.</source>
+          <year>2018</year>
+          <volume>10</volume>
+          <fpage>345</fpage>
+          <lpage>355</lpage>
+          <pub-id pub-id-type="doi">10.1111/2041-210X.13132</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B18-remotesensing-12-01515">
+        <label>18.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Hong</surname>
+              <given-names>S.-J.</given-names>
+            </name>
+            <name>
+              <surname>Han</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Kim</surname>
+              <given-names>S.-Y.</given-names>
+            </name>
+            <name>
+              <surname>Lee</surname>
+              <given-names>A.-Y.</given-names>
+            </name>
+            <name>
+              <surname>Kim</surname>
+              <given-names>G.</given-names>
+            </name>
+          </person-group>
+          <article-title>Application of Deep-Learning Methods to Bird Detection Using Unmanned Aerial Vehicle Imagery</article-title>
+          <source>Sensors</source>
+          <year>2019</year>
+          <volume>19</volume>
+          <elocation-id>1651</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/s19071651</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B19-remotesensing-12-01515">
+        <label>19.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Martin</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Parkes</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Zhang</surname>
+              <given-names>Q.</given-names>
+            </name>
+            <name>
+              <surname>Zhang</surname>
+              <given-names>X.</given-names>
+            </name>
+            <name>
+              <surname>McCabe</surname>
+              <given-names>M.F.</given-names>
+            </name>
+          </person-group>
+          <article-title>Use of unnamed aerial vehicle for efficient beach litter monitoring</article-title>
+          <source>Mar. Pollut. Bull.</source>
+          <year>2018</year>
+          <volume>131</volume>
+          <fpage>662</fpage>
+          <lpage>673</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.marpolbul.2018.04.045</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B20-remotesensing-12-01515">
+        <label>20.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Topouzelis</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Papakonstantinou</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Garaba</surname>
+              <given-names>S.P.</given-names>
+            </name>
+          </person-group>
+          <article-title>Detection of floating plastics from satellite and unmanned aerial systems (Plastic Litter Project 2018)</article-title>
+          <source>Int. J. Appl. Earth Obs. Geoinf.</source>
+          <year>2019</year>
+          <volume>79</volume>
+          <fpage>175</fpage>
+          <lpage>183</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.jag.2019.03.011</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B21-remotesensing-12-01515">
+        <label>21.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Geraeds</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>van Emmeric</surname>
+              <given-names>T.</given-names>
+            </name>
+            <name>
+              <surname>de Vries</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>bin Ab Razak</surname>
+              <given-names>M.S.</given-names>
+            </name>
+          </person-group>
+          <article-title>Riverine Plastic Litter Monitoring Using Unmanned Aerial Vehicles (UAVs)</article-title>
+          <source>Remote Sens.</source>
+          <year>2019</year>
+          <volume>11</volume>
+          <elocation-id>2045</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs11172045</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B22-remotesensing-12-01515">
+        <label>22.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Moy</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Neilson</surname>
+              <given-names>B.</given-names>
+            </name>
+            <name>
+              <surname>Chung</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Meadows</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Castrence</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Ambagis</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Davidson</surname>
+              <given-names>K.</given-names>
+            </name>
+          </person-group>
+          <article-title>Mapping coastal marine debris using aerial imagery and spatial analysis</article-title>
+          <source>Mar. Pollut. Bull.</source>
+          <year>2018</year>
+          <volume>132</volume>
+          <fpage>52</fpage>
+          <lpage>59</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.marpolbul.2017.11.045</pub-id>
+          <pub-id pub-id-type="pmid">29273243</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B23-remotesensing-12-01515">
+        <label>23.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Boonpook</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Tan</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Ye</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Torteeka</surname>
+              <given-names>P.</given-names>
+            </name>
+            <name>
+              <surname>Torsri</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Dong</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>A Deep Learning Approach on Building Detection from Unmanned Aerial Vehicle-Based Images in Riverbank Monitoring</article-title>
+          <source>Sensors</source>
+          <year>2018</year>
+          <volume>18</volume>
+          <elocation-id>3921</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/s18113921</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B24-remotesensing-12-01515">
+        <label>24.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Ronneberger</surname>
+              <given-names>O.</given-names>
+            </name>
+            <name>
+              <surname>Fischer</surname>
+              <given-names>P.</given-names>
+            </name>
+            <name>
+              <surname>Brox</surname>
+              <given-names>T.</given-names>
+            </name>
+          </person-group>
+          <article-title>U-Net: Convolutional Networks for Biomedical Image Segmentation</article-title>
+          <source>arXiv</source>
+          <year>2015</year>
+          <pub-id pub-id-type="arxiv">1505.04597v1</pub-id>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://arxiv.org/abs/1505.04597" ext-link-type="uri">https://arxiv.org/abs/1505.04597</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-25">(accessed on 25 April 2020.)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B25-remotesensing-12-01515">
+        <label>25.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Schmidt</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Krauth</surname>
+              <given-names>T.</given-names>
+            </name>
+            <name>
+              <surname>Wagner</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>Export of Plastic Debris by Rivers into the Sea</article-title>
+          <source>Environ. Sci. Technol.</source>
+          <year>2017</year>
+          <volume>51</volume>
+          <fpage>12246</fpage>
+          <lpage>12253</lpage>
+          <pub-id pub-id-type="doi">10.1021/acs.est.7b02368</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B26-remotesensing-12-01515">
+        <label>26.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Krizhevsky</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Sutskever</surname>
+              <given-names>I.</given-names>
+            </name>
+            <name>
+              <surname>Hinton</surname>
+              <given-names>G.E.</given-names>
+            </name>
+          </person-group>
+          <article-title>ImageNet classification with deep convolutional neural networks</article-title>
+          <source>Proceedings of the Advances in Neural Information Processing Systems</source>
+          <conf-loc>Lake Tahoe, ND, USA</conf-loc>
+          <conf-date>3&#x2013;6 December 2012</conf-date>
+          <fpage>1097</fpage>
+          <lpage>1105</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B27-remotesensing-12-01515">
+        <label>27.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Simonyan</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Zisserman</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Very Deep Convolutional Networks for Large-Scale Image Recognition</article-title>
+          <source>arXiv</source>
+          <year>2014</year>
+          <pub-id pub-id-type="arxiv">1409.1556</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B28-remotesensing-12-01515">
+        <label>28.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>He</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Zhang</surname>
+              <given-names>X.</given-names>
+            </name>
+            <name>
+              <surname>Ren</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Sun</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Deep residual learning for image recognition</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</source>
+          <conf-loc>Las Vegas, NV, USA</conf-loc>
+          <conf-date>26 June&#x2013;1 July 2016</conf-date>
+          <fpage>770</fpage>
+          <lpage>778</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B29-remotesensing-12-01515">
+        <label>29.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Huang</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Liu</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>van der Maaten</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Weinberger</surname>
+              <given-names>K.Q.</given-names>
+            </name>
+          </person-group>
+          <article-title>Densely Connected Convolutional Networks</article-title>
+          <year>2016</year>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://arxiv.org/abs/1608.06993" ext-link-type="uri">https://arxiv.org/abs/1608.06993</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-25">(accessed on 25 April 2020)</date-in-citation>
+          <pub-id pub-id-type="arxiv">1608.06993</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B30-remotesensing-12-01515">
+        <label>30.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Szegedy</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Ioffe</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Vanhoucke</surname>
+              <given-names>V.</given-names>
+            </name>
+            <name>
+              <surname>Alemi</surname>
+              <given-names>A.A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Inception-4, Inception-ResNet and the impact of residual connections on learning</article-title>
+          <source>Proceedings of the Thirty-First AAAI Conference on Artificial Intelligence</source>
+          <conf-loc>San Francisco, CA, USA</conf-loc>
+          <conf-date>4&#x2013;10 February 2017</conf-date>
+        </element-citation>
+      </ref>
+      <ref id="B31-remotesensing-12-01515">
+        <label>31.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Song</surname>
+              <given-names>H.S.</given-names>
+            </name>
+            <name>
+              <surname>Kim</surname>
+              <given-names>Y.H.</given-names>
+            </name>
+            <name>
+              <surname>Kim</surname>
+              <given-names>Y.I.</given-names>
+            </name>
+          </person-group>
+          <article-title>A Patch-Based Light Convolutional Neural Network for Land-Cover Mapping Using Landsat-8 Images</article-title>
+          <source>Remote Sens.</source>
+          <year>2019</year>
+          <volume>11</volume>
+          <elocation-id>114</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs11020114</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B32-remotesensing-12-01515">
+        <label>32.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Lagkvist</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Kiselev</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Alirezaie</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Loutfi</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Classification and Segmentation of Satellite Orthoimagery Using Convolutional Neural Networks</article-title>
+          <source>Remote Sens.</source>
+          <year>2016</year>
+          <volume>8</volume>
+          <elocation-id>329</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs8040329</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B33-remotesensing-12-01515">
+        <label>33.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Long</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Shelhamer</surname>
+              <given-names>E.</given-names>
+            </name>
+            <name>
+              <surname>Darrell</surname>
+              <given-names>T.</given-names>
+            </name>
+          </person-group>
+          <article-title>Fully Convolutional Networks for Semantic Segmentation</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</source>
+          <conf-loc>Boston, MA, USA</conf-loc>
+          <conf-date>7&#x2013;12 June 2015</conf-date>
+          <fpage>3431</fpage>
+          <lpage>3440</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B34-remotesensing-12-01515">
+        <label>34.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Yu</surname>
+              <given-names>F.</given-names>
+            </name>
+            <name>
+              <surname>Koltun</surname>
+              <given-names>V.</given-names>
+            </name>
+          </person-group>
+          <article-title>Multi-scale context aggregation by dilated convolution</article-title>
+          <source>arXiv</source>
+          <year>2016</year>
+          <pub-id pub-id-type="arxiv">1511.07122</pub-id>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://arxiv.org/abs/1511.07122" ext-link-type="uri">https://arxiv.org/abs/1511.07122</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-25">(accessed on 25 April 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B35-remotesensing-12-01515">
+        <label>35.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Chen</surname>
+              <given-names>L.-C.</given-names>
+            </name>
+            <name>
+              <surname>Papandreou</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Kokkinos</surname>
+              <given-names>I.</given-names>
+            </name>
+            <name>
+              <surname>Murphy</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Yuille</surname>
+              <given-names>A.L.</given-names>
+            </name>
+          </person-group>
+          <article-title>Deeplab: Semantic image segmentation with deep convolutional nets, Atrous convolution, and fully connected CRFs</article-title>
+          <source>IEEE Trans. Pattern Anal. Mach. Intell.</source>
+          <year>2018</year>
+          <volume>40</volume>
+          <fpage>834</fpage>
+          <lpage>848</lpage>
+          <pub-id pub-id-type="doi">10.1109/TPAMI.2017.2699184</pub-id>
+          <pub-id pub-id-type="pmid">28463186</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B36-remotesensing-12-01515">
+        <label>36.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Zhao</surname>
+              <given-names>X.</given-names>
+            </name>
+            <name>
+              <surname>Yuan</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Song</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Ding</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Lin</surname>
+              <given-names>F.</given-names>
+            </name>
+            <name>
+              <surname>Liang</surname>
+              <given-names>D.</given-names>
+            </name>
+            <name>
+              <surname>Zhang</surname>
+              <given-names>D.</given-names>
+            </name>
+          </person-group>
+          <article-title>Use of Unmanned Aerial Vehicle Imagery and Deep Learning UNet to Extract Rice Lodging</article-title>
+          <source>Sensors</source>
+          <year>2019</year>
+          <volume>19</volume>
+          <elocation-id>3859</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/s19183859</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B37-remotesensing-12-01515">
+        <label>37.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Xu</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Wu</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Xie</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Chen</surname>
+              <given-names>Z.</given-names>
+            </name>
+          </person-group>
+          <article-title>Building Extraction in Very High Resolution Remote Sensing Imagery Using Deep Learning and Guided Filters</article-title>
+          <source>Remote Sens.</source>
+          <year>2018</year>
+          <volume>10</volume>
+          <elocation-id>144</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs10010144</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B38-remotesensing-12-01515">
+        <label>38.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Yi</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Zhang</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Zhang</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Zhang</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Zhao</surname>
+              <given-names>T.</given-names>
+            </name>
+          </person-group>
+          <article-title>Semantic Segmentation of Urban Buildings from VHR Remote Sensing Imagery Using a Deep Convolutional Neural Network</article-title>
+          <source>Remote Sens.</source>
+          <year>2019</year>
+          <volume>11</volume>
+          <elocation-id>1774</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs11151774</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B39-remotesensing-12-01515">
+        <label>39.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Guo</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>He</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Jiang</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Yin</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Yan</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Leng</surname>
+              <given-names>W.</given-names>
+            </name>
+          </person-group>
+          <article-title>A Multi-Scale Water Extraction Convolutional Neural Network (MWEN) Method for GaoFen-1 Remote Sensing Images</article-title>
+          <source>Isprs Int. J. Geo Inf.</source>
+          <year>2020</year>
+          <volume>9</volume>
+          <elocation-id>189</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/ijgi9040189</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B40-remotesensing-12-01515">
+        <label>40.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Pashaei</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Kamangir</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Starek</surname>
+              <given-names>M.J.</given-names>
+            </name>
+            <name>
+              <surname>Tissot</surname>
+              <given-names>P.</given-names>
+            </name>
+          </person-group>
+          <article-title>Review and Evaluation of Deep Learning Architectures for Efficient Land Cover Mapping with UAS Hyper-Spatial Imagery: A Case Study Over a Wetland</article-title>
+          <source>Remote Sens.</source>
+          <year>2020</year>
+          <volume>12</volume>
+          <elocation-id>959</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs12060959</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B41-remotesensing-12-01515">
+        <label>41.</label>
+        <element-citation publication-type="web">
+          <article-title>Ekocentar Bo&#x10D;ac</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://ekocentar-bocacjezero.com/zastitna_mreza/zaustavljanje-plutajuceg-otpada-na-mrezi/" ext-link-type="uri">https://ekocentar-bocacjezero.com/zastitna_mreza/zaustavljanje-plutajuceg-otpada-na-mrezi/</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-02-29">(accessed on 29 February 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B42-remotesensing-12-01515">
+        <label>42.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Govedarica</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Jakovljevi&#x107;</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Taboada</surname>
+              <given-names>F.A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Flood risk assessment based on LiDAR and UAV points clouds and DEM</article-title>
+          <source>Proceedings of the SPIE 10783, Remote Sensing for Agriculture, Ecosystems, and Hydrology XX, 107830B</source>
+          <conf-loc>Berlin, Germany</conf-loc>
+          <conf-date>10 October 2018</conf-date>
+          <pub-id pub-id-type="doi">10.1117/12.2513278</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B43-remotesensing-12-01515">
+        <label>43.</label>
+        <element-citation publication-type="web">
+          <article-title>Trimble</article-title>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://www.ecognition.com/" ext-link-type="uri">http://www.ecognition.com/</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-01-12">(accessed on 12 January 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B44-remotesensing-12-01515">
+        <label>44.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Zhou</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Siddiquee</surname>
+              <given-names>M.R.</given-names>
+            </name>
+            <name>
+              <surname>Tajbakhsh</surname>
+              <given-names>N.</given-names>
+            </name>
+            <name>
+              <surname>Liang</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>UNet++: Redesigning Skip Connections to Exploit Multiscale Features in Image Segmentation</article-title>
+          <source>IEEE Trans. Med. Imaging.</source>
+          <year>2020</year>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://arxiv.org/pdf/1912.05074.pdf" ext-link-type="uri">https://arxiv.org/pdf/1912.05074.pdf</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-27">(accessed on 27 April 2020)</date-in-citation>
+          <pub-id pub-id-type="doi">10.1109/TMI.2019.2959609</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B45-remotesensing-12-01515">
+        <label>45.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Wang</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Liang</surname>
+              <given-names>B.</given-names>
+            </name>
+            <name>
+              <surname>Ding</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Dense Semantic Labeling with Atrous Spatial Pyramid Pooling and Decoder for High-Resolution Remote Sensing Imagery</article-title>
+          <source>Remote Sens.</source>
+          <year>2019</year>
+          <volume>11</volume>
+          <elocation-id>20</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs11010020</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B46-remotesensing-12-01515">
+        <label>46.</label>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Chollet</surname>
+              <given-names>F.</given-names>
+            </name>
+          </person-group>
+          <source>Deep Learning with Python</source>
+          <publisher-name>Manning Publications Co.</publisher-name>
+          <publisher-loc>Greenwich, CT, USA</publisher-loc>
+          <year>2017</year>
+        </element-citation>
+      </ref>
+      <ref id="B47-remotesensing-12-01515">
+        <label>47.</label>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Goodfellow</surname>
+              <given-names>I.</given-names>
+            </name>
+            <name>
+              <surname>Bengio</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Courville</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Deep Learning</article-title>
+          <publisher-name>The MIT Press</publisher-name>
+          <publisher-loc>Cambridge, MA, USA</publisher-loc>
+          <year>2016</year>
+        </element-citation>
+      </ref>
+      <ref id="B48-remotesensing-12-01515">
+        <label>48.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Szegedy</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Liu</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Jia</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Sermanet</surname>
+              <given-names>P.</given-names>
+            </name>
+            <name>
+              <surname>Reed</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Anguelov</surname>
+              <given-names>D.</given-names>
+            </name>
+            <name>
+              <surname>Erhan</surname>
+              <given-names>D.</given-names>
+            </name>
+            <name>
+              <surname>Vanhoucke</surname>
+              <given-names>V.</given-names>
+            </name>
+            <name>
+              <surname>Rabinovich</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Going Deeper with Convolutions</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</source>
+          <conf-loc>Boston, MA, USA</conf-loc>
+          <conf-date>7&#x2013;12 June 2015</conf-date>
+          <fpage>1</fpage>
+          <lpage>9</lpage>
+          <pub-id pub-id-type="doi">10.1109/CVPR.2015.7298594</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B49-remotesensing-12-01515">
+        <label>49.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Nair</surname>
+              <given-names>V.</given-names>
+            </name>
+            <name>
+              <surname>Hinton</surname>
+              <given-names>G.E.</given-names>
+            </name>
+          </person-group>
+          <article-title>Rectified Linear Units Improve Restricted Boltzmann Machines</article-title>
+          <source>Proceedings of the 27th International Conference on Machine Learning</source>
+          <conf-loc>Haifa, Israel</conf-loc>
+          <conf-date>21&#x2013;24 June 2010</conf-date>
+        </element-citation>
+      </ref>
+      <ref id="B50-remotesensing-12-01515">
+        <label>50.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Deng</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Dong</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Socher</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Fei-Fei</surname>
+              <given-names>L.</given-names>
+            </name>
+          </person-group>
+          <article-title>ImageNet: A large-scale hierarchical image database</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</source>
+          <conf-loc>Miami, FL, USA</conf-loc>
+          <conf-date>20&#x2013;25 June 2009</conf-date>
+          <fpage>248</fpage>
+          <lpage>255</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B51-remotesensing-12-01515">
+        <label>51.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Xie</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Girshick</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Dollar</surname>
+              <given-names>P.</given-names>
+            </name>
+            <name>
+              <surname>Tu</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>He</surname>
+              <given-names>K.</given-names>
+            </name>
+          </person-group>
+          <article-title>Aggregated Residual Transformations for Deep Neural Network</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</source>
+          <conf-loc>Honolulu, HI, USA</conf-loc>
+          <conf-date>21&#x2013;26 July 2017</conf-date>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://arxiv.org/abs/1611.05431" ext-link-type="uri">https://arxiv.org/abs/1611.05431</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-25">(accessed on 25 April 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B52-remotesensing-12-01515">
+        <label>52.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Chollet</surname>
+              <given-names>F.</given-names>
+            </name>
+          </person-group>
+          <article-title>Xception: Deep Learning with Depthwise Separable Convolutions</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</source>
+          <conf-loc>Honolulu, HI, USA</conf-loc>
+          <conf-date>21&#x2013;26 July 2017</conf-date>
+          <fpage>1251</fpage>
+          <lpage>1258</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B53-remotesensing-12-01515">
+        <label>53.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Hasini</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Shokri</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Dehghan</surname>
+              <given-names>M.</given-names>
+            </name>
+          </person-group>
+          <article-title>Augmentation Scheme for Dealing with Imbalanced Network Traffic Classification Using Deep Learning</article-title>
+          <source>arXiv</source>
+          <year>2019</year>
+          <pub-id pub-id-type="arxiv">1901.00204</pub-id>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://arxiv.org/pdf/1901.00204.pdf" ext-link-type="uri">https://arxiv.org/pdf/1901.00204.pdf</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-25">(accessed on 25 April 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B54-remotesensing-12-01515">
+        <label>54.</label>
+        <element-citation publication-type="book">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Yosinski</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Clune</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Bengio</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Lipson</surname>
+              <given-names>H.</given-names>
+            </name>
+          </person-group>
+          <article-title>How transferable are features in deep neural networks?</article-title>
+          <source>Advances in Neural Information Processing Systems 27 (NIPS &#x2019;14)</source>
+          <publisher-name>NIPS Foundation</publisher-name>
+          <publisher-loc>Montreal, QC, Canada</publisher-loc>
+          <year>2014</year>
+        </element-citation>
+      </ref>
+      <ref id="B55-remotesensing-12-01515">
+        <label>55.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Fawcett</surname>
+              <given-names>T.</given-names>
+            </name>
+          </person-group>
+          <article-title>An introduction to ROC analysis</article-title>
+          <source>Pattern Recognit. Lett.</source>
+          <year>2006</year>
+          <volume>27</volume>
+          <fpage>861</fpage>
+          <lpage>874</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.patrec.2005.10.010</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B56-remotesensing-12-01515">
+        <label>56.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Bekkar</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Kheliouane Djemaa</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Akrouf Alitouche</surname>
+              <given-names>T.</given-names>
+            </name>
+          </person-group>
+          <article-title>Evaluation Measure for Models Assessment over Imbalanced Data Sets</article-title>
+          <source>J. Inf. Eng. Appl.</source>
+          <year>2013</year>
+          <volume>3</volume>
+          <fpage>27</fpage>
+          <lpage>38</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B57-remotesensing-12-01515">
+        <label>57.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Innamorati</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Ritschel</surname>
+              <given-names>T.</given-names>
+            </name>
+            <name>
+              <surname>Weyrich</surname>
+              <given-names>T.</given-names>
+            </name>
+            <name>
+              <surname>Mitra</surname>
+              <given-names>N.J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Learning on the Edge: Explicit Boundary Handling in CNNs</article-title>
+          <source>arXiv</source>
+          <year>2018</year>
+          <pub-id pub-id-type="arxiv">180503106.2018</pub-id>
+          <comment>Available online: <ext-link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://arxiv.org/pdf/1805.03106.pdf" ext-link-type="uri">https://arxiv.org/pdf/1805.03106.pdf</ext-link></comment>
+          <date-in-citation content-type="access-date" iso-8601-date="2020-04-25">(accessed on 25 April 2020)</date-in-citation>
+        </element-citation>
+      </ref>
+      <ref id="B58-remotesensing-12-01515">
+        <label>58.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cui</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Zhang</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Liu</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Xiong</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Hu</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>A Deep Learning Algorithm for One-step Contour Aware Nuclei Segmentation of Histopathological Images</article-title>
+          <source>Med. Biol. Eng. Comput.</source>
+          <year>2019</year>
+          <volume>57</volume>
+          <fpage>2027</fpage>
+          <lpage>2043</lpage>
+          <pub-id pub-id-type="doi">10.1007/s11517-019-02008-8</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B59-remotesensing-12-01515">
+        <label>59.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Goddijn-Murphy</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Peters</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>van Sebille</surname>
+              <given-names>E.</given-names>
+            </name>
+            <name>
+              <surname>James</surname>
+              <given-names>N.</given-names>
+            </name>
+            <name>
+              <surname>Gibb</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>Concept for a hyperspectral remote sensing algorithm for floating marine macro plastics</article-title>
+          <source>Mar. Pollut. Bull.</source>
+          <year>2018</year>
+          <volume>126</volume>
+          <fpage>255</fpage>
+          <lpage>262</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.marpolbul.2017.11.011</pub-id>
+          <pub-id pub-id-type="pmid">29421096</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B60-remotesensing-12-01515">
+        <label>60.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Kannoji</surname>
+              <given-names>S.P.</given-names>
+            </name>
+            <name>
+              <surname>Jaiswal</surname>
+              <given-names>G.</given-names>
+            </name>
+          </person-group>
+          <article-title>Effects of Varying Resolution on Performance of CNN based Image Classification: An Experimental Study</article-title>
+          <source>Int. J. Comput. Sci. Eng.</source>
+          <year>2018</year>
+          <volume>6</volume>
+          <fpage>451</fpage>
+          <lpage>456</lpage>
+          <pub-id pub-id-type="doi">10.26438/ijcse/v6i9.451456</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B61-remotesensing-12-01515">
+        <label>61.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Kay</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Hedley</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Lavender</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>Sun Glint Correction of High and Low Spatial Resolution Images of Aquatic Scenes: A Review of Methods for Visible and Near-Infrared Wavelengths</article-title>
+          <source>Remote Sens.</source>
+          <year>2009</year>
+          <volume>1</volume>
+          <fpage>697</fpage>
+          <lpage>730</lpage>
+          <pub-id pub-id-type="doi">10.3390/rs1040697</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B62-remotesensing-12-01515">
+        <label>62.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Ji</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Gong</surname>
+              <given-names>P.</given-names>
+            </name>
+            <name>
+              <surname>Geng</surname>
+              <given-names>X.</given-names>
+            </name>
+            <name>
+              <surname>Zhao</surname>
+              <given-names>Y.</given-names>
+            </name>
+          </person-group>
+          <article-title>Improving the Accuracy of the Water Surface Cover Type in the 30 m FROM-GLC Product</article-title>
+          <source>Remote Sens.</source>
+          <year>2015</year>
+          <volume>7</volume>
+          <fpage>13507</fpage>
+          <lpage>13527</lpage>
+          <pub-id pub-id-type="doi">10.3390/rs71013507</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B63-remotesensing-12-01515">
+        <label>63.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Anggoro</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Siregar</surname>
+              <given-names>V.</given-names>
+            </name>
+            <name>
+              <surname>Agus</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>The effect of sunglint on benthic habitats mapping in Pari Island using worldview-2 imagery</article-title>
+          <source>Procedia Environ. Sci.</source>
+          <year>2016</year>
+          <volume>33</volume>
+          <fpage>487</fpage>
+          <lpage>495</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.proenv.2016.03.101</pub-id>
+        </element-citation>
+      </ref>
+    </ref-list>
+    <sec sec-type="display-objects">
+      <title>Figures and Tables</title>
+      <fig id="remotesensing-12-01515-f001" position="float">
+        <label>Figure 1</label>
+        <caption>
+          <p>Study areas: Lake Balkana (left) and Crna Rijeka River (right). EPSG:3857.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g001.tif"/>
+      </fig>
+      <fig id="remotesensing-12-01515-f002" position="float">
+        <label>Figure 2</label>
+        <caption>
+          <p>Targets used in the study area located in Lake Balkana (<bold>a</bold>) frame with metal construction for the underwater survey, (<bold>b</bold>) frame for the on the water surface survey, (<bold>c</bold>) nylon rope, (<bold>d</bold>) plastic bottles.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g002.tif"/>
+      </fig>
+      <fig id="remotesensing-12-01515-f003" position="float">
+        <label>Figure 3</label>
+        <caption>
+          <p>Workflow used in this study where &#x201C;B*&#x201D; and &#x201C;CR**&#x201D; correspond with the Balkana and Crna Rijeka dataset respectively. UAV = Unmanned Aerial Vehicles; SfM = Structure from Motion.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g003.tif"/>
+      </fig>
+      <fig id="remotesensing-12-01515-f004" position="float">
+        <label>Figure 4</label>
+        <caption>
+          <p>Building blocks of (<bold>a</bold>) ResNet, (<bold>b</bold>) Inception-ResNet v2, (<bold>c</bold>) Xception, and (<bold>d</bold>) ResNeXt (C = 32) (<bold>e</bold>) architecture of ResUNet50/ResUNext50. Where: ReLu is Rectified Linear Unit, BN is Batch Normalization, and CONV is convolution.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g004.tif"/>
+      </fig>
+      <fig id="remotesensing-12-01515-f005" position="float">
+        <label>Figure 5</label>
+        <caption>
+          <p>Ground truth data and results of the classification using the four tested models for detecting different plastic materials, located underwater (<bold>a</bold>) and overwater (<bold>b</bold>&#x2013;<bold>d</bold>) (Dataset 1). Where: OPS is Oriented Polystyrene and PET is Polyethylene terephthalate.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g005.tif"/>
+      </fig>
+      <fig id="remotesensing-12-01515-f006" position="float">
+        <label>Figure 6</label>
+        <caption>
+          <p>Spectral signatures of water, PET and OPS.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g006.tif"/>
+      </fig>
+      <fig id="remotesensing-12-01515-f007" position="float">
+        <label>Figure 7</label>
+        <caption>
+          <p>Ground truth data and results of the classification using the ResUNet50 algorithm for visual comparison, at different spatial resolutions and for different plastic materials, located underwater (<bold>a</bold>) and overwater (<bold>b</bold>&#x2013;<bold>d</bold>) (Dataset 2).</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g007.tif"/>
+      </fig>
+      <fig id="remotesensing-12-01515-f008" position="float">
+        <label>Figure 8</label>
+        <caption>
+          <p>Differences in the extension of the detected area covered by plastic (using the classification of the 4 mm orthophoto as a reference value).</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g008.tif"/>
+      </fig>
+      <fig id="remotesensing-12-01515-f009" position="float">
+        <label>Figure 9</label>
+        <caption>
+          <p>Relationship between the spatial resolution (cm/pixel) and the area covered by an image gathered by the DJI Mavic ProCamera (grid mission with an 80 % overlap).</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g009.tif"/>
+      </fig>
+      <fig id="remotesensing-12-01515-f010" position="float">
+        <label>Figure 10</label>
+        <caption>
+          <p>Visual comparison between the orthophoto, true data (ground truth) and classification results for the five different scenarios: (<bold>a</bold>) group of plastics, (<bold>b</bold>) single plastic items, (<bold>c</bold>) plastic in shallow waters, (<bold>d</bold>) training data errors (orange lines), which were misclassified by the operator and correctly classified by the algorithm (<bold>e</bold>) plastic on the ground.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g010.tif"/>
+      </fig>
+      <fig id="remotesensing-12-01515-f011" position="float">
+        <label>Figure 11</label>
+        <caption>
+          <p>Proposed flight planning methodology to obtain accurate datasets for algorithm calibration.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="remotesensing-12-01515-g011.tif"/>
+      </fig>
+      <table-wrap id="remotesensing-12-01515-t001" position="float">
+        <object-id pub-id-type="pii">remotesensing-12-01515-t001_Table 1</object-id>
+        <label>Table 1</label>
+        <caption>
+          <p>Flight heights and spatial resolutions of the conducted surveys.</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Flight Height (m)</th>
+              <th colspan="2" align="center" valign="top" style="border-top:solid thin">Spatial Resolution (mm)</th>
+            </tr>
+            <tr>
+              <th align="center" valign="top" style="border-bottom:solid thin">Balkana</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">Crna Rijeka</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="middle">12</td>
+              <td align="center" valign="top">4</td>
+              <td align="center" valign="top">-</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">40</td>
+              <td align="center" valign="top">13</td>
+              <td align="center" valign="top">-</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">55</td>
+              <td align="center" valign="top">18</td>
+              <td align="center" valign="top">-</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">70</td>
+              <td align="center" valign="top">23</td>
+              <td align="center" valign="top">-</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle" style="border-bottom:solid thin">90</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">30</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">30</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="remotesensing-12-01515-t002" position="float">
+        <object-id pub-id-type="pii">remotesensing-12-01515-t002_Table 2</object-id>
+        <label>Table 2</label>
+        <caption>
+          <p>Hyperparameters used for training the models.</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Study Area</th>
+              <th align="center" valign="top" style="border-top:solid thin;border-bottom:solid thin">Dataset</th>
+              <th align="center" valign="top" style="border-top:solid thin;border-bottom:solid thin">Architecture</th>
+              <th align="center" valign="top" style="border-top:solid thin;border-bottom:solid thin">Batch Size</th>
+              <th align="center" valign="top" style="border-top:solid thin;border-bottom:solid thin">Learning Rate</th>
+              <th align="center" valign="top" style="border-top:solid thin;border-bottom:solid thin">Training Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="top">Balkana</td>
+              <td align="center" valign="top">Dataset 1</td>
+              <td align="center" valign="top">ResUNet50</td>
+              <td align="center" valign="top">8</td>
+              <td align="center" valign="top">8 &#xD7; 10<sup>&#x2212;5</sup></td>
+              <td align="center" valign="top">31 min</td>
+            </tr>
+            <tr>
+              <td align="center" valign="top">Balkana</td>
+              <td align="center" valign="top">Dataset 1</td>
+              <td align="center" valign="top">ResUNext50</td>
+              <td align="center" valign="top">8</td>
+              <td align="center" valign="top">1 &#xD7; 10<sup>&#x2212;6</sup></td>
+              <td align="center" valign="top">44 min</td>
+            </tr>
+            <tr>
+              <td align="center" valign="top">Balkana</td>
+              <td align="center" valign="top">Dataset 1</td>
+              <td align="center" valign="top">XceptionUNet</td>
+              <td align="center" valign="top">8</td>
+              <td align="center" valign="top">2 &#xD7; 10<sup>&#x2212;5</sup></td>
+              <td align="center" valign="top">21 min</td>
+            </tr>
+            <tr>
+              <td align="center" valign="top">Balkana</td>
+              <td align="center" valign="top">Dataset 1</td>
+              <td align="center" valign="top">InceptionUResNet v2</td>
+              <td align="center" valign="top">8</td>
+              <td align="center" valign="top">1 &#xD7; 10<sup>&#x2212;5</sup></td>
+              <td align="center" valign="top">33 min</td>
+            </tr>
+            <tr>
+              <td align="center" valign="top">Balkana</td>
+              <td align="center" valign="top">Dataset 2 </td>
+              <td align="center" valign="top">ResUNet50</td>
+              <td align="center" valign="top">8</td>
+              <td align="center" valign="top">3 &#xD7; 10<sup>&#x2212;5</sup></td>
+              <td align="center" valign="top">40 min</td>
+            </tr>
+            <tr>
+              <td align="center" valign="top" style="border-bottom:solid thin">Crna Rijeka</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">Dataset 3</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">ResUNet50</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">8</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">4 &#xD7; 10<sup>&#x2212;6</sup></td>
+              <td align="center" valign="top" style="border-bottom:solid thin">3 h</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="remotesensing-12-01515-t003" position="float">
+        <object-id pub-id-type="pii">remotesensing-12-01515-t003_Table 3</object-id>
+        <label>Table 3</label>
+        <caption>
+          <p>Comparison of different encoder architectures for floating plastic detection (where P, R, <italic>F</italic>1, are precision, recall, and <italic>F</italic>1-score respectively) (Dataset 1).</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2" align="center" valign="top" style="border-top:solid thin"> </th>
+              <th colspan="3" align="center" valign="top" style="border-top:solid thin">ResUNet50</th>
+              <th colspan="3" align="center" valign="top" style="border-top:solid thin">ResUNext50</th>
+              <th colspan="3" align="center" valign="top" style="border-top:solid thin">XceptionUNet</th>
+              <th colspan="3" align="center" valign="top" style="border-top:solid thin">InceptionResUNet v2</th>
+            </tr>
+            <tr>
+              <th align="center" valign="top" style="border-bottom:solid thin">P</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">R</th>
+              <th align="center" valign="top" style="border-bottom:solid thin"><italic>F</italic>1</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">P</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">R</th>
+              <th align="center" valign="top" style="border-bottom:solid thin"><italic>F</italic>1</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">P</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">R</th>
+              <th align="center" valign="top" style="border-bottom:solid thin"><italic>F</italic>1</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">P</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">R</th>
+              <th align="center" valign="top" style="border-bottom:solid thin"><italic>F</italic>1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="top">OPS</td>
+              <td align="center" valign="top">0.86</td>
+              <td align="center" valign="top">0.86</td>
+              <td align="center" valign="top">0.86</td>
+              <td align="center" valign="top">0.99</td>
+              <td align="center" valign="top">0.19</td>
+              <td align="center" valign="top">0.31</td>
+              <td align="center" valign="top">0.81</td>
+              <td align="center" valign="top">0.39</td>
+              <td align="center" valign="top">0.53</td>
+              <td align="center" valign="top">0.01</td>
+              <td align="center" valign="top">0.00</td>
+              <td align="center" valign="top">0.00</td>
+            </tr>
+            <tr>
+              <td align="center" valign="top">Nylon</td>
+              <td align="center" valign="top">0.92</td>
+              <td align="center" valign="top">0.85</td>
+              <td align="center" valign="top">0.88</td>
+              <td align="center" valign="top">0.77</td>
+              <td align="center" valign="top">0.96</td>
+              <td align="center" valign="top">0.85</td>
+              <td align="center" valign="top">0.76</td>
+              <td align="center" valign="top">0.87</td>
+              <td align="center" valign="top">0.81</td>
+              <td align="center" valign="top">0.76</td>
+              <td align="center" valign="top">0.74</td>
+              <td align="center" valign="top">0.75</td>
+            </tr>
+            <tr>
+              <td align="center" valign="top" style="border-bottom:solid thin">PET</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.92</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.92</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.92</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.82</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.96</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.88</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.78</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.75</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.77</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.60</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.72</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.65</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="remotesensing-12-01515-t004" position="float">
+        <object-id pub-id-type="pii">remotesensing-12-01515-t004_Table 4</object-id>
+        <label>Table 4</label>
+        <caption>
+          <p>The effect of spatial resolution (mm) on ResUNet50 performance (where P, R, <italic>F</italic>1 are precision, recall, and <italic>F</italic>1-score respectively) (Dataset 2).</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th align="center" valign="top" style="border-top:solid thin"> </th>
+              <th colspan="3" align="center" valign="top" style="border-top:solid thin">13 mm</th>
+              <th colspan="3" align="center" valign="top" style="border-top:solid thin">18 mm</th>
+              <th colspan="3" align="center" valign="top" style="border-top:solid thin">23 mm</th>
+              <th colspan="3" align="center" valign="top" style="border-top:solid thin">30 mm</th>
+            </tr>
+            <tr>
+              <th align="center" valign="top"> </th>
+              <th align="center" valign="top" style="border-bottom:solid thin">P</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">R</th>
+              <th align="center" valign="top" style="border-bottom:solid thin"><italic>F</italic>1</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">P</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">R</th>
+              <th align="center" valign="top" style="border-bottom:solid thin"><italic>F</italic>1</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">P</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">R</th>
+              <th align="center" valign="top" style="border-bottom:solid thin"><italic>F</italic>1</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">P</th>
+              <th align="center" valign="top" style="border-bottom:solid thin">R</th>
+              <th align="center" valign="top" style="border-bottom:solid thin"><italic>F</italic>1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="top">OPS</td>
+              <td align="center" valign="top">0.88</td>
+              <td align="center" valign="top">0.77</td>
+              <td align="center" valign="top">0.82</td>
+              <td align="center" valign="top">0.69</td>
+              <td align="center" valign="top">0.71</td>
+              <td align="center" valign="top">0.70</td>
+              <td align="center" valign="top">0.79</td>
+              <td align="center" valign="top">0.31</td>
+              <td align="center" valign="top">0.44</td>
+              <td align="center" valign="top">0.75</td>
+              <td align="center" valign="top">0.45</td>
+              <td align="center" valign="top">0.56</td>
+            </tr>
+            <tr>
+              <td align="center" valign="top">Nylon</td>
+              <td align="center" valign="top">0.89</td>
+              <td align="center" valign="top">0.75</td>
+              <td align="center" valign="top">0.82</td>
+              <td align="center" valign="top">0.91</td>
+              <td align="center" valign="top">0.52</td>
+              <td align="center" valign="top">0.66</td>
+              <td align="center" valign="top">0.76</td>
+              <td align="center" valign="top">0.26</td>
+              <td align="center" valign="top">0.39</td>
+              <td align="center" valign="top">0.87</td>
+              <td align="center" valign="top">0.20</td>
+              <td align="center" valign="top">0.33</td>
+            </tr>
+            <tr>
+              <td align="center" valign="top" style="border-bottom:solid thin">PET</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.92</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.83</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.87</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.78</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.84</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.81</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.83</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.68</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.75</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.77</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.70</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.73</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="remotesensing-12-01515-t005" position="float">
+        <object-id pub-id-type="pii">remotesensing-12-01515-t005_Table 5</object-id>
+        <label>Table 5</label>
+        <caption>
+          <p>Precision, Recall, and <italic>F</italic>1-score of plastic classes in the Crna Rijeka study area.</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin"> </th>
+              <th align="center" valign="top" style="border-top:solid thin;border-bottom:solid thin">Precision</th>
+              <th align="center" valign="top" style="border-top:solid thin;border-bottom:solid thin">Recall</th>
+              <th align="center" valign="top" style="border-top:solid thin;border-bottom:solid thin"><italic>F</italic>1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="top">
+                <bold>Plastic</bold>
+              </td>
+              <td align="center" valign="top">0.82</td>
+              <td align="center" valign="top">0.75</td>
+              <td align="center" valign="top">0.78</td>
+            </tr>
+            <tr>
+              <td align="center" valign="top" style="border-bottom:solid thin">
+                <bold>Maybe Plastic</bold>
+              </td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.62</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.34</td>
+              <td align="center" valign="top" style="border-bottom:solid thin">0.43</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+    </sec>
+  </back>
+</article>

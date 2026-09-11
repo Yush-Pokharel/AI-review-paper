@@ -1,0 +1,1514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.2 201905//EN" "JATS-journalpublishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.2" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">entropy</journal-id>
+      <journal-title-group>
+        <journal-title>Entropy</journal-title>
+        <abbrev-journal-title abbrev-type="publisher">Entropy</abbrev-journal-title>
+        <abbrev-journal-title abbrev-type="pubmed">Entropy</abbrev-journal-title>
+      </journal-title-group>
+      <issn pub-type="epub">1099-4300</issn>
+      <publisher>
+        <publisher-name>MDPI</publisher-name>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="doi">10.3390/e23091111</article-id>
+      <article-id pub-id-type="publisher-id">entropy-23-01111</article-id>
+      <article-categories>
+        <subj-group>
+          <subject>Article</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Improved YOLO Based Detection Algorithm for Floating Debris in Waterway</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid" authenticated="true">https://orcid.org/0000-0001-8003-4793</contrib-id>
+          <name>
+            <surname>Lin</surname>
+            <given-names>Feng</given-names>
+          </name>
+          <xref rid="af1-entropy-23-01111" ref-type="aff">1</xref>
+          <xref rid="c1-entropy-23-01111" ref-type="corresp">*</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Hou</surname>
+            <given-names>Tian</given-names>
+          </name>
+          <xref rid="af1-entropy-23-01111" ref-type="aff">1</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Jin</surname>
+            <given-names>Qiannan</given-names>
+          </name>
+          <xref rid="af2-entropy-23-01111" ref-type="aff">2</xref>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>You</surname>
+            <given-names>Aiju</given-names>
+          </name>
+          <xref rid="af2-entropy-23-01111" ref-type="aff">2</xref>
+        </contrib>
+      </contrib-group>
+      <contrib-group>
+        <contrib contrib-type="editor">
+          <name>
+            <surname>Menasalvas</surname>
+            <given-names>Ernestina</given-names>
+          </name>
+          <role>Academic Editor</role>
+        </contrib>
+      </contrib-group>
+      <aff id="af1-entropy-23-01111"><label>1</label>College of Electrical Engineering, Zhejiang University, Hangzhou 310027, China; <email>houtian@zju.edu.cn</email></aff>
+      <aff id="af2-entropy-23-01111"><label>2</label>Zhejiang Institute of Hydraulics and Estuary, Hangzhou 310020, China; <email>jqn.amy@126.com</email> (Q.J.); <email>yajyaj1997@126.com</email> (A.Y.)</aff>
+      <author-notes>
+        <corresp id="c1-entropy-23-01111"><label>*</label>Correspondence: <email>eeflin@zju.edu.cn</email></corresp>
+      </author-notes>
+      <pub-date pub-type="epub">
+        <day>27</day>
+        <month>08</month>
+        <year>2021</year>
+      </pub-date>
+      <pub-date pub-type="collection">
+        <month>09</month>
+        <year>2021</year>
+      </pub-date>
+      <volume>23</volume>
+      <issue>9</issue>
+      <elocation-id>1111</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>28</day>
+          <month>06</month>
+          <year>2021</year>
+        </date>
+        <date date-type="accepted">
+          <day>24</day>
+          <month>08</month>
+          <year>2021</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-statement>&#xA9; 2021 by the authors.</copyright-statement>
+        <copyright-year>2021</copyright-year>
+        <license license-type="open-access">
+          <license-p>Licensee MDPI, Basel, Switzerland. This article is an open access article distributed under the terms and conditions of the Creative Commons Attribution (CC BY) license (<ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</ext-link>).</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <p>Various floating debris in the waterway can be used as one kind of visual index to measure the water quality. The traditional image processing method is difficult to meet the requirements of real-time monitoring of floating debris in the waterway due to the complexity of the environment, such as reflection of sunlight, obstacles of water plants, a large difference between the near and far target scale, and so on. To address these issues, an improved YOLOv5s (FMA-YOLOv5s) algorithm by adding a feature map attention (FMA) layer at the end of the backbone is proposed. The mosaic data augmentation is applied to enhance the detection effect of small targets in training. A data expansion method is introduced to expand the training dataset from 1920 to 4800, which fuses the labeled target objects extracted from the original training dataset and the background images of the clean river surface in the actual scene. The comparisons of accuracy and rapidity of six models of this algorithm are completed. The experiment proves that it meets the standards of real-time object detection.</p>
+      </abstract>
+      <kwd-group>
+        <kwd>deep learning</kwd>
+        <kwd>YOLOv5</kwd>
+        <kwd>floating debris detection</kwd>
+        <kwd>detection algorithm</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="sec1-entropy-23-01111" sec-type="intro">
+      <title>1. Introduction</title>
+      <p>With the development of the city and the increase in population, people&#x2019;s requirements for the environment are constantly improving. As the largest water area on the earth&#x2019;s surface, the ocean has been shown to have great economic and ecological value in reducing the number of floating debris [<xref ref-type="bibr" rid="B1-entropy-23-01111">1</xref>,<xref ref-type="bibr" rid="B2-entropy-23-01111">2</xref>], and researchers put forward relevant detection algorithms according to the characteristics of floating debris in the ocean [<xref ref-type="bibr" rid="B3-entropy-23-01111">3</xref>,<xref ref-type="bibr" rid="B4-entropy-23-01111">4</xref>,<xref ref-type="bibr" rid="B5-entropy-23-01111">5</xref>,<xref ref-type="bibr" rid="B6-entropy-23-01111">6</xref>]. The above researches are to classify the floating objects by using satellite images, which require high image acquisition equipment. Additionally, the detected objects are large aggregated floating objects, which is not suitable for the detection of a single relatively small object. However, the environment of the river is very different from that of the ocean. The floating debris in waterways has a great impact on the beauty of the river, the water quality of the river and the evaluation of the environment; furthermore, it has an important influence on the floating debris in the ocean too [<xref ref-type="bibr" rid="B7-entropy-23-01111">7</xref>]. The main sources of garbage in the water area are domestic garbage, crop straw, tree branches and leaves, and surface vegetation, and so on. It is characterized by regular changes in seasons and climate. Generally, the flood season is the peak period, and the rainy season is more than the dry season. Among the non-degradable floating debris, various kinds of bottle floating objects account for the majority [<xref ref-type="bibr" rid="B8-entropy-23-01111">8</xref>]. The quantity and species of floating debris in the waterway can reflect the water quality to a certain extent and can be used as an index to measure the water quality. The floating objects in rivers are often found by watching a video or directly at the scene; it takes a lot of labor and time. With the development of computer vision technology, it is possible to automatically identify and monitor the floating debris based on computer vision.</p>
+      <p>Traditional image processing methods include the mean-shift search model and Kalman filter prediction model to complete the tracking of moving targets [<xref ref-type="bibr" rid="B9-entropy-23-01111">9</xref>]. The image is filtered and analyzed, and then the shape, color, texture and other features of the target are extracted. Finally, the collected features are classified by support vector machine (SVM) [<xref ref-type="bibr" rid="B10-entropy-23-01111">10</xref>]. The K-nearest neighbor algorithm is used to establish the background model, and then the image and the background model are differentiated to detect the foreground target [<xref ref-type="bibr" rid="B11-entropy-23-01111">11</xref>]. Kataoka et al. [<xref ref-type="bibr" rid="B12-entropy-23-01111">12</xref>] used a traditional image processing approach to study the transport of riverine macro-debris quantitatively. Although this kind of algorithm does not need a large number of image data, its robustness is poor, and it is easy to be affected by the factors such as reflection and river grass occlusion; identifying the floating debris in the complex water area is not suitable.</p>
+      <p>With the improvement of data volume and the performance of computing equipment, the deep learning algorithm based on a convolutional neural network shows its advantages. The deep learning method proved to be superior to the existing machine learning technology in many fields, among which target detection is one of the most prominent examples [<xref ref-type="bibr" rid="B13-entropy-23-01111">13</xref>,<xref ref-type="bibr" rid="B14-entropy-23-01111">14</xref>]. Deep learning algorithms can be divided into two categories: one is the two-stage region-convolutional neural network(R-CNN) [<xref ref-type="bibr" rid="B15-entropy-23-01111">15</xref>,<xref ref-type="bibr" rid="B16-entropy-23-01111">16</xref>,<xref ref-type="bibr" rid="B17-entropy-23-01111">17</xref>,<xref ref-type="bibr" rid="B18-entropy-23-01111">18</xref>] series algorithm, the other is the one-stage single shot multi-box detector (SSD) [<xref ref-type="bibr" rid="B19-entropy-23-01111">19</xref>] and you only look once (YOLO) [<xref ref-type="bibr" rid="B20-entropy-23-01111">20</xref>,<xref ref-type="bibr" rid="B21-entropy-23-01111">21</xref>,<xref ref-type="bibr" rid="B22-entropy-23-01111">22</xref>,<xref ref-type="bibr" rid="B23-entropy-23-01111">23</xref>] series algorithm.</p>
+      <p>The latest researches show that YOLO series algorithms can be applied to different detection scenarios. Zheng et al. [<xref ref-type="bibr" rid="B24-entropy-23-01111">24</xref>] proposed a convolution neural network based on YOLOv3 to detect bearing-cover defects. Teng et al. [<xref ref-type="bibr" rid="B25-entropy-23-01111">25</xref>] used a well-known feature extractor model and the YOLOv2 network to detect a concrete crack. Li et al. [<xref ref-type="bibr" rid="B26-entropy-23-01111">26</xref>] proposed an enhanced YOLOv3 tiny network for real-time ship detection. Yolo is also widely used in radar images and remote sensing images. For instance, both Chen et al. [<xref ref-type="bibr" rid="B27-entropy-23-01111">27</xref>] and Zhou et al. [<xref ref-type="bibr" rid="B28-entropy-23-01111">28</xref>] used radar images as training datasets, and their detectors achieved lighter architecture and real-time detection speed. Gao et al. [<xref ref-type="bibr" rid="B29-entropy-23-01111">29</xref>] developed a novel CNN model named YOLO-S-<italic>CIOU</italic>, which is based on YOLOv3 for specific building detection. In [<xref ref-type="bibr" rid="B30-entropy-23-01111">30</xref>], the YOLO detector was trained on a thermal image dataset for person detection. In [<xref ref-type="bibr" rid="B31-entropy-23-01111">31</xref>], the authors proposed a ratio-and-scale aware YOLO (RSA-YOLO) to solve the ratio problems. In the field of deep learning, annotation is also a very important problem. In supervised learning, all data in the training dataset have corresponding annotation information. However, there will be some wrong annotation or missing annotation. In order to make full use of the data in the training dataset, semi-supervised learning is also a common learning method. In image classification and target detection, semi-supervised learning can be used in the case of insufficient annotation of the training dataset [<xref ref-type="bibr" rid="B32-entropy-23-01111">32</xref>,<xref ref-type="bibr" rid="B33-entropy-23-01111">33</xref>].</p>
+      <p>In this paper, an improved YOLOv5s (FMA-YOLOv5s) algorithm by adding a feature map attention (FMA) layer at the end of the backbone is proposed to enhance the ability of network feature extraction. The FMA layer does not change the size of the input feature map so that it can be easily added to any network structure with flexibility and versatility. The network structure is used to detect the floating debris in the river. The main work of this article is as follows:<list list-type="order"><list-item><p>The network structure of YOLOv5s was redesigned, and a feature map attention (FMA) layer was added between the backbone and neck, as shown in <xref ref-type="fig" rid="entropy-23-01111-f001">Figure 1</xref>. In this layer, the input feature map was weighted to improve the feature extraction ability of the lightweight object detection YOLOv5s backbone; nevertheless, the number of channels of the feature map was not increased, and the calculation of the subsequent neck and head parts remained unchanged. The number of network parameters is small, and the detection speed and accuracy are high. This new network is called FMA-YOLOv5s in this paper;</p></list-item><list-item><p>The mosaic data augmentation is introduced in training, which can raise the detection ability of small targets on the water. The four images are randomly stitched together by mosaic data augmentation, and then they are sent into the model. On the one hand, it increases the batch size indirectly, which makes each iteration receives more data and speed up the training. On the other hand, it also reduces the size of the target, which makes the training dataset contain more small targets, and therefore raises the detection efficiency of small targets in the river;</p></list-item><list-item><p>A novel method to expand the training dataset is presented. This approach can quickly and effectively expand the number of images in the training dataset, especially for the scene where the target object is difficult to collect. This method separates the target objects and the background: the target objects in the training dataset are cropped; the clean river surface images are collected as the background images. Subsequently, those target objects and background images are merged by Poisson Blending to obtain a new dataset. Experiments show that the performance of the method in the test dataset was significantly improved;</p></list-item><list-item><p>Compared with the other six object detection networks, the experiment shows that the FMA-YOLOv5s network structure has good detection accuracy while ensuring detection speed.</p></list-item></list></p>
+    </sec>
+    <sec id="sec2-entropy-23-01111">
+      <title>2. Implementation of FMA-YOLOv5 Object Detection Algorithm</title>
+      <p>An algorithm based on FMA-YOLOv5 was designed to implement the real-time floating debris detection in this paper. The algorithm is composed of two processes: network training and detection, as shown in <xref ref-type="fig" rid="entropy-23-01111-f001">Figure 1</xref>. The weight parameters of the model are continuously updated by the loss of backpropagation in the training process. The weight value of the model does not change during detection. The prediction value is filtered according to the threshold value, and the final detection result is selected and marked on the image.</p>
+      <sec id="sec2dot1-entropy-23-01111">
+        <title>2.1. YOLOv5 Network Structure</title>
+        <p>The training and detection network of this algorithm adopts the YOLOv5 network structure, as shown in <xref ref-type="fig" rid="entropy-23-01111-f002">Figure 2</xref>. The backbone part of the network is Cross Stage Partial Network (CSPNet) [<xref ref-type="bibr" rid="B34-entropy-23-01111">34</xref>]. CSPNet alleviates the problem that requires a lot of inference calculations. CSPNet divides the feature map of the base layer into two parts and then extracts the image features by merging the cross-stage hierarchical structure. The advantage of this method is that it reduces the repeated gradient information, decreases the amount of calculation, improves the calculation speed of the equipment and does not affect the accuracy of the model. In order to make full use of the feature information extracted from different layers, YOLOv5 also adopts the network structure of feature pyramid networks (FPN) [<xref ref-type="bibr" rid="B35-entropy-23-01111">35</xref>]. The feature maps of different levels obtained from the downsampling of the input image are then processed in upsampling from top to bottom, and the new feature map is obtained by splicing with the original feature map on the left. This structure not only enriches the scale of the output feature map but also achieves a better effect by combining shallow information with deep information. After the FPN feature combination, the path aggregation network(PAN) [<xref ref-type="bibr" rid="B36-entropy-23-01111">36</xref>] structure is added on this basis. After convolution downsampling, the combined bottom feature map is spliced with the same scale feature map in the left FPN structure, and finally, three output feature maps with different scales are obtained. The purpose of this combination is to convey strong location features from the bottom up and increase the accuracy of the model&#x2019;s feature extraction.</p>
+        <p>The three scale feature maps of the model are 19 &#xD7; 19, 38 &#xD7; 38 and 76 &#xD7; 76, respectively. Among them, the feature map with the size of 19 &#xD7; 19 has a larger downsampling ratio, which is suitable for the target with a larger scale, while the feature map with the size of 76 &#xD7; 76 has a smaller downsampling ratio, which is suitable for the target with a smaller scale. Each pixel of the feature map predicts the correction value of three sets of prior frames, one confidence and eight targets. The total number of channels is 39 = 3 &#xD7; (4 + 1 + 8).</p>
+      </sec>
+      <sec id="sec2dot2-entropy-23-01111">
+        <title>2.2. Feature Map Attention Layer Structure</title>
+        <p>The YOLOv5 algorithm is selected as the network model of floating debris detection. Compared with YOLOv2, YOLOv3 and YOLOv4, YOLOv5 has a more flexible network structure, which can adjust the network structure of different tasks more conveniently. YOLOv5 has four versions, namely YOLOv5s, YOLOv5m, YOLOv5l, YOLOv5x. From YOLOv5s to YOLOv5l, the depth and width of the model are increasing, and the number of parameters is also enlarging. Although the accuracy will be improved with the increase in the complexity of the model, it also has a great impact on the detection speed. YOLOv5l and YOLOv5x are excluded due to their large number of parameters that would greatly reduce the detection speed. YOLOv5 is composed of several convolution layers. The convolution of each part has its own depth and width. The depth coefficient of YOLOv5s is 0.33, and the width coefficient is 0.5. The meaning of the depth coefficient is to control the depth of the network by controlling the number of stacking layers. The width coefficient controls the width of the network by controlling the number of convolution output channels. By limiting the depth and width, we can control the number of parameters of the whole network. A feature map attention (FMA) layer, which is inserted between the backbone and neck, is proposed to improve the network structure based on YOLOv5s, as shown in <xref ref-type="fig" rid="entropy-23-01111-f003">Figure 3</xref>. In the FMA layer, the feature map of each channel of the attention feature map (shown as four channels in <xref ref-type="fig" rid="entropy-23-01111-f003">Figure 3</xref>) and the input feature map is weighted to obtain the four groups&#x2019; features. Then, 1 &#xD7; 1 convolution is used to downsample the number of channels for each group&#x2019;s feature map. Eventually, the four groups&#x2019; feature map after channel downsampling is concatenated to obtain a new output feature map. Since the channel downsampling multiple of the feature maps&#x2019; attention layer is the same as that of the attention feature map, the input and output feature map have the same size.</p>
+      </sec>
+      <sec id="sec2dot3-entropy-23-01111">
+        <title>2.3. Network Training</title>
+        <p>The network training in this paper is completed by the FMA-YOLOv5s algorithm, and the training process is as follows: Step 1, data preprocessing. The mosaic data augmentation method is used, as shown in <xref ref-type="fig" rid="entropy-23-01111-f004">Figure 4</xref>. Step 2, input a batch of image data into the network for the forward propagation to obtain the detection result. Step 3, compare the detection results with the label value and then calculate the loss value. Step 4, backpropagate based on the loss value and update the weight according to the learning rate. Step 5, repeat steps 2, 3 and 4 until the network loss continues to decrease and tends to converge.</p>
+        <p>In order to realize the real-time detection of the floating debris in the river environment, the data required for modeling are collected in the actual river channel. The specific image data include the following situations, as shown in <xref ref-type="fig" rid="entropy-23-01111-f005">Figure 5</xref>: water grass or other facilities block a part of the monitoring target, strong sunlight reflection near the floating objects, complex water surface of the river, too small target in the image, ripple near the target, etc. The above situations are difficult examples in the monitoring of floating debris, and adding such images can improve the robustness of the model.</p>
+        <p>The mosaic data enhancement method is used by FMA-YOLOv5s based object detection algorithm to preprocess the video data to solve these problems in this paper. This method refers to the CutMix method. CutMix uses two images for splicing, and the mosaic uses four images, which can enrich the background of the detected object. Mosaic technology can compute the data of four images at a time. The process is as follow: first, randomly select four images; secondly, flip, zoom and color gamut changes of the four pictures, respectively, and place them in four directions; next, combine the images and frames, and re-splice the four images into a new image in the order of upper left, lower left, lower right and upper right, respectively; finally, use this image data for training.</p>
+        <p>The effect of mosaic data augmentation processing of this algorithm is shown in <xref ref-type="fig" rid="entropy-23-01111-f004">Figure 4</xref>. The advantage is that, firstly, it is equivalent to increasing the number of training images each time, which is conducive to saving the GPU memory of the training equipment and also increases the number of images in each batch; secondly, it is conducive to the training model&#x2019;s ability to detect small targets. The target object in each image becomes smaller than the whole image by splicing four images into one. This method is helpful to improve the model&#x2019;s ability to detect smaller targets in the waterway.</p>
+      </sec>
+      <sec id="sec2dot4-entropy-23-01111">
+        <title>2.4. Detection Process</title>
+        <p>The flow of the detection process is as follows: Step 1, take the image to be tested as input and extract the features of the image through the backbone. Step 2, extract the feature maps of different depths of the backbone network. Step 3, the extracted multi-scale feature maps are used as the input of the FPN structure for feature fusion. As an improvement, the upsampling of the feature map is a bilinear interpolation method. Step 4, the multi-scale feature maps after FPN fusion are input into the PAN structure for strong feature localization, and the detection results of three feature maps with different scales are obtained. Step 5, after all feature map detection results are processed by nms, the final results will be generated, and detection boxes and categories will be labeled in the original input images. Step 6, extract the next frame of the image to be detected and repeat steps 1 to 5 to complete the video frame by frame detection, as shown in <xref ref-type="fig" rid="entropy-23-01111-f006">Figure 6</xref>.</p>
+      </sec>
+      <sec id="sec2dot5-entropy-23-01111">
+        <title>2.5. Loss Function</title>
+        <p>The loss function is an important index to measure the similarity between the training and the real results. The output of the YOLO algorithm model predicts the center coordinate, width and height of the bounding box. In the algorithm of YOLOv3, the loss function calculates the mean square error (MSE) of the center coordinate, width and height, respectively. Because the YOLOv3 algorithm does not consider the relationship between the two kinds of results, the loss function cannot truly reflect the difference between the predicted and the real value, which affects the performance of the model. YOLOv4 and YOLOv5 algorithms change the loss function of the prediction bounding box to <italic>CIoU</italic> [<xref ref-type="bibr" rid="B37-entropy-23-01111">37</xref>] function, which considers the scale information of the coincidence degree, center distance and aspect ratio of the border on the basis of <italic>IoU</italic>, as is shown in the following equation:<disp-formula id="FD1-entropy-23-01111"><label>(1)</label><mml:math id="mm1" display="block"><mml:semantics><mml:mrow><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mi>o</mml:mi><mml:mi>U</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mn>1</mml:mn><mml:mo>&#x2212;</mml:mo><mml:mi>I</mml:mi><mml:mi>o</mml:mi><mml:mi>U</mml:mi><mml:mfenced><mml:mrow><mml:mi>B</mml:mi><mml:mi>o</mml:mi><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub><mml:mo>,</mml:mo><mml:mi>B</mml:mi><mml:mi>o</mml:mi><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>g</mml:mi><mml:mi>t</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfenced></mml:mrow></mml:semantics></mml:math></disp-formula>
+        where <inline-formula><mml:math id="mm2" display="block"><mml:semantics><mml:mrow><mml:mi>B</mml:mi><mml:mi>o</mml:mi><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:semantics></mml:math></inline-formula> and <inline-formula><mml:math id="mm3" display="block"><mml:semantics><mml:mrow><mml:mi>B</mml:mi><mml:mi>o</mml:mi><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>g</mml:mi><mml:mi>t</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:semantics></mml:math></inline-formula> are the predicted bounding box and the real bounding box, respectively, and they are the overlapping area.
+        <disp-formula id="FD2-entropy-23-01111"><label>(2)</label><mml:math id="mm4" display="block"><mml:semantics><mml:mrow><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mi>C</mml:mi><mml:mi>I</mml:mi><mml:mi>o</mml:mi><mml:mi>U</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mn>1</mml:mn><mml:mo>&#x2212;</mml:mo><mml:mi>I</mml:mi><mml:mi>o</mml:mi><mml:mi>U</mml:mi><mml:mfenced><mml:mrow><mml:mi>B</mml:mi><mml:mi>o</mml:mi><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub><mml:mo>,</mml:mo><mml:mi>B</mml:mi><mml:mi>o</mml:mi><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>g</mml:mi><mml:mi>t</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfenced><mml:mo>&#x2009;</mml:mo><mml:mo>+</mml:mo><mml:mo>&#x2009;</mml:mo><mml:mfrac><mml:mrow><mml:msup><mml:mi>&#x3C1;</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mfenced><mml:mrow><mml:mi>B</mml:mi><mml:mi>o</mml:mi><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mo>_</mml:mo><mml:mi>c</mml:mi><mml:mi>t</mml:mi><mml:mi>r</mml:mi></mml:mrow></mml:msub><mml:mo>,</mml:mo><mml:mi>B</mml:mi><mml:mi>o</mml:mi><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>g</mml:mi><mml:mi>t</mml:mi><mml:mo>_</mml:mo><mml:mi>c</mml:mi><mml:mi>t</mml:mi><mml:mi>r</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfenced></mml:mrow><mml:mrow><mml:msup><mml:mi>c</mml:mi><mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:mfrac><mml:mo>+</mml:mo><mml:mi>&#x3B1;</mml:mi><mml:mo>.</mml:mo><mml:mi>v</mml:mi></mml:mrow></mml:semantics></mml:math></disp-formula>
+        <disp-formula id="FD3-entropy-23-01111"><label>(3)</label><mml:math id="mm5" display="block"><mml:semantics><mml:mrow><mml:mi>&#x3B1;</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mi>v</mml:mi><mml:mrow><mml:mfenced><mml:mrow><mml:mn>1</mml:mn><mml:mo>&#x2212;</mml:mo><mml:mi>I</mml:mi><mml:mi>o</mml:mi><mml:mi>U</mml:mi></mml:mrow></mml:mfenced><mml:mo>&#x2009;</mml:mo><mml:mo>+</mml:mo><mml:mo>&#x2009;</mml:mo><mml:mi>v</mml:mi></mml:mrow></mml:mfrac></mml:mrow></mml:semantics></mml:math></disp-formula>
+        <disp-formula id="FD4-entropy-23-01111"><label>(4)</label><mml:math id="mm6" display="block"><mml:semantics><mml:mrow><mml:mi>v</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mn>4</mml:mn><mml:mrow><mml:msup><mml:mi>&#x3C0;</mml:mi><mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:mfrac><mml:msup><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mrow><mml:mi>arctan</mml:mi><mml:mfrac><mml:mrow><mml:msub><mml:mi>w</mml:mi><mml:mrow><mml:mi>g</mml:mi><mml:mi>t</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>h</mml:mi><mml:mrow><mml:mi>g</mml:mi><mml:mi>t</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac><mml:mo>&#x2212;</mml:mo><mml:mi>arctan</mml:mi><mml:mfrac><mml:mrow><mml:msub><mml:mi>w</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>h</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:semantics></mml:math></disp-formula>
+        where <inline-formula><mml:math id="mm7" display="block"><mml:semantics><mml:mi>&#x3B1;</mml:mi></mml:semantics></mml:math></inline-formula> is a positive number, and <inline-formula><mml:math id="mm8" display="block"><mml:semantics><mml:mi>v</mml:mi></mml:semantics></mml:math></inline-formula> is a penalty term to measure the wide and high similarity between the predicted value and real value. <inline-formula><mml:math id="mm9" display="block"><mml:semantics><mml:mrow><mml:msub><mml:mi>w</mml:mi><mml:mrow><mml:mi>g</mml:mi><mml:mi>t</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:semantics></mml:math></inline-formula>, <inline-formula><mml:math id="mm10" display="block"><mml:semantics><mml:mrow><mml:msub><mml:mi>h</mml:mi><mml:mrow><mml:mi>g</mml:mi><mml:mi>t</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:semantics></mml:math></inline-formula>, <inline-formula><mml:math id="mm11" display="block"><mml:semantics><mml:mrow><mml:msub><mml:mi>w</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:semantics></mml:math></inline-formula> and <inline-formula><mml:math id="mm12" display="block"><mml:semantics><mml:mrow><mml:msub><mml:mi>h</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:semantics></mml:math></inline-formula> are the width and height of the real and predicted values of the bounding box, respectively. The middle term of the loss function is the penalty term to measure the distance between the center points, where the <inline-formula><mml:math id="mm13" display="block"><mml:semantics><mml:mrow><mml:mi>&#x3C1;</mml:mi><mml:mfenced><mml:mo>&#xB7;</mml:mo></mml:mfenced></mml:mrow></mml:semantics></mml:math></inline-formula> is the Euclidean distance, <inline-formula><mml:math id="mm14" display="block"><mml:semantics><mml:mrow><mml:mi>B</mml:mi><mml:mi>o</mml:mi><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mo>_</mml:mo><mml:mi>c</mml:mi><mml:mi>t</mml:mi><mml:mi>r</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:semantics></mml:math></inline-formula> and <inline-formula><mml:math id="mm15" display="block"><mml:semantics><mml:mrow><mml:mi>B</mml:mi><mml:mi>o</mml:mi><mml:msub><mml:mi>x</mml:mi><mml:mrow><mml:mi>g</mml:mi><mml:mi>t</mml:mi><mml:mo>_</mml:mo><mml:mi>c</mml:mi><mml:mi>t</mml:mi><mml:mi>r</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:semantics></mml:math></inline-formula> are the center coordinate of the predicted value and the real value, and <inline-formula><mml:math id="mm16" display="block"><mml:semantics><mml:mi>c</mml:mi></mml:semantics></mml:math></inline-formula> is the diagonal length of the minimum bounding box between the predicted and real bounding boxes. Moreover, YOLOv5 adopts a cross neighborhood grid matching strategy (one Ground Truth can match multiple anchors) in the definition of positive and negative samples so as to get more positive sample anchors and accelerate the convergence of the loss function.</p>
+      </sec>
+    </sec>
+    <sec id="sec3-entropy-23-01111">
+      <title>3. Experiments and Results</title>
+      <sec id="sec3dot1-entropy-23-01111">
+        <title>3.1. Dataset and Expand Method</title>
+        <p>Since there is no available relevant large dataset of floating debris in the waterway, the dataset used in this paper is derived from the floating debris images collected by the project. The total number of images is 2400, including 8 categories: leaf, plastic bags, grass, branch, bottle, milk boxes, plastic garbage and a ball, as shown in <xref ref-type="fig" rid="entropy-23-01111-f007">Figure 7</xref>. The above eight categories of floating debris are common floating debris in the river. The image data is labeled with LabelImg labeling tool and is made into VOC format data set, and the label is saved in an xml file. The labeling method of the bounding box is the coordinate values of the upper left corner and the lower right corner. Since the label format required by the YOLO series algorithm is a txt file, normalized by the center coordinates of the bounding box and the width and height, the dataset format needs to be converted.</p>
+        <p>Due to the randomness of the occurrence time of river floating debris, it is difficult to collect a large number of training datasets in the actual environment in a short time. An effective method to expand the training dataset of river floating debris is presented. This approach can alleviate the problem of insufficient training data set to some extent and enhance the detection effect of a small target. The labeled target objects are extracted from the original train dataset, and a total of 2824 target objects are extracted from 1920 images. Then 54 background images of the clean river surface in the actual scene are collected, including clear and turbid water, various water color and different light conditions. Furthermore, a background image is randomly cut into a 416 &#xD7; 416 image, and the target objects and background image are selected randomly to get a new training image containing various target objects. The image generation process is shown in <xref ref-type="fig" rid="entropy-23-01111-f008">Figure 8</xref>. The Poisson Blending [<xref ref-type="bibr" rid="B38-entropy-23-01111">38</xref>] method is applied to merge the target objects and background image, and it is called seamlesClone function in OpenCV. The training dataset is expanded by this approach from 1920 to 4800, and the test dataset is 480. According to the comparison of the center point coordinates and bounding box size of the target object in the dataset, it was found that the overall distribution trend of the target object does not change after expansion, and there are more small objects in the dataset (see <xref ref-type="fig" rid="entropy-23-01111-f009">Figure 9</xref>).</p>
+      </sec>
+      <sec id="sec3dot2-entropy-23-01111">
+        <title>3.2. Model Training Results and Analysis</title>
+        <p>It is necessary to perform scale clustering processing on all labeled borders in the dataset, and the method used is the K-Means clustering algorithm. The flow of the algorithm is as follows: Step 1, randomly select nine of all the labeled Ground Truth sample points as the cluster center (each sample is a four-dimensional vector); Step 2, calculate the distances from all other sample points to these nine centers, respectively, and each sample point belongs to the center point nearest to it; Step 3, in the newly divided clusters, a new cluster center is chosen by means of the average value of four dimensions; Step 4, repeat step 2 and 3 until the new cluster center does not change from the previous cluster center or the change is limited within the specified range.</p>
+        <p>The distance uses the Euclidean distance equation:<disp-formula id="FD5-entropy-23-01111"><label>(5)</label><mml:math id="mm17" display="block"><mml:semantics><mml:mrow><mml:mi>d</mml:mi><mml:mi>i</mml:mi><mml:mi>s</mml:mi><mml:mi>t</mml:mi><mml:mfenced><mml:mrow><mml:mi>X</mml:mi><mml:mo>,</mml:mo><mml:mi>Y</mml:mi></mml:mrow></mml:mfenced><mml:mo>&#x2009;</mml:mo><mml:mo>=</mml:mo><mml:mo>&#x2009;</mml:mo><mml:msqrt><mml:mrow><mml:munderover><mml:mstyle mathsize="140%" displaystyle="true"><mml:mo>&#x2211;</mml:mo></mml:mstyle><mml:mrow><mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mn>4</mml:mn></mml:munderover><mml:msup><mml:mrow><mml:mfenced><mml:mrow><mml:msub><mml:mi>x</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>&#x2212;</mml:mo><mml:msub><mml:mi>y</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:mfenced></mml:mrow><mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:msqrt></mml:mrow></mml:semantics></mml:math></disp-formula></p>
+        <p>The clustering results are sorted by area size as (23, 29), (37, 34), (26, 53), (41, 53), (41, 90), (94, 40), (61, 75) and (78, 135). It can be found that the scales of the prior boxes are quite different, and they are assigned to 76 &#xD7; 76, 38 &#xD7; 38, 19 &#xD7; 19 three feature maps as the prior boxes.</p>
+        <p>The deep learning framework used in this experiment is Pytorch, the training platform is Ubuntu 18.04, the CPU is Intel i9-10900k, and the GPU is a single-card NVIDIA GeForce GTX 2080Ti (11GB). The batch size is set to four, and the epoch was set to 300. Adam is used to optimize the network. The decay method of the learning rate is to multiply the learning rate by the coefficient <inline-formula><mml:math id="mm18" display="block"><mml:semantics><mml:mrow><mml:mi mathvariant="sans-serif">&#x3B3;</mml:mi><mml:mo>=</mml:mo><mml:mn>0.9</mml:mn></mml:mrow></mml:semantics></mml:math></inline-formula> after a certain step.</p>
+        <p>The mean average precision (mAP) is used as the evaluation index of the model performance.
+        <disp-formula id="FD6-entropy-23-01111"><label>(6)</label><mml:math id="mm19" display="block"><mml:semantics><mml:mrow><mml:mi>P</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi></mml:mrow><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>P</mml:mi></mml:mrow></mml:mfrac></mml:mrow></mml:semantics></mml:math></disp-formula>
+        <disp-formula id="FD7-entropy-23-01111"><label>(7)</label><mml:math id="mm20" display="block"><mml:semantics><mml:mrow><mml:mi>R</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi></mml:mrow><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi></mml:mrow></mml:mfrac></mml:mrow></mml:semantics></mml:math></disp-formula>
+        <disp-formula id="FD8-entropy-23-01111"><label>(8)</label><mml:math id="mm21" display="block"><mml:semantics><mml:mrow><mml:mi>mAP</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mi>N</mml:mi></mml:mfrac><mml:munderover><mml:mstyle mathsize="140%" displaystyle="true"><mml:mo>&#x2211;</mml:mo></mml:mstyle><mml:mrow><mml:mi>i</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>N</mml:mi></mml:munderover><mml:msub><mml:mrow><mml:mi>AP</mml:mi></mml:mrow><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:semantics></mml:math></disp-formula>
+        where, <italic>P</italic> is precision rate, <italic>R</italic> is recall rate, <italic>TP</italic> is True Positives, <italic>FP</italic> is False Positives, <italic>FN</italic> False Negatives. <inline-formula><mml:math id="mm22" display="block"><mml:semantics><mml:mrow><mml:msub><mml:mrow><mml:mi>AP</mml:mi></mml:mrow><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:semantics></mml:math></inline-formula> is the area under the <italic>P</italic>(Precision) &#x2212; <italic>R</italic>(Recall) curve of a certain class <inline-formula><mml:math id="mm23" display="block"><mml:semantics><mml:mi>i</mml:mi></mml:semantics></mml:math></inline-formula>, which is obtained by adjusting the threshold values of some columns to the images drawn with different <italic>P</italic> and <italic>R</italic> values. The mAP can be obtained by adding and averaging AP values under each corresponding category, and it can reflect the overall performance of the model.</p>
+      </sec>
+      <sec id="sec3dot3-entropy-23-01111">
+        <title>3.3. Model Training Results and Analysis</title>
+        <p>In order to verify the effectiveness of this algorithm, other six network structures such as SSD, YOLOv2, YOLOv3, YOLOv4, YOLOv5s and YOLOv5m are selected for comparative experiments. <xref ref-type="table" rid="entropy-23-01111-t001">Table 1</xref> shows the performance of these seven models on two train datasets. The table shows that the accuracy of all models is better than the previous models in the expanded training dataset. Moreover, YOLOv4 and YOLOv2 increased significantly by 3.6% and 2.54%, respectively. The performance of YOLOv2 is obviously worse than that of YOLOv3 in the detection of floating debris. The reason is that there are no multi-scale feature maps in YOLOv2, which makes some small targets easy to be ignored. The performance of SSD, YOLOv3 and YOLOv4 with multi-scale feature maps is similar. In terms of detection speed, YOLOv5s performs the best one, FMA-YOLOv5s is close to YOLOv5s, only 1 FPS lower. YOLOv4 performs the worst because it has the largest number of parameters. On the whole, the mAP of the YOLOv2 model is the lowest, which is 71.23%. In a word, when considering both detection speed and accuracy, FMA-YOLOv5s has better performance.</p>
+        <p>The results of a series of comparative experiments on the YOLOv5s are shown in <xref ref-type="table" rid="entropy-23-01111-t002">Table 2</xref>. Those experiments consider the influence of three factors of data set expansion, mosaic data augmentation and FMA layer, separately or in various combinations. The AP of each category is shown in detail. In <xref ref-type="table" rid="entropy-23-01111-t002">Table 2</xref>, the first row is chosen as the baseline. Comparing the second row with baseline, the mAP increased by 0.29%, and the AP value of the plastic bag category increased obviously. The mAP values of the third row are 2.47% and 2.18%, higher than those of the first and second row, respectively, and the AP values of the eight categories are better. The FMA-YOLOv5s, which is trained by mosaic data augmentation on the expanded dataset, has the best comprehensive performance.</p>
+        <p>The real-time water quality data is collected by the camera to detect the application effect of the algorithm in the actual project. As shown in <xref ref-type="fig" rid="entropy-23-01111-f010">Figure 10</xref>, the monitoring algorithm can still correctly detect floating debris when the water body is covered with a lot of floating objects, and some images in the test set are displayed visually.</p>
+      </sec>
+    </sec>
+    <sec id="sec4-entropy-23-01111" sec-type="conclusions">
+      <title>4. Conclusions</title>
+      <p>The FMA-YOLOv5s network architecture is proposed in this paper. On the basis of YOLOv5s, a feature map attention (FMA) layer is added at the end of the backbone to improve the ability of feature extraction. FMA layer uses a self-attention mechanism to weigh each channel of the upper layer feature map and uses 1 &#xD7; 1 convolution to control the number of output channels to keep consistent with the input without increasing the computation of the neck part. In the neck part, FPN and PANet are used to enhance the fusion between features. A data expansion method is introduced to expand the training dataset from 1920 to 4800. This approach merges the labeled target objects extracted from the original training dataset and the background images of the clean river surface in the actual scene. The strategy of mosaic data augmentation is applied to raise the mAP value of the model and enhance the detection effect of small targets. The FMA-YOLOv5s model obtains the mAP of 79.41% and 42 FPS on the test dataset, wherein the mAP value exceeds YOLOv5s by 2.18%. This algorithm can meet the requirements of the rapidity and accuracy in real-time monitoring of floating objects in waterways. Due to the strong robustness of the deep learning algorithm for water grass occlusion, water surface reflection and other special cases, it is suitable for most environments. This algorithm successfully applies the machine learning method to the monitoring of floating debris in the waterway of urban and rural rivers, which can greatly enhance the efficiency of automatic monitoring of floating debris and save a lot of manual work. It can be widely used to monitor the floating objects in urban inland rivers and is of great significance to environmental protection. More attention can be paid to improving the detection of blurred and dense objects and support more floating debris categories in the future. Meanwhile, the semi-supervised learning method could be considered to reduce the workload of manual annotation and make the model more robust in the follow-up researches.</p>
+    </sec>
+  </body>
+  <back>
+    <notes>
+      <title>Author Contributions</title>
+      <p>Conceptualization, F.L. and Q.J.; methodology, T.H. and F.L.; software, T.H.; validation, F.L. and T.H.; formal analysis, T.H. and F.L.; investigation, F.L. and A.Y.; resources, F.L. and A.Y.; data curation, T.H. and F.L.; writing&#x2014;original draft preparation, T.H.; writing&#x2014;review and editing, F.L.; visualization, T.H. and F.L.; supervision, F.L. and A.Y.; project administration, F.L. and A.Y.; funding acquisition, F.L. and Q.J. All authors have read and agreed to the published version of the manuscript.</p>
+    </notes>
+    <notes>
+      <title>Funding</title>
+      <p>This research was funded by the National Key R &amp; D Program of China, grant number 2019YFC0408802.</p>
+    </notes>
+    <notes notes-type="COI-statement">
+      <title>Conflicts of Interest</title>
+      <p>The authors declare no conflict of interest.</p>
+    </notes>
+    <ref-list>
+      <title>References</title>
+      <ref id="B1-entropy-23-01111">
+        <label>1.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Jin</surname>
+              <given-names>S.J.</given-names>
+            </name>
+            <name>
+              <surname>Kwon</surname>
+              <given-names>Y.J.</given-names>
+            </name>
+            <name>
+              <surname>Yoo</surname>
+              <given-names>S.H.</given-names>
+            </name>
+          </person-group>
+          <article-title>Economic Valuation of Reducing Submerged Marine Debris in South Korea</article-title>
+          <source>Appl. Sci.</source>
+          <year>2020</year>
+          <volume>10</volume>
+          <elocation-id>6086</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/app10176086</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B2-entropy-23-01111">
+        <label>2.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Gall</surname>
+              <given-names>S.C.</given-names>
+            </name>
+            <name>
+              <surname>Thompson</surname>
+              <given-names>R.C.</given-names>
+            </name>
+          </person-group>
+          <article-title>The Impact of Debris on Marine Life</article-title>
+          <source>Mar. Pollut. Bull.</source>
+          <year>2015</year>
+          <volume>92</volume>
+          <fpage>170</fpage>
+          <lpage>179</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.marpolbul.2014.12.041</pub-id>
+          <pub-id pub-id-type="pmid">25680883</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B3-entropy-23-01111">
+        <label>3.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Biermann</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Clewley</surname>
+              <given-names>D.</given-names>
+            </name>
+            <name>
+              <surname>Martinez-Vicente</surname>
+              <given-names>V.</given-names>
+            </name>
+            <name>
+              <surname>Topouzelis</surname>
+              <given-names>K.</given-names>
+            </name>
+          </person-group>
+          <article-title>Finding Plastic Patches in Coastal Waters Using Optical Satellite Data</article-title>
+          <source>Sci. Rep.</source>
+          <year>2020</year>
+          <volume>10</volume>
+          <elocation-id>5364</elocation-id>
+        </element-citation>
+      </ref>
+      <ref id="B4-entropy-23-01111">
+        <label>4.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Topouzelis</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Papageorgiou</surname>
+              <given-names>D.</given-names>
+            </name>
+            <name>
+              <surname>Karagaitanakis</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Papakonstantinou</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Ballesteros</surname>
+              <given-names>M.A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Remote Sensing of Sea Surface Artificial Floating Plastic Targets with Sentinel-2 and Unmanned Aerial Systems (Plastic Litter Project 2019)</article-title>
+          <source>Remote Sens.</source>
+          <year>2020</year>
+          <volume>12</volume>
+          <elocation-id>2013</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs12122013</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B5-entropy-23-01111">
+        <label>5.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Basu</surname>
+              <given-names>B.</given-names>
+            </name>
+            <name>
+              <surname>Sannigrahi</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Basu</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Pilla</surname>
+              <given-names>F.</given-names>
+            </name>
+          </person-group>
+          <article-title>Development of Novel Classification Algorithms for Detection of Floating Plastic Debris in Coastal Waterbodies Using Multispectral Sentinel-2 Remote Sensing Imagery</article-title>
+          <source>Remote Sens.</source>
+          <year>2021</year>
+          <volume>13</volume>
+          <elocation-id>1508</elocation-id>
+        </element-citation>
+      </ref>
+      <ref id="B6-entropy-23-01111">
+        <label>6.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Themistocleous</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Papoutsa</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Michaelides</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Hadjimitsis</surname>
+              <given-names>D.</given-names>
+            </name>
+          </person-group>
+          <article-title>Investigating Detection of Floating Plastic Litter from Space Using Sentinel-2 Imagery</article-title>
+          <source>Remote Sens.</source>
+          <year>2020</year>
+          <volume>12</volume>
+          <elocation-id>2648</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/rs12162648</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B7-entropy-23-01111">
+        <label>7.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Jambeck</surname>
+              <given-names>J.R.</given-names>
+            </name>
+            <name>
+              <surname>Geyer</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Wilcox</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Siegler</surname>
+              <given-names>T.R.</given-names>
+            </name>
+            <name>
+              <surname>Perryman</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Andrady</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Narayan</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Law</surname>
+              <given-names>K.L.</given-names>
+            </name>
+          </person-group>
+          <article-title>Plastic Waste Inputs from Land into the Ocean</article-title>
+          <source>Science</source>
+          <year>2015</year>
+          <volume>347</volume>
+          <fpage>768</fpage>
+          <lpage>771</lpage>
+          <pub-id pub-id-type="doi">10.1126/science.1260352</pub-id>
+          <pub-id pub-id-type="pmid">25678662</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B8-entropy-23-01111">
+        <label>8.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Cai</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Tang</surname>
+              <given-names>X.</given-names>
+            </name>
+            <name>
+              <surname>Jiang</surname>
+              <given-names>W.</given-names>
+            </name>
+          </person-group>
+          <article-title>Influence of river floating debris on engineering and research status</article-title>
+          <source>J. Yangtze River Acad. Sci.</source>
+          <year>2013</year>
+          <volume>30</volume>
+          <fpage>84</fpage>
+          <lpage>89</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B9-entropy-23-01111">
+        <label>9.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Mu</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Yuan</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Song</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Chen</surname>
+              <given-names>Y.</given-names>
+            </name>
+          </person-group>
+          <article-title>A New Approach to Track Moving Target with Improved Mean Shift Algorithm and Kalman Filter</article-title>
+          <source>Proceedings of the International Conference on Intelligent Human-Machine Systems and Cybernetics</source>
+          <conf-loc>Nanchang, China</conf-loc>
+          <conf-date>26&#x2013;27 August 2012</conf-date>
+          <fpage>359</fpage>
+          <lpage>362</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B10-entropy-23-01111">
+        <label>10.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Altaf</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Raeisi</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Presenting an Effective Algorithm for Tracking of Moving Object based on Support Vector Machine</article-title>
+          <source>Indian J. Sci. Technol.</source>
+          <year>2015</year>
+          <volume>8</volume>
+          <fpage>1</fpage>
+          <lpage>7</lpage>
+          <pub-id pub-id-type="doi">10.17485/ijst/2015/v8i17/70326</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B11-entropy-23-01111">
+        <label>11.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Zivkovic</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Heijden</surname>
+              <given-names>F.V.D.</given-names>
+            </name>
+          </person-group>
+          <article-title>Efficient adaptive density estimation per image pixel for the task of background subtraction</article-title>
+          <source>Pattern Recognit. Lett.</source>
+          <year>2006</year>
+          <volume>27</volume>
+          <fpage>773</fpage>
+          <lpage>780</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.patrec.2005.11.005</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B12-entropy-23-01111">
+        <label>12.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Kataoka</surname>
+              <given-names>T.</given-names>
+            </name>
+            <name>
+              <surname>Nihei</surname>
+              <given-names>Y.</given-names>
+            </name>
+          </person-group>
+          <article-title>Quantification of Floating Riverine Macro-Debris Transport Using an Image Processing Approach</article-title>
+          <source>Sci. Rep.</source>
+          <year>2020</year>
+          <volume>10</volume>
+          <elocation-id>2198</elocation-id>
+          <pub-id pub-id-type="doi">10.1038/s41598-020-59201-1</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B13-entropy-23-01111">
+        <label>13.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Voulodimos</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Doulamis</surname>
+              <given-names>N.</given-names>
+            </name>
+            <name>
+              <surname>Doulamis</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Protopapadakis</surname>
+              <given-names>E.</given-names>
+            </name>
+          </person-group>
+          <article-title>Deep Learning for Computer Vision: A Brief Review</article-title>
+          <source>Comput. Intell. Neurosci.</source>
+          <year>2018</year>
+          <volume>2018</volume>
+          <elocation-id>7068349</elocation-id>
+          <pub-id pub-id-type="doi">10.1155/2018/7068349</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B14-entropy-23-01111">
+        <label>14.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Guo</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Liu</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Oerlemans</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Lao</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Wu</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Lew</surname>
+              <given-names>M.S.</given-names>
+            </name>
+          </person-group>
+          <article-title>Deep Learning for Visual Understanding: A Review</article-title>
+          <source>Neurocomputing</source>
+          <year>2016</year>
+          <volume>187</volume>
+          <fpage>27</fpage>
+          <lpage>48</lpage>
+          <pub-id pub-id-type="doi">10.1016/j.neucom.2015.09.116</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B15-entropy-23-01111">
+        <label>15.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Girshick</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Donahue</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Darrell</surname>
+              <given-names>T.</given-names>
+            </name>
+            <name>
+              <surname>Malik</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Rich feature hierarchies for accurate object detection and semantic segmentation</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</source>
+          <conf-loc>Columbus, OH, USA</conf-loc>
+          <conf-date>23&#x2013;28 June 2014</conf-date>
+          <fpage>580</fpage>
+          <lpage>587</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B16-entropy-23-01111">
+        <label>16.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Lin</surname>
+              <given-names>F.</given-names>
+            </name>
+            <name>
+              <surname>Yu</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Jin</surname>
+              <given-names>Q.</given-names>
+            </name>
+            <name>
+              <surname>You</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Semantic segmentation and scale recognition&#x2013;based water-level monitoring algorithm</article-title>
+          <source>J. Coast. Res.</source>
+          <year>2020</year>
+          <volume>105</volume>
+          <fpage>185</fpage>
+          <lpage>189</lpage>
+          <pub-id pub-id-type="doi">10.2112/JCR-SI105-039.1</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B17-entropy-23-01111">
+        <label>17.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Girshick</surname>
+              <given-names>R.</given-names>
+            </name>
+          </person-group>
+          <article-title>Fast R-CNN</article-title>
+          <source>Proceedings of the IEEE International Conference on Computer Vision</source>
+          <conf-loc>Santiago, Chile</conf-loc>
+          <conf-date>11&#x2013;18 December 2015</conf-date>
+          <fpage>1440</fpage>
+          <lpage>1448</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B18-entropy-23-01111">
+        <label>18.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Ren</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>He</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Girshick</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Sun</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks</article-title>
+          <source>Proceedings of the Annual Conference on Neural Information Processing Systems</source>
+          <conf-loc>Montreal, QC, Canada</conf-loc>
+          <conf-date>7&#x2013;12 December 2015</conf-date>
+          <fpage>91</fpage>
+          <lpage>99</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B19-entropy-23-01111">
+        <label>19.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Liu</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Anguelov</surname>
+              <given-names>D.</given-names>
+            </name>
+            <name>
+              <surname>Erhan</surname>
+              <given-names>D.</given-names>
+            </name>
+            <name>
+              <surname>Szegedy</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Reed</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Fu</surname>
+              <given-names>C.Y.</given-names>
+            </name>
+            <name>
+              <surname>Berg</surname>
+              <given-names>A.C.</given-names>
+            </name>
+          </person-group>
+          <article-title>SSD: Single Shot MultiBox Detector</article-title>
+          <source>Proceedings of the European Conference on Computer Vision</source>
+          <conf-loc>Amsterdam, The Netherlands</conf-loc>
+          <conf-date>11&#x2013;14 October 2016</conf-date>
+          <fpage>21</fpage>
+          <lpage>37</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B20-entropy-23-01111">
+        <label>20.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Redmon</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Divvala</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Girshick</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Farhadi</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>You Only Look Once: Unified, Real-Time Object Detection</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</source>
+          <conf-loc>Las Vegas, NV, USA</conf-loc>
+          <conf-date>27&#x2013;30 June 2016</conf-date>
+          <fpage>779</fpage>
+          <lpage>788</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B21-entropy-23-01111">
+        <label>21.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Redmon</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Farhadi</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>YOLO9000: Better, Faster, Stronger</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</source>
+          <conf-loc>Honolulu, HI, USA</conf-loc>
+          <conf-date>21&#x2013;26 July 2017</conf-date>
+          <fpage>7263</fpage>
+          <lpage>7271</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B22-entropy-23-01111">
+        <label>22.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Redmon</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Farhadi</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Yolov3: An incremental improvement</article-title>
+          <source>arXiv</source>
+          <year>2018</year>
+          <pub-id pub-id-type="arxiv">1804.02767</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B23-entropy-23-01111">
+        <label>23.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Bochkovskiy</surname>
+              <given-names>A.</given-names>
+            </name>
+            <name>
+              <surname>Wang</surname>
+              <given-names>C.Y.</given-names>
+            </name>
+            <name>
+              <surname>Liao</surname>
+              <given-names>H.Y.M.</given-names>
+            </name>
+          </person-group>
+          <article-title>YOLOv4: Optimal Speed and Accuracy of Object Detection</article-title>
+          <source>arXiv</source>
+          <year>2020</year>
+          <pub-id pub-id-type="arxiv">2004.10934</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B24-entropy-23-01111">
+        <label>24.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Zheng</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Zhao</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>Y.</given-names>
+            </name>
+          </person-group>
+          <article-title>Research on Detecting Bearing-Cover Defects Based on Improved YOLOv3</article-title>
+          <source>IEEE Access</source>
+          <year>2021</year>
+          <volume>9</volume>
+          <fpage>10304</fpage>
+          <lpage>10315</lpage>
+          <pub-id pub-id-type="doi">10.1109/ACCESS.2021.3050484</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B25-entropy-23-01111">
+        <label>25.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Teng</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Liu</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Chen</surname>
+              <given-names>G.</given-names>
+            </name>
+            <name>
+              <surname>Cheng</surname>
+              <given-names>L.</given-names>
+            </name>
+          </person-group>
+          <article-title>Concrete Crack Detection Based on Well-Known Feature Extractor Model and the YOLO_v2 Network</article-title>
+          <source>Appl. Sci.</source>
+          <year>2021</year>
+          <volume>11</volume>
+          <elocation-id>813</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/app11020813</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B26-entropy-23-01111">
+        <label>26.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Li</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Deng</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Yang</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Liu</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Gu</surname>
+              <given-names>Z.</given-names>
+            </name>
+          </person-group>
+          <article-title>Enhanced YOLO v3 Tiny Network for Real-Time Ship Detection from Visual Image</article-title>
+          <source>IEEE Access</source>
+          <year>2021</year>
+          <volume>9</volume>
+          <fpage>16692</fpage>
+          <lpage>16706</lpage>
+          <pub-id pub-id-type="doi">10.1109/ACCESS.2021.3053956</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B27-entropy-23-01111">
+        <label>27.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Chen</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Zhan</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>Wang</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Zhang</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Learning Slimming SAR Ship Object Detector through Network Pruning and Knowledge Distillation</article-title>
+          <source>IEEE J. Sel. Top. Appl. Earth Obs. Remote Sens.</source>
+          <year>2020</year>
+          <volume>14</volume>
+          <fpage>1267</fpage>
+          <lpage>1282</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B28-entropy-23-01111">
+        <label>28.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Long</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Suyuan</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Zhongma</surname>
+              <given-names>C.</given-names>
+            </name>
+            <name>
+              <surname>Jiaqi</surname>
+              <given-names>F.</given-names>
+            </name>
+            <name>
+              <surname>Xiaoting</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Wei</surname>
+              <given-names>D.</given-names>
+            </name>
+          </person-group>
+          <article-title>Lira-YOLO: A Lightweight Model for Ship Detection in Radar Images</article-title>
+          <source>J. Syst. Eng. Electron.</source>
+          <year>2020</year>
+          <volume>31</volume>
+          <fpage>950</fpage>
+          <lpage>956</lpage>
+          <pub-id pub-id-type="doi">10.23919/JSEE.2020.000063</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B29-entropy-23-01111">
+        <label>29.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Gao</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Chen</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Wei</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Detection of Specific Building in Remote Sensing Images Using a Novel YOLO-S-CIOU Model. Case: Gas Station Identification</article-title>
+          <source>Sensors</source>
+          <year>2021</year>
+          <volume>21</volume>
+          <elocation-id>1375</elocation-id>
+          <pub-id pub-id-type="doi">10.3390/s21041375</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B30-entropy-23-01111">
+        <label>30.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Kri&#x161;to</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Ivasic-Kos</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Pobar</surname>
+              <given-names>M.</given-names>
+            </name>
+          </person-group>
+          <article-title>Thermal Object Detection in Difficult Weather Conditions Using YOLO</article-title>
+          <source>IEEE Access</source>
+          <year>2020</year>
+          <volume>8</volume>
+          <fpage>125459</fpage>
+          <lpage>125476</lpage>
+          <pub-id pub-id-type="doi">10.1109/ACCESS.2020.3007481</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B31-entropy-23-01111">
+        <label>31.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Hsu</surname>
+              <given-names>W.-Y.</given-names>
+            </name>
+            <name>
+              <surname>Lin</surname>
+              <given-names>W.-Y.</given-names>
+            </name>
+          </person-group>
+          <article-title>Ratio-and-Scale-Aware YOLO for Pedestrian Detection</article-title>
+          <source>IEEE Trans. Image Process.</source>
+          <year>2021</year>
+          <volume>30</volume>
+          <fpage>934</fpage>
+          <lpage>947</lpage>
+          <pub-id pub-id-type="doi">10.1109/TIP.2020.3039574</pub-id>
+        </element-citation>
+      </ref>
+      <ref id="B32-entropy-23-01111">
+        <label>32.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Chen</surname>
+              <given-names>Y.</given-names>
+            </name>
+            <name>
+              <surname>Zhu</surname>
+              <given-names>X.</given-names>
+            </name>
+            <name>
+              <surname>Gong</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>Semi-Supervised Deep Learning with Memory</article-title>
+          <source>Proceedings of the European Conference on Computer Vision</source>
+          <conf-loc>Munich, Germany</conf-loc>
+          <conf-date>8&#x2013;14 September 2018</conf-date>
+          <fpage>275</fpage>
+          <lpage>291</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B33-entropy-23-01111">
+        <label>33.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Doulamis</surname>
+              <given-names>N.</given-names>
+            </name>
+            <name>
+              <surname>Doulamis</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Fast and Adaptive Deep Fusion Learning for Detecting Visual Objects</article-title>
+          <source>Proceedings of the European Conference on Computer Vision</source>
+          <conf-loc>Florence, Italy</conf-loc>
+          <conf-date>7&#x2013;13 October 2012</conf-date>
+          <fpage>345</fpage>
+          <lpage>354</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B34-entropy-23-01111">
+        <label>34.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Wang</surname>
+              <given-names>C.Y.</given-names>
+            </name>
+            <name>
+              <surname>Liao</surname>
+              <given-names>H.Y.M.</given-names>
+            </name>
+            <name>
+              <surname>Wu</surname>
+              <given-names>Y.H.</given-names>
+            </name>
+            <name>
+              <surname>Chen</surname>
+              <given-names>P.Y.</given-names>
+            </name>
+            <name>
+              <surname>Hsieh</surname>
+              <given-names>J.W.</given-names>
+            </name>
+            <name>
+              <surname>Yeh</surname>
+              <given-names>I.H.</given-names>
+            </name>
+          </person-group>
+          <article-title>CSPNet: A New Backbone that can Enhance Learning Capability of CNN</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</source>
+          <conf-loc>Seattle, WA, USA</conf-loc>
+          <conf-date>14&#x2013;19 June 2020</conf-date>
+          <fpage>1571</fpage>
+          <lpage>1580</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B35-entropy-23-01111">
+        <label>35.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Lin</surname>
+              <given-names>T.Y.</given-names>
+            </name>
+            <name>
+              <surname>Doll&#xE1;r</surname>
+              <given-names>P.</given-names>
+            </name>
+            <name>
+              <surname>Girshick</surname>
+              <given-names>R.</given-names>
+            </name>
+            <name>
+              <surname>He</surname>
+              <given-names>K.</given-names>
+            </name>
+            <name>
+              <surname>Hariharan</surname>
+              <given-names>B.</given-names>
+            </name>
+            <name>
+              <surname>Belongie</surname>
+              <given-names>S.</given-names>
+            </name>
+          </person-group>
+          <article-title>Feature Pyramid Networks for Object Detection</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</source>
+          <conf-loc>Honolulu, HI, USA</conf-loc>
+          <conf-date>21&#x2013;26 July 2017</conf-date>
+          <fpage>936</fpage>
+          <lpage>944</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B36-entropy-23-01111">
+        <label>36.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Liu</surname>
+              <given-names>S.</given-names>
+            </name>
+            <name>
+              <surname>Qi</surname>
+              <given-names>L.</given-names>
+            </name>
+            <name>
+              <surname>Qin</surname>
+              <given-names>H.</given-names>
+            </name>
+            <name>
+              <surname>Shi</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Jia</surname>
+              <given-names>J.</given-names>
+            </name>
+          </person-group>
+          <article-title>Path Aggregation Network for Instance Segmentation</article-title>
+          <source>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</source>
+          <conf-loc>Salt Lake, UT, USA</conf-loc>
+          <conf-date>18&#x2013;23 June 2018</conf-date>
+          <fpage>8759</fpage>
+          <lpage>8768</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B37-entropy-23-01111">
+        <label>37.</label>
+        <element-citation publication-type="confproc">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Zheng</surname>
+              <given-names>Z.</given-names>
+            </name>
+            <name>
+              <surname>Wang</surname>
+              <given-names>P.</given-names>
+            </name>
+            <name>
+              <surname>Liu</surname>
+              <given-names>W.</given-names>
+            </name>
+            <name>
+              <surname>Li</surname>
+              <given-names>J.</given-names>
+            </name>
+            <name>
+              <surname>Ren</surname>
+              <given-names>D.</given-names>
+            </name>
+          </person-group>
+          <article-title>Distance-IoU Loss: Faster and Better Learning for Bounding Box Regression</article-title>
+          <source>Proceedings of the AAAI Conference on Artificial Intelligence</source>
+          <conf-loc>Hilton Midtown, NY, USA</conf-loc>
+          <conf-date>7&#x2013;12 February 2020</conf-date>
+          <fpage>12993</fpage>
+          <lpage>13000</lpage>
+        </element-citation>
+      </ref>
+      <ref id="B38-entropy-23-01111">
+        <label>38.</label>
+        <element-citation publication-type="journal">
+          <person-group person-group-type="author">
+            <name>
+              <surname>Perez</surname>
+              <given-names>P.</given-names>
+            </name>
+            <name>
+              <surname>Gangnet</surname>
+              <given-names>M.</given-names>
+            </name>
+            <name>
+              <surname>Blake</surname>
+              <given-names>A.</given-names>
+            </name>
+          </person-group>
+          <article-title>Poisson Image Editing</article-title>
+          <source>ACM Trans. Graph. (TOG)</source>
+          <year>2003</year>
+          <volume>22</volume>
+          <fpage>313</fpage>
+          <lpage>318</lpage>
+          <pub-id pub-id-type="doi">10.1145/882262.882269</pub-id>
+        </element-citation>
+      </ref>
+    </ref-list>
+    <sec sec-type="display-objects">
+      <title>Figures and Tables</title>
+      <fig id="entropy-23-01111-f001" position="float">
+        <label>Figure 1</label>
+        <caption>
+          <p>Overall framework of FMA-YOLOv5s algorithm.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="entropy-23-01111-g001.tif"/>
+      </fig>
+      <fig id="entropy-23-01111-f002" position="float">
+        <label>Figure 2</label>
+        <caption>
+          <p>YOLOv5 network structure.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="entropy-23-01111-g002.tif"/>
+      </fig>
+      <fig id="entropy-23-01111-f003" position="float">
+        <label>Figure 3</label>
+        <caption>
+          <p>Feature map attention (FMA) layer.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="entropy-23-01111-g003.tif"/>
+      </fig>
+      <fig id="entropy-23-01111-f004" position="float">
+        <label>Figure 4</label>
+        <caption>
+          <p>The mosaic data augmentation.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="entropy-23-01111-g004.tif"/>
+      </fig>
+      <fig id="entropy-23-01111-f005" position="float">
+        <label>Figure 5</label>
+        <caption>
+          <p>Float debris images with various disturbance: (<bold>a</bold>) ideal detection target; (<bold>b</bold>) blocked target; (<bold>c</bold>) strong reflection; (<bold>d</bold>) complex water surface; (<bold>e</bold>) small target; (<bold>f</bold>) ripples.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="entropy-23-01111-g005.tif"/>
+      </fig>
+      <fig id="entropy-23-01111-f006" position="float">
+        <label>Figure 6</label>
+        <caption>
+          <p>Frame by frame detection.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="entropy-23-01111-g006.tif"/>
+      </fig>
+      <fig id="entropy-23-01111-f007" position="float">
+        <label>Figure 7</label>
+        <caption>
+          <p>Floating debris category: (<bold>a</bold>) leaf; (<bold>b</bold>) plastic-bags; (<bold>c</bold>) grass; (<bold>d</bold>) branch; (<bold>e</bold>) bottle; (<bold>f</bold>) milk box; (<bold>g</bold>) plastic garbage; (<bold>h</bold>) ball.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="entropy-23-01111-g007.tif"/>
+      </fig>
+      <fig id="entropy-23-01111-f008" position="float">
+        <label>Figure 8</label>
+        <caption>
+          <p>Dataset expanding method.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="entropy-23-01111-g008.tif"/>
+      </fig>
+      <fig id="entropy-23-01111-f009" position="float">
+        <label>Figure 9</label>
+        <caption>
+          <p>Bounding box distribution. (<bold>a</bold>) Dataset-original; (<bold>b</bold>) Dataset-expanded.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="entropy-23-01111-g009.tif"/>
+      </fig>
+      <fig id="entropy-23-01111-f010" position="float">
+        <label>Figure 10</label>
+        <caption>
+          <p>Actual test results.</p>
+        </caption>
+        <graphic xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="entropy-23-01111-g010.tif"/>
+      </fig>
+      <table-wrap id="entropy-23-01111-t001" position="float">
+        <object-id pub-id-type="pii">entropy-23-01111-t001_Table 1</object-id>
+        <label>Table 1</label>
+        <caption>
+          <p>Comparison of the results with the other six models.</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Model</th>
+              <th rowspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Input</th>
+              <th colspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">mAP(%)</th>
+              <th rowspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">FPS</th>
+              <th rowspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Params (M)</th>
+            </tr>
+            <tr>
+              <th align="center" valign="middle" style="border-bottom:solid thin">Dataset-Original</th>
+              <th align="center" valign="middle" style="border-bottom:solid thin">Dataset-Expanded</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="center" valign="middle">SSD</td>
+              <td rowspan="7" align="center" valign="middle" style="border-bottom:solid thin">416 &#xD7; 416</td>
+              <td align="center" valign="middle">72.06</td>
+              <td align="center" valign="middle">73.14</td>
+              <td align="center" valign="middle">26</td>
+              <td align="center" valign="middle">105</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">YOLOv2</td>
+              <td align="center" valign="middle">68.69</td>
+              <td align="center" valign="middle">71.23</td>
+              <td align="center" valign="middle">25</td>
+              <td align="center" valign="middle">193</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">YOLOv3</td>
+              <td align="center" valign="middle">73.95</td>
+              <td align="center" valign="middle">74.87</td>
+              <td align="center" valign="middle">24</td>
+              <td align="center" valign="middle">248</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">YOLOv4</td>
+              <td align="center" valign="middle">71.75</td>
+              <td align="center" valign="middle">75.35</td>
+              <td align="center" valign="middle">22</td>
+              <td align="center" valign="middle">244</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">YOLOv5s</td>
+              <td align="center" valign="middle">76.12</td>
+              <td align="center" valign="middle">77.23</td>
+              <td align="center" valign="middle">43</td>
+              <td align="center" valign="middle">13.7</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">YOLOv5m</td>
+              <td align="center" valign="middle">75.79</td>
+              <td align="center" valign="middle">78.26</td>
+              <td align="center" valign="middle">39</td>
+              <td align="center" valign="middle">40.5</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle" style="border-bottom:solid thin">FMA-YOLOv5s</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">77.83</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">79.41</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">42</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">18.2</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+      <table-wrap id="entropy-23-01111-t002" position="float">
+        <object-id pub-id-type="pii">entropy-23-01111-t002_Table 2</object-id>
+        <label>Table 2</label>
+        <caption>
+          <p>Comparison of the result in detail.</p>
+        </caption>
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Method</th>
+              <th rowspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Dataset-Expand</th>
+              <th rowspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">Mosaic</th>
+              <th rowspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">FMA</th>
+              <th colspan="8" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">AP(%)</th>
+              <th rowspan="2" align="center" valign="middle" style="border-top:solid thin;border-bottom:solid thin">mAP (%)</th>
+            </tr>
+            <tr>
+              <th align="center" valign="middle" style="border-bottom:solid thin">Bottle</th>
+              <th align="center" valign="middle" style="border-bottom:solid thin">Milk-Box</th>
+              <th align="center" valign="middle" style="border-bottom:solid thin">Ball</th>
+              <th align="center" valign="middle" style="border-bottom:solid thin">Plastic-Bag</th>
+              <th align="center" valign="middle" style="border-bottom:solid thin">Plastic-Garbage</th>
+              <th align="center" valign="middle" style="border-bottom:solid thin">Branch</th>
+              <th align="center" valign="middle" style="border-bottom:solid thin">Grass</th>
+              <th align="center" valign="middle" style="border-bottom:solid thin">Leaf</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="3" align="center" valign="middle" style="border-bottom:solid thin">YOLOv5s</td>
+              <td align="center" valign="middle">&#x221A;</td>
+              <td align="center" valign="middle"> </td>
+              <td align="center" valign="middle"> </td>
+              <td align="center" valign="middle">92.73</td>
+              <td align="center" valign="middle">86.82</td>
+              <td align="center" valign="middle">83.01</td>
+              <td align="center" valign="middle">81.21</td>
+              <td align="center" valign="middle">82.79</td>
+              <td align="center" valign="middle">60.74</td>
+              <td align="center" valign="middle">62.88</td>
+              <td align="center" valign="middle">65.23</td>
+              <td align="center" valign="middle">76.94</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle">&#x221A;</td>
+              <td align="center" valign="middle">&#x221A;</td>
+              <td align="center" valign="middle"> </td>
+              <td align="center" valign="middle">93.92</td>
+              <td align="center" valign="middle">83.44</td>
+              <td align="center" valign="middle">85.52</td>
+              <td align="center" valign="middle">87.72</td>
+              <td align="center" valign="middle">87.24</td>
+              <td align="center" valign="middle">55.69</td>
+              <td align="center" valign="middle">59.71</td>
+              <td align="center" valign="middle">65.23</td>
+              <td align="center" valign="middle">77.23</td>
+            </tr>
+            <tr>
+              <td align="center" valign="middle" style="border-bottom:solid thin">&#x221A;</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">&#x221A;</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">&#x221A;</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">93.81</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">85.74</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">88.68</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">85.83</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">85.97</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">66.98</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">62.46</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">66.23</td>
+              <td align="center" valign="middle" style="border-bottom:solid thin">79.41</td>
+            </tr>
+          </tbody>
+        </table>
+      </table-wrap>
+    </sec>
+    <fn-group>
+      <fn>
+        <p><bold>Publisher&#x2019;s Note:</bold> MDPI stays neutral with regard to jurisdictional claims in published maps and institutional affiliations.</p>
+      </fn>
+    </fn-group>
+  </back>
+</article>

@@ -1,0 +1,19 @@
+\section{Future Research Directions}
+\label{sec:future}
+
+Each direction below answers a gap from Section~\ref{sec:challenges} and names an actionable first step.
+
+\subsection{Measure What Cameras Miss}
+Develop submerged-capable river sensing (low-light architectures, polarization, depth cues) and report floating versus total-transport fractions with net-calibrated protocols, following the bridge-plus-net template \cite{Wolf2022}. Benchmarks should include transparency and entrapment stress splits rather than clean-water test sets \cite{JiaFlux2025}.
+
+\subsection{Model Vegetation Jointly}
+Treat hyacinth and debris as a joint detection problem with entrapment-aware labels, and empirically test the hyacinth-as-satellite-proxy and joint-removal hypotheses that current work only proposes \cite{Saigon2025}. Preprocessing that suppresses vegetative noise (tiling, blurring, background removal) should become standard reporting \cite{FrontEnv2025,Nunkhaw2025}.
+
+\subsection{Build for Adverse Conditions}
+ Adopt illumination-robust training (dark-channel and test-time lighting sweeps \cite{Saddi2024}), weather-adaptive detectors \cite{EAAI2023}, and multispectral or hyperspectral sensing where RGB saturates \cite{Cortesi2022,Tasseron2022}. Publish per-condition metric breakdowns instead of single headline scores.
+
+\subsection{Scale Data Without Scaling Cost}
+Prioritize open datasets with released weights \cite{JiaFrontiers2023,Pan2024,JiaFlux2025,Cheng2021}, semi- and self-supervised pipelines that exploit unlabeled river footage \cite{Sun2025,JiaSwAV2024}, synthetic supplementation for well-scoped settings \cite{Pan2023}, and citizen-science collection with standardized protocols \cite{Lieshout2020,Cook2021,RiverWatch2024}. Target Global-South rivers to correct the geographic imbalance \cite{Atuhaire2025}.
+
+\subsection{Close the Architecture and Evaluation Gaps}
+Run the first controlled transformer-versus-CNN comparisons on fixed river benchmarks; extend state-space and edge-efficient backbones to deployment studies \cite{Sun2025,Yan2025}; require counting-conditioned metrics (tracking F1, flux error versus human counts) alongside detection scores \cite{Lee2025,JiaFlux2025}; and converge on harmonized reporting discipline \cite{Hurley2023}.
